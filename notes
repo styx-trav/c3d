@@ -1,0 +1,28 @@
+still no threads ????
+
+looking at the map ::
+
+strong af parsing ::
+	check all elements are given
+	no order to elements, parsing through identifers (NE, F, etc.)
+	checking texture paths are valid
+	valid color structure :: 0 to 255, separated by commas, 3 values
+	map ::
+		no forbidden characters
+		no mult players, but at least one
+		border wall (first line, last line, first char, last char, + space-adjacent chars)
+
+translation file map to char **map ::
+	get longest line (including spaces at the beginning), allocate that to lines
+	re-read and transcribe
+
+translation char **map to struct *map ::
+	start at the player, store that, then build on recursive calls based on nwse dirs
+	if space, hit NULL, return, etc.
+
+simplistic structures first ::
+
+north, west, east, south : following piece of the map, NULL if no;
+type : wall, empty; 1,0;
+colors : floor, ceiling;
+access to the textures
