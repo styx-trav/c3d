@@ -58,7 +58,7 @@ static char	*parse_elements(int fd, t_pars *parse)
 	char	*err;
 
 	i = 0;
-	while (i != 6)
+	while (i != 4)//(i != 6)
 	{
 		a = move_to_char(fd);
 		if (a == '\0')
