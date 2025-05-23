@@ -1,0 +1,91 @@
+#include "libparsing.h"
+
+t_pars	*make_parse(void)
+{
+	t_pars	*parse;
+	int	i;
+
+	parse = (t_pars *)malloc(sizeof(t_pars));
+	if (!parse)
+	{
+		perror("parsing_pt1, malloc");
+		return (NULL);
+	}
+	parse->south = NULL;
+	parse->east = NULL;
+	parse->west = NULL;
+	parse->north = NULL;
+	i = 0;
+	while (i < 4)
+	{
+		parse->floor[i] = 0;
+		parse->ceiling[i] = 0;
+		i++;
+	}
+	return (parse);
+}
+
+t_pars	*free_parse(t_pars *parse, char *err_msg, int fd)
+{
+	if (fd != -1)
+		close(fd);
+	if (err_msg)
+	{
+		write(2, "Error\n", 6);
+		printf("%s\n", err_msg);
+	}
+	if (parse->south)
+		free(parse->south);
+	if (parse->east)
+		free(parse->east);
+	if (parse->west)
+		free(parse->west);
+	if (parse->north)
+		free(parse->north);
+	free(parse);
+	return (NULL);
+}
+
+int	len(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
+
+char	*add_char(char *str, char c)
+{
+	char	*s;
+	int	i;
+
+	s = malloc(len(str) + 2);
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (str && str[i])
+	{
+		s[i] = str[i];
+		i++;
+	}
+	s[i] = c;
+	s[i + 1] = '\0';
+	if (str)
+		free(str);
+	return (s);
+}
+
+char	move_to_char(int fd)
+{
+	char	a;
+
+	a = ' ';
+	while (read(fd, &a, 1))
+	{
+		if (!(a == ' ' || (a >= '\t' && a <= '\r')))
+			return (a);
+	}
+	return ('\0');
+}
