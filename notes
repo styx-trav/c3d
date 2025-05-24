@@ -1,18 +1,25 @@
 still no threads ????
 
-////////////////////////banner for current events//////////////////////////////
-okay, started on the parsing
-	no tests yet
-		double elements
-		bad names
-		not enough elements
-		cutoff
-		bad file
-		empty lines
-		
-	no colors (just textures for now)
+////////////////////////start for current events//////////////////////////////
+started on the parsing
+	tested
+		double elements, check
+		bad names, check
+		not enough elements, check
+		cutoff, check
+		bad file, somewhat check
+		empty lines, check
+		bad color input, check
+	will however want to do an overhaul of the first part (textures), now that we have gnl implemented
+	also, its all over the place. we'll fix that
 unsure what type of files textures will be, but I assume an open on RDONLY will be enough to check them ? will add
 
+next up ::
+	fix texture parsing with gnl
+	re-organize code for cleaner read, + explanation comments (norme ?)
+	get started on the **map to *struct conversion (consider island scenario - technically : correct map, practically : only one island rendered)
+
+////////////////////////end of current events/////////////////////////////////
 
 looking at the map ::
 
@@ -39,4 +46,10 @@ simplistic structures first ::
 north, west, east, south : following piece of the map, NULL if no;
 type : wall, empty; 1,0;
 colors : floor, ceiling;
-access to the textures
+access to the textures (images ? filename for now)
+
+future graphics add for Makefile
+#%.o: %.c
+	#$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
+#-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz

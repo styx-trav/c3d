@@ -25,19 +25,21 @@ static char	**get_dir(char c, int fd, t_pars *parse)
 static char	*get_texture(char c, int fd, t_pars *parse)
 {
 	char	**s;
-	char	buf[8];
 
 	s = get_dir(c, fd, parse);
 	if (!s)
 		return ("invalid element name");
+	c = reader(fd);
+	if (c == '\0' || (c != ' ' && c != '\t'))
+		return ("invalid element name");
 	while (c == ' ' || c == '\t')
-		read(fd, &c, 1);
-	while (c != '\n' && c != ' ' && c != '\t')
+		c = reader(fd);
+	while (c != '\0' && c != '\n' && c != ' ' && c != '\t')
 	{
 		*s = add_char(*s, c);
 		if (!(*s))
 			return ("textures, malloc");
-		read(fd, &c, 1);
+		c = reader(fd);
 	}
 	return (NULL);
 }
@@ -46,8 +48,8 @@ static char	*get_element(char c, int fd, t_pars *parse)
 {
 	if (c == 'S' || c == 'N' || c == 'W' || c == 'E')
 		return (get_texture(c, fd, parse));
-	//if (c == 'F' || c == 'C')
-		//return (get_color);
+	if (c == 'F' || c == 'C')
+		return (get_color(c, fd, parse));
 	return ("invalid element name");
 }
 
@@ -58,10 +60,10 @@ static char	*parse_elements(int fd, t_pars *parse)
 	char	*err;
 
 	i = 0;
-	while (i != 4)//(i != 6)
+	while (i != 6)//(i != 4)
 	{
 		a = move_to_char(fd);
-		if (a == '\0')
+		if (a == '\0' || a == '1')
 			return ("missing elements of parsing");
 		err = get_element(a, fd, parse);
 		if (err)
@@ -86,8 +88,9 @@ t_pars	*parsing_pt1_el(char *file)
 	parse = make_parse();
 	if (!parse)
 		return (NULL);
+	parse->fd = fd;
 	err_msg = parse_elements(fd, parse);
 	if (err_msg)
-		return (free_parse(parse, err_msg, fd));
+		return (free_parse(parse, err_msg));
 	return (parse);
 }

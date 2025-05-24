@@ -25,23 +25,39 @@ t_pars	*make_parse(void)
 	return (parse);
 }
 
-t_pars	*free_parse(t_pars *parse, char *err_msg, int fd)
+t_pars	*free_parse(t_pars *parse, char *err_msg)
 {
-	if (fd != -1)
-		close(fd);
+	if (parse->fd != -1)
+		close(parse->fd);
 	if (err_msg)
 	{
 		write(2, "Error\n", 6);
 		printf("%s\n", err_msg);
 	}
 	if (parse->south)
+	{
+		printf("south texture :: %s\n", parse->south);
 		free(parse->south);
+	}
 	if (parse->east)
+	{
+		printf("east texture :: %s\n", parse->east);
 		free(parse->east);
+	}
 	if (parse->west)
+	{
+		printf("west texture :: %s\n", parse->west);
 		free(parse->west);
+	}
 	if (parse->north)
+	{
+		printf("north texture :: %s\n", parse->north);
 		free(parse->north);
+	}
+	if (parse->floor[0])
+		printf("floor color : %d.%d.%d\n", parse->floor[1], parse->floor[2], parse->floor[3]);
+	if (parse->ceiling[0])
+		printf("ceiling color : %d.%d.%d\n", parse->ceiling[1], parse->ceiling[2], parse->ceiling[3]);
 	free(parse);
 	return (NULL);
 }
@@ -77,15 +93,21 @@ char	*add_char(char *str, char c)
 	return (s);
 }
 
+char	reader(int fd)
+{
+	char	a;
+
+	if (!read(fd, &a, 1))
+		return ('\0');
+	return (a);
+}
+
 char	move_to_char(int fd)
 {
 	char	a;
 
 	a = ' ';
-	while (read(fd, &a, 1))
-	{
-		if (!(a == ' ' || (a >= '\t' && a <= '\r')))
-			return (a);
-	}
-	return ('\0');
+	while (a && (a == ' ' || (a >= '\t' && a <= '\r')))
+		a = reader(fd);
+	return (a);
 }

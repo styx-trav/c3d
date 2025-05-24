@@ -18,10 +18,31 @@ int	is_cub(char *str)
 	return (1);
 }
 
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map && map[i])
+	{
+		printf("%s", map[i]);
+		free(map[i]);
+		i++;
+	}
+	if (map)
+		free(map);
+}
+
 int main()
 {
-	t_pars *parse = parsing_pt1("texte.cub");
+	char	**map;
+	t_pars *parse = parsing_pt1_el("texte.cub");
 	if (parse)
-		free_parse(parse, NULL, -1);
+	{
+		map = make_map(parse);
+		if (map)
+			free_map(map);
+		free_parse(parse, NULL);
+	}
 	return (0);
 }
