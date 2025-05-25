@@ -62,9 +62,11 @@ static char	*parse_elements(int fd, t_pars *parse)
 	i = 0;
 	while (i != 6)//(i != 4)
 	{
-		a = move_to_char(fd);
+		a = move_to_char(fd, i);
 		if (a == '\0' || a == '1')
 			return ("missing elements of parsing");
+		if (a == '\n')
+			return ("bad element formatting");
 		err = get_element(a, fd, parse);
 		if (err)
 			return (err);

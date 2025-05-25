@@ -102,12 +102,20 @@ char	reader(int fd)
 	return (a);
 }
 
-char	move_to_char(int fd)
+char	move_to_char(int fd, int i)
 {
 	char	a;
+	int	nline;
 
 	a = ' ';
+	nline = 0;
 	while (a && (a == ' ' || (a >= '\t' && a <= '\r')))
+	{
 		a = reader(fd);
+		if (!nline && a == '\n')
+			nline++;
+	}
+	if (i && !nline)
+		return ('\n');
 	return (a);
 }

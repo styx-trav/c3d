@@ -1,4 +1,5 @@
 #include "libparsing.h"
+#include "libmap.h"
 
 int	is_cub(char *str)
 {
@@ -33,15 +34,62 @@ void	free_map(char **map)
 		free(map);
 }
 
+void	print_map(t_map *player)
+{
+	char a = 'a';
+	while (a != 'x')
+	{
+		a = reader(0);
+		if (a == 'u')
+		{
+			if (player->north->type)
+				printf("hitting wall\n");
+			else
+				player = player->north;
+		}
+		else if (a == 'd')
+		{
+			if (player->south->type)
+				printf("hitting wall\n");
+			else
+				player = player->south;
+		}
+		if (a == 'l')
+		{
+			if (player->west->type)
+				printf("hitting wall\n");
+			else
+				player = player->west;
+		}
+		if (a == 'r')
+		{
+			if (player->east->type)
+				printf("hitting wall\n");
+			else
+				player = player->east;
+		}
+	}
+}
+
 int main()
 {
 	char	**map;
+	t_map	*mapp;
+
 	t_pars *parse = parsing_pt1_el("texte.cub");
 	if (parse)
 	{
 		map = make_map(parse);
 		if (map)
+		{
+			mapp = get_map(map);
 			free_map(map);
+			if (mapp)
+			{
+				print_map(mapp);
+				free_mapp(mapp);
+			}
+		}
 		free_parse(parse, NULL);
 	}
 	return (0);

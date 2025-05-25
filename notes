@@ -1,4 +1,4 @@
-still no threads ????
+still no threads ???? ??!
 
 ////////////////////////start for current events//////////////////////////////
 started on the parsing
@@ -10,14 +10,21 @@ started on the parsing
 		bad file, somewhat check
 		empty lines, check
 		bad color input, check
+		info after element && before newline, check
 	will however want to do an overhaul of the first part (textures), now that we have gnl implemented
+		--later, if we really want to. for now, works fine.
 	also, its all over the place. we'll fix that
+
+started on the conversion
+	no texture/color yet, will probably be available in pointer bundle or another way
+		!!!!currently under construction, no leaks but map unusable
+		stacks on repeat at south : 2,7
+		
 unsure what type of files textures will be, but I assume an open on RDONLY will be enough to check them ? will add
 
 next up ::
-	fix texture parsing with gnl
+	fix texture parsing with gnl -- later or not at all.
 	re-organize code for cleaner read, + explanation comments (norme ?)
-	get started on the **map to *struct conversion (consider island scenario - technically : correct map, practically : only one island rendered)
 
 ////////////////////////end of current events/////////////////////////////////
 
@@ -44,7 +51,7 @@ translation char **map to struct *map ::
 simplistic structures first ::
 
 north, west, east, south : following piece of the map, NULL if no;
-type : wall, empty; 1,0;
+type : wall, empty; 1, 0;
 colors : floor, ceiling;
 access to the textures (images ? filename for now)
 

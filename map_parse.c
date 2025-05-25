@@ -50,6 +50,7 @@ int	check_map(char **map)
 	int	max;
 
 	i = 0;
+	max = 0;
 	if (!map || !map[0])
 	{
 		printf("no map\n");
@@ -65,7 +66,8 @@ int	check_map(char **map)
 			printf("forbidden character in map\n");
 			return (0);
 		}
-		max = j;
+		if (max < j)
+			max = j;
 		i++;
 	}
 	return (max);
