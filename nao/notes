@@ -16,9 +16,8 @@ started on the parsing
 	also, its all over the place. we'll fix that
 
 started on the conversion
-	no texture/color yet, will probably be available in pointer bundle or another way
-		!!!!currently under construction, no leaks but map unusable
-		stacks on repeat at south : 2,7
+	overhauled, works fine but needs merging
+	might want to switch to an (i, j) type overlay later for easier layout and merge, if necessary
 		
 unsure what type of files textures will be, but I assume an open on RDONLY will be enough to check them ? will add
 

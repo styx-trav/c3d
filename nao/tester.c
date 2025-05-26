@@ -42,28 +42,28 @@ void	print_map(t_map *player)
 		a = reader(0);
 		if (a == 'u')
 		{
-			if (player->north->type)
+			if (!player->north)
 				printf("hitting wall\n");
 			else
 				player = player->north;
 		}
 		else if (a == 'd')
 		{
-			if (player->south->type)
+			if (!player->south)
 				printf("hitting wall\n");
 			else
 				player = player->south;
 		}
 		if (a == 'l')
 		{
-			if (player->west->type)
+			if (!player->west)
 				printf("hitting wall\n");
 			else
 				player = player->west;
 		}
 		if (a == 'r')
 		{
-			if (player->east->type)
+			if (!player->east)
 				printf("hitting wall\n");
 			else
 				player = player->east;

@@ -9,7 +9,6 @@ typedef struct s_map
 	struct s_map	*south;
 	struct s_map	*east;
 	struct s_map	*west;
-	int		type;
 	//here access to the colors and texture (maybe in a separate structure ?)
 }			t_map;
 
@@ -19,10 +18,11 @@ typedef struct s_maps
 	int	j;
 	char	dir;
 	char	**map;
+	int	fail;
 }		t_maps;
 
 t_map	*get_map(char **map);
-int	mapping(t_maps *map, t_map **s, t_map *prev);
+t_map	*mapping(t_maps *map, t_map *prev);
 void	free_mapp(t_map *mapp);
 
 #endif

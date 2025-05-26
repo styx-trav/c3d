@@ -7,8 +7,8 @@ SRC =	srcs/parsing/parsing.c 			\
 		tester.c 						\
 		srcs/parsing/floor_ceiling.c 	\
 		srcs/parsing/map_parse.c 		\
-		get_next_line.c 				\
-		get_next_line_utils.c 			\
+		srcs/gnl/get_next_line.c 				\
+		srcs/gnl/get_next_line_utils.c 			\
 		srcs/mapping/mapping.c			
 
 OBJ = $(SRC:.c=.o)
