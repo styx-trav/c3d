@@ -1,16 +1,32 @@
-CC=cc
-FLAGS=-Wall -Werror -Wextra
-NAME=try
-OBJ=parsing.c parsing_utils.c tester.c floor_ceiling.c map_parse.c get_next_line.c get_next_line_utils.c mapping.c
+CC = cc -g
+INCLUDES = -I./libs -I./srcs
+FLAGS = -Wall -Werror -Wextra $(INCLUDES)
+NAME = try
+SRC =	srcs/parsing/parsing.c 			\
+		srcs/parsing/parsing_utils.c	\
+		tester.c 						\
+		srcs/parsing/floor_ceiling.c 	\
+		srcs/parsing/map_parse.c 		\
+		get_next_line.c 				\
+		get_next_line_utils.c 			\
+		srcs/mapping/mapping.c			
+
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libparsing.h libmap.h
+$(NAME): $(OBJ)
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ) 
 
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
 clean:
-	rm -f try
+	rm -f $(OBJ)
+
+fclean:
+	rm -f $(OBJ) $(NAME)
 	
 re: clean all
 
-.PHONY: all clean re
+.PHONY: all clean fclean re
