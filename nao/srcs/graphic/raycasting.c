@@ -1,1 +1,1 @@
-#include "libgraphic.c"
+#include "libgraphic.h"
