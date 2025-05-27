@@ -11,6 +11,8 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/mapping/map_parse_utils.c 		\
 		srcs/gnl/get_next_line.c 				\
 		srcs/gnl/get_next_line_utils.c 			\
+		srcs/init/init.c 				\
+		srcs/init/init_utils.c 			\
 		srcs/mapping/mapping.c			
 
 OBJ = $(SRC:.c=.o)
@@ -22,6 +24,12 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
+
+#%.o: %.c
+#	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
+#$(NAME): $(SRC)
+#	$(CC) $(FLAGS) $(SRC) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

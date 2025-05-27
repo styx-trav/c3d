@@ -1,13 +1,13 @@
-NO ./path_of_least_resistance
+NO ./textures/tex.xpm 
      
-     SO ./textures      
+     SO ./textures/tex.xpm      
 
 	F 214,20,1
 		
 			
-EA			./test
+EA			./textures/tex.xpm 
 
-		WE                                            ./path_here
+		WE                                            ./textures/tex.xpm 
 		
 C 				214,4,1
 

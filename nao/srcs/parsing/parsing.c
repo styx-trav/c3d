@@ -81,6 +81,8 @@ t_pars	*parsing_pt1_el(char *file)
 	int		fd;
 	char	*err_msg;
 
+	if (!is_cub(file))
+		return (NULL);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{

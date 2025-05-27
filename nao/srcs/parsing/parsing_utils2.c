@@ -36,3 +36,21 @@ t_pars	*free_parse(t_pars *parse, char *err_msg)
 	free(parse);
 	return (NULL);
 }
+
+int	is_cub(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (str[i - 1] != 'b')
+		return (0);
+	if (str[i - 2] != 'u')
+		return (0);
+	if (str[i - 3] != 'c')
+		return (0);
+	if (str[i - 4] != '.')
+		return (0);
+	return (1);
+}

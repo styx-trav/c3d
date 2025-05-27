@@ -1,23 +1,6 @@
 #include "libparsing.h"
 #include "libmap.h"
-
-int	is_cub(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (str[i - 1] != 'b')
-		return (0);
-	if (str[i - 2] != 'u')
-		return (0);
-	if (str[i - 3] != 'c')
-		return (0);
-	if (str[i - 4] != '.')
-		return (0);
-	return (1);
-}
+#include "liball.h"
 
 void	free_map(char **map)
 {
@@ -41,24 +24,38 @@ void	print_map(t_maps *map)
 	free(map);
 }
 
+void	free_all(t_all *all)
+{
+	if (all->map)
+		free_map(all->map);
+	if (all->north.img)
+		mlx_destroy_image(all->mlx, all->north.img);
+	if (all->south.img)
+		mlx_destroy_image(all->mlx, all->south.img);
+	if (all->west.img)
+		mlx_destroy_image(all->mlx, all->west.img);
+	if (all->east.img)
+		mlx_destroy_image(all->mlx, all->east.img);
+	if (!all->fg.img)
+		printf("Error\ninit mlx\n");
+	else
+		mlx_destroy_image(all->mlx, all->fg.img);
+	if (all->bg.img)
+		mlx_destroy_image(all->mlx, all->bg.img);
+	if (all->win)
+		mlx_destroy_window(all->mlx, all->win);
+	if (all->mlx)
+		mlx_destroy_display(all->mlx);
+	if (all->mlx)
+		free(all->mlx);
+}
 
 int	main(void)
 {
-	char	**map;
-	t_maps	*mapp;
+	t_all all;
 
-	t_pars *parse = parsing_pt1_el("texte.cub");
-	if (parse)
-	{
-		map = make_map(parse);
-		if (map)
-		{
-			mapp = get_map(map);
-			free_map(map);
-			if (mapp)
-				print_map(mapp);
-		}
-		free_parse(parse, NULL);
-	}
+	if (!init(&all, "texte.cub", 800, 800))
+		return (0);
+	free_all(&all);
 	return (0);
 }

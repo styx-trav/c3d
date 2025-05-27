@@ -90,6 +90,8 @@ t_maps	*get_map(char **map)
 {
 	t_maps	*mapp;
 
+	if (!map)
+		return (NULL);
 	mapp = (t_maps *)malloc(sizeof(t_maps));
 	if (!mapp)
 		return (NULL);
@@ -102,6 +104,7 @@ t_maps	*get_map(char **map)
 	mapp->dir = map[mapp->i][mapp->j];
 	size_map(mapp, mapp->i, mapp->j);
 	mapp->map = reduce_map(map, mapp);
+	free_map(map);
 	if (!mapp->map)
 	{
 		perror("map conversion malloc");

@@ -29,6 +29,7 @@ char	move_to_char(int fd, int i);
 
 //from parsing_utils2.c
 t_pars	*free_parse(t_pars *parse, char *err_msg);
+int	is_cub(char *str);
 
 //from parsing.c
 t_pars	*parsing_pt1_el(char *file);
