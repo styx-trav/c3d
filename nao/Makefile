@@ -1,6 +1,7 @@
 CC = cc -g
-INCLUDES = -I./libs -I./srcs
-FLAGS = -Wall -Werror -Wextra $(INCLUDES)
+INCLUDES = -I./libs -I./srcs -Imlx
+CFLAGS = -Wall -Werror -Wextra $(INCLUDES)
+LDFLAGS = -Lmlx -lmlx -lX11 -lXext -lm
 NAME = try
 SRC =	srcs/parsing/parsing.c 			\
 		srcs/parsing/parsing_utils.c	\
@@ -9,17 +10,20 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/parsing/map_parse.c 		\
 		get_next_line.c 				\
 		get_next_line_utils.c 			\
-		srcs/mapping/mapping.c			
+		srcs/mapping/mapping.c			\
+		srcs/graphic/draw.c 			\
+		srcs/graphic/image.c 			\
+		srcs/graphic/raycasting.c 		\
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) 
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

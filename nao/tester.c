@@ -1,5 +1,6 @@
 #include "libparsing.h"
 #include "libmap.h"
+#include "libgraphic.h"
 
 int	is_cub(char *str)
 {
@@ -75,6 +76,7 @@ int main()
 {
 	char	**map;
 	t_map	*mapp;
+	t_game	game;
 
 	t_pars *parse = parsing_pt1_el("texte.cub");
 	if (parse)
@@ -83,6 +85,11 @@ int main()
 		if (map)
 		{
 			mapp = get_map(map);
+			if (init_game(&game))
+				return (1);
+			mlx_key_hook(game.mlx.win_ptr, key_press, &game);
+			mlx_hook(game.mlx.win_ptr, 17, 0, close_game, &game);
+			mlx_loop(game.mlx.mlx_ptr);
 			free_map(map);
 			if (mapp)
 			{
