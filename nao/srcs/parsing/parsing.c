@@ -55,12 +55,12 @@ static char	*get_element(char c, int fd, t_pars *parse)
 
 static char	*parse_elements(int fd, t_pars *parse)
 {
-	int	i;
+	int		i;
 	char	a;
 	char	*err;
 
 	i = 0;
-	while (i != 6)//(i != 4)
+	while (i != 6)
 	{
 		a = move_to_char(fd, i);
 		if (a == '\0' || a == '1')
@@ -78,7 +78,7 @@ static char	*parse_elements(int fd, t_pars *parse)
 t_pars	*parsing_pt1_el(char *file)
 {
 	t_pars	*parse;
-	int	fd;
+	int		fd;
 	char	*err_msg;
 
 	fd = open(file, O_RDONLY);

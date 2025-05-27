@@ -26,7 +26,7 @@ void	free_map(char **map)
 	i = 0;
 	while (map && map[i])
 	{
-		printf("%s", map[i]);
+		printf("%s\n", map[i]);
 		free(map[i]);
 		i++;
 	}
@@ -34,47 +34,18 @@ void	free_map(char **map)
 		free(map);
 }
 
-void	print_map(t_map *player)
+void	print_map(t_maps *map)
 {
-	char a = 'a';
-	while (a != 'x')
-	{
-		a = reader(0);
-		if (a == 'u')
-		{
-			if (!player->north)
-				printf("hitting wall\n");
-			else
-				player = player->north;
-		}
-		else if (a == 'd')
-		{
-			if (!player->south)
-				printf("hitting wall\n");
-			else
-				player = player->south;
-		}
-		if (a == 'l')
-		{
-			if (!player->west)
-				printf("hitting wall\n");
-			else
-				player = player->west;
-		}
-		if (a == 'r')
-		{
-			if (!player->east)
-				printf("hitting wall\n");
-			else
-				player = player->east;
-		}
-	}
+	printf("current map :: player at %d, %d, min %d, %d, max %d, %d\n", map->i, map->j, map->mini, map->minj, map->maxi, map->maxj);
+	free_map(map->map);
+	free(map);
 }
 
-int main()
+
+int	main(void)
 {
 	char	**map;
-	t_map	*mapp;
+	t_maps	*mapp;
 
 	t_pars *parse = parsing_pt1_el("texte.cub");
 	if (parse)
@@ -85,10 +56,7 @@ int main()
 			mapp = get_map(map);
 			free_map(map);
 			if (mapp)
-			{
 				print_map(mapp);
-				free_mapp(mapp);
-			}
 		}
 		free_parse(parse, NULL);
 	}

@@ -3,7 +3,7 @@
 static int	get_num(int fd, int i)
 {
 	char	a;
-	int	res;
+	int		res;
 
 	a = reader(fd);
 	if (i == 1)

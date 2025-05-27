@@ -1,58 +1,11 @@
-still no threads ???? ??!
 
-////////////////////////start for current events//////////////////////////////
-started on the parsing
-	tested
-		double elements, check
-		bad names, check
-		not enough elements, check
-		cutoff, check
-		bad file, somewhat check
-		empty lines, check
-		bad color input, check
-		info after element && before newline, check
-	will however want to do an overhaul of the first part (textures), now that we have gnl implemented
-		--later, if we really want to. for now, works fine.
-	also, its all over the place. we'll fix that
+//current events
 
-started on the conversion
-	overhauled, works fine but needs merging
-	might want to switch to an (i, j) type overlay later for easier layout and merge, if necessary
-		
-unsure what type of files textures will be, but I assume an open on RDONLY will be enough to check them ? will add
+parsing finished, just need to consolidate all the new info into a global structure
 
-next up ::
-	fix texture parsing with gnl -- later or not at all.
-	re-organize code for cleaner read, + explanation comments (norme ?)
+next up :: textures
 
-////////////////////////end of current events/////////////////////////////////
-
-looking at the map ::
-
-strong af parsing ::
-	check all elements are given
-	no order to elements, parsing through identifers (NE, F, etc.)
-	checking texture paths are valid
-	valid color structure :: 0 to 255, separated by commas, 3 values
-	map ::
-		no forbidden characters
-		no mult players, but at least one
-		border wall (first line, last line, first char, last char, + space-adjacent chars)
-
-translation file map to char **map ::
-	get longest line (including spaces at the beginning), allocate that to lines
-	re-read and transcribe
-
-translation char **map to struct *map ::
-	start at the player, store that, then build on recursive calls based on nwse dirs
-	if space, hit NULL, return, etc.
-
-simplistic structures first ::
-
-north, west, east, south : following piece of the map, NULL if no;
-type : wall, empty; 1, 0;
-colors : floor, ceiling;
-access to the textures (images ? filename for now)
+//end of current events
 
 future graphics add for Makefile
 #%.o: %.c

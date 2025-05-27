@@ -1,8 +1,7 @@
 #include "libmap.h"
 
-int	get_player(t_maps *mapp, char **map)
+static int	get_player(t_maps *mapp, char **map)
 {
-
 	mapp->i = 0;
 	while (map[mapp->i])
 	{
@@ -18,101 +17,97 @@ int	get_player(t_maps *mapp, char **map)
 	return (0);
 }
 
-t_map	*create_item(t_maps *map, char dir, t_map *prev)
+static void	size_map(t_maps *map, int i, int j)
 {
-	t_map *item;
-
-	if (map->map[map->i][map->j] == '1' || map->map[map->i][map->j] == '?')
-		return (NULL);
-	item = (t_map *)malloc(sizeof(t_map));
-	if (!item)
+	if (map->map[i][j] == '!')
+		return ;
+	if (map->map[i][j] == '1')
 	{
-		map->fail = 1;
-		return (NULL);
+		if (map->mini == -1 || i < map->mini)
+			map->mini = i;
+		if (map->minj == -1 || j < map->minj)
+			map->minj = j;
+		if (j > map->maxj)
+			map->maxj = j;
+		if (i > map->maxi)
+			map->maxi = i;
+		return ;
 	}
-	item->south = NULL;
-	item->east = NULL;
-	item->north = NULL;
-	item->west = NULL;
-	if (dir == 's')
-		item->north = prev;
-	else if (dir == 'n')
-		item->south = prev;
-	else if (dir == 'e')
-		item->west = prev;
-	else if (dir == 'w')
-		item->east = prev;
-	map->map[map->i][map->j] = '?';
-	return (item);
+	map->map[i][j] = '!';
+	size_map(map, i +1, j);
+	size_map(map, i -1, j);
+	size_map(map, i, j +1);
+	size_map(map, i, j -1);
 }
 
-t_map	*mapping(t_maps *map, t_map *prev)
+static char	*inloop(char *map, int min, int max)
 {
-	t_map *item;
-	static int e = 0;
+	char	*s;
+	int		i;
 
-	if (map->fail)
+	i = 0;
+	s = malloc(max - min + 2);
+	if (!s)
 		return (NULL);
-	e++;
-	printf("it %d :: currently drawing %c from %d, %d, map %c\n", e, map->dir, map->i, map->j, map->map[map->i][map->j]);
-	item = create_item(map, map->dir, prev);
-	if (!item)
-		return (NULL);
-	map->dir = 's';
-	map->i++;
-	if (!item->south)
-		item->south = mapping(map, item);
-	map->dir = 'n';
-	map->i = map->i - 2;
-	if (!item->north)
-		item->north = mapping(map, item);
-	map->dir = 'e';
-	map->i++;
-	map->j++;
-	if (!item->east)
-		item->east = mapping(map, item);
-	map->dir = 'w';
-	map->j = map->j - 2;
-	if (!item->west)
-		item->west = mapping(map, item);
-	map->j++;
-	return (item);
+	while (map[min + i] != '\n' && min + i <= max)
+	{
+		s[i] = map[min + i];
+		i++;
+	}
+	while (min + i <= max)
+	{
+		s[i] = ' ';
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
 }
 
-t_map	*get_map(char **map)
+static char	**reduce_map(char **map, t_maps *mapp)
 {
-	t_map	*player;
-	t_maps	mapp;
+	char	**nmap;
+	int		i;
 
-	get_player(&mapp, map);
-	mapp.map = map;
-	mapp.dir = 'p';
-	mapp.fail = 0;
-	player = mapping(&mapp, NULL);
-	if (mapp.fail || !player)
+	nmap = malloc(sizeof(char *) * (mapp->maxi - mapp->mini + 2));
+	if (!nmap)
+		return (NULL);
+	i = 0;
+	while (mapp->mini + i <= mapp->maxi)
+	{
+		nmap[i] = inloop(map[mapp->mini + i], mapp->minj, mapp->maxj);
+		if (!nmap[i])
+		{
+			free_map(nmap);
+			return (NULL);
+		}
+		i++;
+	}
+	nmap[i] = NULL;
+	return (nmap);
+}
+
+t_maps	*get_map(char **map)
+{
+	t_maps	*mapp;
+
+	mapp = (t_maps *)malloc(sizeof(t_maps));
+	if (!mapp)
+		return (NULL);
+	get_player(mapp, map);
+	mapp->mini = -1;
+	mapp->minj = -1;
+	mapp->maxi = -1;
+	mapp->maxj = -1;
+	mapp->map = map;
+	mapp->dir = map[mapp->i][mapp->j];
+	size_map(mapp, mapp->i, mapp->j);
+	mapp->map = reduce_map(map, mapp);
+	if (!mapp->map)
 	{
 		perror("map conversion malloc");
-		free_mapp(player);
+		free(mapp);
 		return (NULL);
 	}
-	return (player);
-}
-
-void	free_mapp(t_map *mapp)
-{
-	if (!mapp)
-		return ;
-	if (mapp->north)
-		mapp->north->south = NULL;
-	if (mapp->south)
-		mapp->south->north = NULL;
-	if (mapp->east)
-		mapp->east->west = NULL;
-	if (mapp->west)
-		mapp->west->east = NULL;
-	free_mapp(mapp->north);
-	free_mapp(mapp->south);
-	free_mapp(mapp->east);
-	free_mapp(mapp->west);
-	free(mapp);
+	get_player(mapp, mapp->map);
+	return (mapp);
 }
