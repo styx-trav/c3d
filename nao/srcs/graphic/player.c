@@ -19,7 +19,7 @@ void init_player(t_all *all, t_player *player)
 
 int key_press(int keycode, t_all *all)
 {
-	printf("keycode = %d\n", keycode);
+	//printf("keycode = %d\n", keycode);
 	if (keycode == 65307)// esc
 	{
 		mlx_loop_end(all->mlx);
@@ -79,9 +79,10 @@ void move_player(t_all *all, t_player *player)
 	float sin_angle;
 
 	speed = 5;
+	rotate_player(player);
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
-	rotate_player(player);
+	//printf("show me angle %9.6f and cos %9.6f, and sin %9.6f\n", player->angle, cos_angle, sin_angle);
 	if (player->key_up && all->map[(int)((player->y - speed) / 64)][(int)(player->x / 64)] != '1')
 	{
 		//player->y -= speed;
@@ -98,14 +99,14 @@ void move_player(t_all *all, t_player *player)
 	if (player->key_left && all->map[(int)(player->y / 64)][(int)((player->x - speed) / 64)] != '1')
 	{
 		//player->x -= speed;
-		player->x += cos_angle * speed;
 		player->x -= sin_angle * speed;
+		player->y += cos_angle * speed;
 	}
 	if (player->key_right && all->map[(int)(player->y / 64)][(int)((player->x + speed) / 64)] != '1')
 	{
 		//player->x += speed;
-		player->x -= cos_angle * speed;
 		player->x += sin_angle * speed;
+		player->y -= cos_angle * speed;
 	}
 	clear_image(all);
 }
