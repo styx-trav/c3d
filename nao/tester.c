@@ -50,12 +50,33 @@ void	free_all(t_all *all)
 		free(all->mlx);
 }
 
+int	exitt(t_all *str)
+{
+	mlx_loop_end(str->mlx);
+	return (0);
+}
+
+int	closer(int keycode, t_all *str)
+{
+	if (keycode == 0xff1b)
+		mlx_loop_end(str->mlx);
+	return (0);
+}
+
+void	start_loop(t_all *all)
+{
+	mlx_hook(all->win, 2, 1L << 0, &closer, all);
+	mlx_hook(all->win, 17, 0, &exitt, all);
+	mlx_loop(all->mlx);
+}
+
 int	main(void)
 {
 	t_all all;
 
 	if (!init(&all, "texte.cub", 800, 800))
 		return (0);
+	start_loop(&all);
 	free_all(&all);
 	return (0);
 }
