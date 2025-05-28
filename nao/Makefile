@@ -13,23 +13,25 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/gnl/get_next_line_utils.c 			\
 		srcs/init/init.c 				\
 		srcs/init/init_utils.c 			\
-		srcs/mapping/mapping.c			
+		srcs/mapping/mapping.c			\
+		srcs/graphic/render2D.c			\
+		srcs/graphic/player.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME) clean
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) 
-
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+#$(NAME): $(OBJ)
+#	$(CC) $(FLAGS) -o $(NAME) $(OBJ) 
 
 #%.o: %.c
-#	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+#	$(CC) $(FLAGS) -c $< -o $@
 
-#$(NAME): $(SRC)
-#	$(CC) $(FLAGS) $(SRC) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+%.o: %.c
+	$(CC) $(FLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
+
+$(NAME): $(SRC)
+	$(CC) $(FLAGS) $(SRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

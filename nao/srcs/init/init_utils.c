@@ -13,7 +13,7 @@ int	calc_color(int col[4])
 
 void	img_address(t_img *img)
 {
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->ll, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->size_line, &img->endian);
 }
 
 void	start_all(t_all *all)

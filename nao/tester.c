@@ -65,8 +65,11 @@ int	closer(int keycode, t_all *str)
 
 void	start_loop(t_all *all)
 {
-	mlx_hook(all->win, 2, 1L << 0, &closer, all);
+	mlx_hook(all->win, 2, 1L << 0, key_press, all);
+	mlx_hook(all->win, 3, 1L << 1, key_release, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
+
+	mlx_loop_hook(all->mlx, draw_loop, all);
 	mlx_loop(all->mlx);
 }
 
@@ -74,8 +77,9 @@ int	main(void)
 {
 	t_all all;
 
-	if (!init(&all, "texte.cub", 800, 800))
+	if (!init(&all, "texte.cub", WIDTH, HEIGHT))
 		return (0);
+	init_player(&all.player);
 	start_loop(&all);
 	free_all(&all);
 	return (0);
