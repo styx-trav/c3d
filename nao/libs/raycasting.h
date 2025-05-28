@@ -2,7 +2,6 @@
 # define RAYCASTING_H
 
 #include "liball.h"
-#include <math.h>
 
 typedef struct s_ray
 {
