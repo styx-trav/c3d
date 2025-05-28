@@ -1,33 +1,31 @@
 #include "liball.h"
 
-void clear_image(t_all *all)
+void	init_map(t_all *all)
 {
-	int y;
-	int x;
+	t_img *img;
+	int	i;
+	int	j;
 
-	y = 0;
-	while (y < HEIGHT)
+	img = &all->north;
+	i = 0;
+	while (all->map[i])
 	{
-		x = 0;
-		while (x < WIDTH)
+		j = 0;
+		while (all->map[i][j])
 		{
-			put_pixel(x, y, 0, &all->fg);
-			x++;
+			if (all->map[i][j] == '1')
+				mlx_put_image_to_window(all->mlx, all->win, img->img, j * img->width, i * img->height);
+			j++;
 		}
-		y++;
+		i++;
 	}
 }
 
-int draw_loop(t_all *all)
+void clear_image(t_all *all)
 {
-	t_player *player;
-
-	player = &all->player;
-	move_player(player);
-	clear_image(all);
-	draw_square(player->x, player->y, 5, 0x00FF00, &all->fg);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
-	return (0);
+	init_map(all);
+	mlx_put_image_to_window(all->mlx, all->win, all->player.img.img, all->player.x, all->player.y);
 }
 
 void put_pixel(int x, int y, int color, t_img *img)

@@ -111,6 +111,7 @@ t_maps	*get_map(char **map)
 		free(mapp);
 		return (NULL);
 	}
-	get_player(mapp, mapp->map);
+	mapp->i = mapp->i - mapp->mini;
+	mapp->j = mapp->j - mapp->minj;
 	return (mapp);
 }

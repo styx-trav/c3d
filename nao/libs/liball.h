@@ -12,19 +12,8 @@
 # define  PI 3.14159265359
 
 # include <stdlib.h>
-#include <stdbool.h>
+# include <stdbool.h>
 # include <mlx.h>
-
-typedef struct s_player
-{
-	double x;
-	double y;
-
-	bool key_up;
-	bool key_down;
-	bool key_left;
-	bool key_right;
-}	t_player;
 
 typedef struct s_img
 {
@@ -36,6 +25,18 @@ typedef struct s_img
 	int		size_line;
 	int		endian;
 }		t_img;
+
+typedef struct s_player
+{
+	double x;
+	double y;
+
+	bool key_up;
+	bool key_down;
+	bool key_left;
+	bool key_right;
+	t_img img;
+}	t_player;
 
 // typedef struct s_mx
 // {
@@ -73,10 +74,11 @@ int	init(t_all *all, char *filename, int width, int height);
 //from graphic
 void draw_square(int x, int y, int size, int color, t_img *img);
 void put_pixel(int x, int y, int color, t_img *img);
-void init_player(t_player *player);
+void init_player(t_all *all, t_player *player);
 int key_press(int keycode, t_all *all);
 int key_release(int keycode, t_all *all);
-void move_player(t_player *player);
+void move_player(t_all *all, t_player *player);
 int draw_loop(t_all *all);
+void clear_image(t_all *all);
 
 #endif

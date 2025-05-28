@@ -54,6 +54,10 @@ static int	mlx_setup(t_all *all, int width, int height)
 	all->fg.img = mlx_new_image(all->mlx, width, height);
 	if (!all->fg.img)
 		return (0);
+	all->player.img.img = mlx_new_image(all->mlx, 10, 10);
+	if (!all->player.img.img)
+		return (0);
+	img_address(&all->player.img);
 	img_address(&all->fg);
 	img_address(&all->bg);
 	return (1);

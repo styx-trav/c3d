@@ -36,9 +36,11 @@ void	free_all(t_all *all)
 		mlx_destroy_image(all->mlx, all->west.img);
 	if (all->east.img)
 		mlx_destroy_image(all->mlx, all->east.img);
-	if (!all->fg.img)
+	if (!all->player.img.img)
 		printf("Error\ninit mlx\n");
 	else
+		mlx_destroy_image(all->mlx, all->player.img.img);
+	if (all->fg.img)
 		mlx_destroy_image(all->mlx, all->fg.img);
 	if (all->bg.img)
 		mlx_destroy_image(all->mlx, all->bg.img);
@@ -69,7 +71,6 @@ void	start_loop(t_all *all)
 	mlx_hook(all->win, 3, 1L << 1, key_release, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
 
-	mlx_loop_hook(all->mlx, draw_loop, all);
 	mlx_loop(all->mlx);
 }
 
@@ -78,8 +79,11 @@ int	main(void)
 	t_all all;
 
 	if (!init(&all, "texte.cub", WIDTH, HEIGHT))
+	{
+		free_all(&all);
 		return (0);
-	init_player(&all.player);
+	}
+	init_player(&all, &all.player);
 	start_loop(&all);
 	free_all(&all);
 	return (0);
