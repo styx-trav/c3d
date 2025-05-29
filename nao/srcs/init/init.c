@@ -88,8 +88,8 @@ int	init(t_all *all, char *filename, int width, int height)
 	free_parse(parse, NULL);
 	if (!map)
 		return (0);
-	all->player.x = (double)map->i;
-	all->player.y = (double)map->j;
+	all->player.y = (double)map->i;
+	all->player.x = (double)map->j;
 	all->dir = map->dir;
 	all->map = map->map;
 	free(map);

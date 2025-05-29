@@ -1,5 +1,5 @@
 #include "liball.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 void init_player(t_all *all, t_player *player)
 {

@@ -20,15 +20,24 @@ void	init_map(t_all *all)
 		i++;
 	}
 }
-
 bool touch(float px, float py, t_all *all)
 {
 	int x;
 	int y;
+	int i;
+	int j;
 
 	x = px / 64;
 	y = py / 64;
-	if (all->map[y][x] == '1')
+	//printf("%d, %d\n", x, y);
+	i = 0;
+	while (all->map[i])
+		i++;
+	j = 0;
+	while (all->map[0][j])
+		j++;
+	if (x >= j || y >= i
+		|| all->map[y][x] == '1')
 		return (true);
 	return (false);
 }
