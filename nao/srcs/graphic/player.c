@@ -3,6 +3,7 @@
 
 void init_player(t_all *all, t_player *player)
 {
+	(void)all;
 	player->x = player->x * 64 + 32 - 5;
 	player->y = player->y * 64 + 32 - 5;
 	player->angle = PI / 2;
@@ -13,8 +14,8 @@ void init_player(t_all *all, t_player *player)
 	player->key_right = false;
 	player->left_rotate = false;
 	player->right_rotate = false;
-	draw_square(0, 0, 5, 0x00FF00, &(player->img));
-	clear_image(all);
+	//draw_square(0, 0, 4, 0x00FF00, &(player->img));
+	//clear_image(all);
 }
 
 int key_press(int keycode, t_all *all)
@@ -37,7 +38,7 @@ int key_press(int keycode, t_all *all)
 		all->player.left_rotate = true;
 	if (keycode == RIGHT)
 		all->player.right_rotate = true;
-	move_player(all, &(all->player));
+	//move_player(all, &(all->player));
 	return (0);
 }
 
@@ -62,7 +63,7 @@ void rotate_player(t_player *player)
 {
 	float angle_speed;
 
-	angle_speed = 0.1;
+	angle_speed = 0.008;
 	if (player->left_rotate)
 		player->angle -= angle_speed;
 	if (player->right_rotate)
@@ -74,11 +75,11 @@ void rotate_player(t_player *player)
 }
 void move_player(t_all *all, t_player *player)
 {
-	int speed;
+	float speed;
 	float cos_angle;
 	float sin_angle;
 
-	speed = 5;
+	speed = 0.2;
 	rotate_player(player);
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
@@ -108,5 +109,5 @@ void move_player(t_all *all, t_player *player)
 		player->x += sin_angle * speed;
 		player->y -= cos_angle * speed;
 	}
-	clear_image(all);
+	//clear_image(all);
 }

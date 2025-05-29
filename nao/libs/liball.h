@@ -87,5 +87,6 @@ int key_release(int keycode, t_all *all);
 void move_player(t_all *all, t_player *player);
 int draw_loop(t_all *all);
 void clear_image(t_all *all);
+bool touch(float px, float py, t_all *all);
 
 #endif

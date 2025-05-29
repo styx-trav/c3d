@@ -21,6 +21,18 @@ void	init_map(t_all *all)
 	}
 }
 
+bool touch(float px, float py, t_all *all)
+{
+	int x;
+	int y;
+
+	x = px / 64;
+	y = py / 64;
+	if (all->map[y][x] == '1')
+		return (true);
+	return (false);
+}
+
 void clear_image(t_all *all)
 {
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
@@ -32,7 +44,7 @@ void put_pixel(int x, int y, int color, t_img *img)
 {
 	int index;
 
-	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
+	if (!img || !img->addr || x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return ;
 	index = y * img->size_line + x * img->bpp / 8;
 	img->addr[index] = color & 0xFF;
@@ -45,6 +57,8 @@ void draw_square(int x, int y, int size, int color, t_img *img)
 	int i;
 
 	i = 0;
+	if (!img || !img->addr)
+		return;
 	while(++i < size)
 		put_pixel(x + i, y, color, img);
 	i = 0;
