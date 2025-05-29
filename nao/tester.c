@@ -65,10 +65,45 @@ int	closer(int keycode, t_all *str)
 	return (0);
 }
 
+void	draw_rays(t_all *all, t_player *player)
+{
+	float ray_x;
+	float ray_y;
+	float cos_angle;
+	float sin_angle;
+	float fov = PI / 2 - 0.5;
+	float i = 0;
+
+	while (i < fov)
+	{
+		ray_x = player->x;
+		ray_y = player->y;
+		cos_angle = cos(player->angle - i);
+		sin_angle = sin(player->angle - i);
+		while(!touch(ray_x, ray_y, all))
+		{
+			put_pixel((int)ray_x, (int)ray_y, 0xFF0000, &all->fg);
+			ray_x -= cos_angle;
+			ray_y -= sin_angle;
+		}
+		ray_x = player->x;
+		ray_y = player->y;
+		cos_angle = cos(player->angle + i);
+		sin_angle = sin(player->angle + i);
+		while(!touch(ray_x, ray_y, all))
+		{
+			put_pixel((int)ray_x, (int)ray_y, 0xFF0000, &all->fg);
+			ray_x -= cos_angle;
+			ray_y -= sin_angle;
+		}
+		i = i + 0.01;
+	}
+}
+
 int draw_loop(t_all *all)
 {
 	t_player *player = &all->player;
-	float ray_x;
+	/*float ray_x;
 	float ray_y;
 	float cos_angle;
 	float sin_angle;
@@ -76,19 +111,20 @@ int draw_loop(t_all *all)
 	ray_x = player->x;
 	ray_y = player->y;
 	cos_angle = cos(player->angle);
-	sin_angle = sin(player->angle);
+	sin_angle = sin(player->angle);*/
 	move_player(all, player);
 	mlx_destroy_image(all->mlx, all->fg.img);
 	all->fg.img = mlx_new_image(all->mlx, WIDTH, HEIGHT);
 	img_address(&all->fg);
 	clear_image(all);
 	draw_square(0, 0, 4, 0x00FF00, &(player->img));
-	while(!touch(ray_x, ray_y, all))
+	/*while(!touch(ray_x, ray_y, all))
 	{
 		put_pixel((int)ray_x, (int)ray_y, 0xFF0000, &all->fg);
 		ray_x -= cos_angle;
 		ray_y -= sin_angle;
-	}
+	}*/
+	draw_rays(all, player);
 	return (0);
 }
 
