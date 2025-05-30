@@ -10,6 +10,7 @@
 # define D 100
 # define LEFT 65361
 # define RIGHT 65363
+# define NUM_RAYS WIDTH
 
 # define  PI 3.14159265359
 
@@ -88,5 +89,6 @@ void move_player(t_all *all, t_player *player);
 int draw_loop(t_all *all);
 void clear_image(t_all *all);
 bool touch(float px, float py, t_all *all);
+void draw_rays(t_all *all, t_player *player);
 
 #endif
