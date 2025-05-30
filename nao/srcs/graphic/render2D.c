@@ -36,8 +36,8 @@ bool touch(float px, float py, t_all *all)
 	j = 0;
 	while (all->map[0][j])
 		j++;
-	if (x >= j || y >= i
-		|| all->map[y][x] == '1')
+	if (x >= j - 1 || y >= i - 1
+		|| all->map[y][x] == '1' || all->map[y][x] == ' ')
 		return (true);
 	return (false);
 }
