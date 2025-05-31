@@ -1,10 +1,22 @@
 
 //current events
 
-parsing finished, just need to consolidate all the new info into a global structure
-textures done, easy as hell apparently
+still needed :: perspective texture display
 
-next up :: perspective texture display
+raycasting !! the dda method, suited to current needs ::
+
+float deltaX : abs(1/cos_angle); --> the distance to next square horizontally
+float deltaY : abs(1/sin_angle); --> the distance to next square vertically
+	>>correct, works great so far (mini quadrillage)
+
+moving in both directions using regular int x, y for the map check since we move by one square of the map;
+first to hit returns infos :: x or y hit, distance calculated by distx.y - delta (mult by 64 for our 64x64 square map);
+
+first step :: checking deltas are correct estimates of when the map changes
+	looking good
+seconds step :: the insquare calculations, done (initial distx.y)
+third step :: while loop and display
+		and after hours and hours of looking for dumbass mistakes, here it is !!
 
 //end of current events
 

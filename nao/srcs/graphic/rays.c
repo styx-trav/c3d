@@ -1,6 +1,59 @@
 #include "liball.h"
+static void add_deltas(float cos_angle, float sin_angle, t_all *all, t_player *player)
+{
+	float ray_x = player->x / 64;
+	float ray_y = player->y / 64;
+	float deltax = fabs(1/cos_angle);
+	float deltay = fabs(1/sin_angle);
+	int wall = 0;
+	int side = 0;
+	float distx = 0;
+	float disty = 0;
+	float dist = 0;
+	int mapx = (int) (ray_x);
+	int mapy = (int) (ray_y);
 
-static void draw_one_ray(float angle, t_all *all, t_player *player)
+	if (cos_angle > 0)
+		distx = (ray_x - (float)mapx) * deltax;
+	else
+		distx = ((float)mapx + 1.0 - ray_x) * deltax;
+	if (sin_angle > 0)
+		disty = (ray_y - (float)mapy) * deltay;
+	else
+		disty = ((float)mapy + 1.0 - ray_y) * deltay;
+	while (!wall)
+	{
+		if (distx > disty)
+		{
+			side = 1;
+			disty = disty + deltay;
+			if (sin_angle > 0)
+				mapy--;
+			else
+				mapy++;
+		}
+		else
+		{
+			side = 0;
+			distx = distx + deltax;
+			if (cos_angle > 0)
+				mapx--;
+			else
+				mapx++;
+		}
+		if (all->map[mapy][mapx] == ' ' || all->map[mapy][mapx] == '1')
+			wall = 1;
+	}
+	if (side)
+		dist = (disty - deltay) * 64;
+	else
+		dist = (distx - deltax) * 64;
+	ray_x = player->x - (cos_angle * dist);
+	ray_y = player->y - (sin_angle * dist);
+	put_pixel(ray_x, ray_y, 0x0000FF, &all->fg);
+}
+
+void draw_one_ray(float angle, t_all *all, t_player *player)
 {
 	float ray_x;
 	float ray_y;
@@ -32,7 +85,8 @@ void    draw_rays(t_all *all, t_player *player)
 	while (i < NUM_RAYS)
 	{
 		angle = start_angle + ((float)i / NUM_RAYS) * fov;
-		draw_one_ray(angle, all, player);
+		//draw_one_ray(angle, all, player);
+		add_deltas(cos(angle), sin(angle), all, player);
 		i++;
 	}
 }

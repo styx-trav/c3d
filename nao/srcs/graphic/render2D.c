@@ -45,7 +45,7 @@ bool touch(float px, float py, t_all *all)
 void clear_image(t_all *all)
 {
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
-	init_map(all);
+	//init_map(all);
 	mlx_put_image_to_window(all->mlx, all->win, all->player.img.img, all->player.x, all->player.y);
 }
 
