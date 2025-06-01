@@ -1,11 +1,11 @@
 #include "liball.h"
-//#include <stdio.h>
+#include <stdio.h>
 
 void init_player(t_all *all, t_player *player)
 {
 	(void)all;
-	player->x = player->x * 64 + 32 - 5;
-	player->y = player->y * 64 + 32 - 5;
+	player->x = player->x + 0.5;//* 64 + 32 - 5;
+	player->y = player->y + 0.5;//* 64 + 32 - 5;
 	player->angle = PI / 2;
 
 	player->key_up = false;
@@ -23,6 +23,7 @@ int key_press(int keycode, t_all *all)
 	//printf("keycode = %d\n", keycode);
 	if (keycode == 65307)// esc
 	{
+		printf("places, places %d, %d\n", (int)all->player.y, (int)all->player.x);
 		mlx_loop_end(all->mlx);
 		return (0);
 	}
@@ -81,36 +82,44 @@ void move_player(t_all *all, t_player *player)
 	float x = player->x;
 	float y = player->y;
 
-	speed = 1;
+	speed = 0.02;
 	rotate_player(player);
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
-	if (player->key_up && all->map[(int)((player->y - speed) / 64)][(int)(player->x / 64)] != '1')
+	if (player->key_up)
+		//&& all->map[(int)((y - sin_angle * speed))][(int)(x - cos_angle * speed)] != '1'
+		//&& all->map[(int)((y - sin_angle * speed))][(int)(x - cos_angle * speed)] != ' ')
 	{
 		//player->y -= speed;
 		x -= cos_angle * speed;
 		y -= sin_angle * speed;
 		
 	}
-	if (player->key_down && all->map[(int)((player->y + speed) / 64)][(int)(player->x / 64)] != '1')
+	if (player->key_down)
+		//&& all->map[(int)((y + sin_angle * speed))][(int)(x + cos_angle * speed)] != '1'
+		//&& all->map[(int)((y + sin_angle * speed))][(int)(x + cos_angle * speed)] != ' ')
 	{
 		//player->y += speed;
 		x += cos_angle * speed;
 		y += sin_angle * speed;
 	}
-	if (player->key_left && all->map[(int)(player->y / 64)][(int)((player->x - speed) / 64)] != '1')
+	if (player->key_left)
+		//&& all->map[(int)((y + cos_angle * speed))][(int)(x - sin_angle * speed)] != '1'
+		//&& all->map[(int)((y + cos_angle * speed))][(int)(x - sin_angle * speed)] != ' ')
 	{
 		//player->x -= speed;
 		x -= sin_angle * speed;
 		y += cos_angle * speed;
 	}
-	if (player->key_right && all->map[(int)(player->y / 64)][(int)((player->x + speed) / 64)] != '1')
+	if (player->key_right)
+		//&& all->map[(int)((y - cos_angle * speed))][(int)(x + sin_angle * speed)] != '1'
+		//&& all->map[(int)((y - cos_angle * speed))][(int)(x + sin_angle * speed)] != ' ')
 	{
 		//player->x += speed;
 		x += sin_angle * speed;
 		y -= cos_angle * speed;
 	}
-	if (all->map[(int)y / 64][(int)x / 64] != '1' && all->map[(int)y / 64][(int)x / 64] != ' ')
+	if (all->map[(int)y][(int)x] != '1' && all->map[(int)y][(int)x] != ' ')
 	{
 		player->x = x;
 		player->y = y;
