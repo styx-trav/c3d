@@ -1,6 +1,9 @@
 #include "liball.h"
-static void add_deltas(float cos_angle, float sin_angle, t_all *all, t_player *player)
+
+static void add_deltas(float angle, t_all *all, t_player *player, int i)
 {
+	float cos_angle = cos(angle);
+	float sin_angle = sin(angle);
 	float ray_x = player->x / 64;
 	float ray_y = player->y / 64;
 	float deltax = fabs(1/cos_angle);
@@ -12,6 +15,9 @@ static void add_deltas(float cos_angle, float sin_angle, t_all *all, t_player *p
 	float dist = 0;
 	int mapx = (int) (ray_x);
 	int mapy = (int) (ray_y);
+	float height;
+	int start_y;
+	int end;
 
 	if (cos_angle > 0)
 		distx = (ray_x - (float)mapx) * deltax;
@@ -48,9 +54,19 @@ static void add_deltas(float cos_angle, float sin_angle, t_all *all, t_player *p
 		dist = (disty - deltay) * 64;
 	else
 		dist = (distx - deltax) * 64;
-	ray_x = player->x - (cos_angle * dist);
-	ray_y = player->y - (sin_angle * dist);
-	put_pixel(ray_x, ray_y, 0x0000FF, &all->fg);
+	// ray_x = player->x - (cos_angle * dist);
+	// ray_y = player->y - (sin_angle * dist);
+	// put_pixel(ray_x, ray_y, 0x0000FF, &all->fg);
+
+	dist *= cos(angle - player->angle);//fish-eye effect
+	height = (64 / dist) * (WIDTH / 2);
+	start_y = (HEIGHT - height) / 2;
+	end = start_y + height;
+	while (start_y < end)
+	{
+		put_pixel(i, start_y, 255, &all->fg);
+		start_y++;
+	}
 }
 
 void draw_one_ray(float angle, t_all *all, t_player *player)
@@ -85,8 +101,8 @@ void    draw_rays(t_all *all, t_player *player)
 	while (i < NUM_RAYS)
 	{
 		angle = start_angle + ((float)i / NUM_RAYS) * fov;
-		//draw_one_ray(angle, all, player);
-		add_deltas(cos(angle), sin(angle), all, player);
+		//draw_one_ray(angle, all, player, i);
+		add_deltas(angle, all, player, i);
 		i++;
 	}
 }
