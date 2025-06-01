@@ -46,7 +46,7 @@ void clear_image(t_all *all)
 {
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	//init_map(all);
-	mlx_put_image_to_window(all->mlx, all->win, all->player.img.img, all->player.x, all->player.y);
+	//mlx_put_image_to_window(all->mlx, all->win, all->player.img.img, all->player.x, all->player.y);
 }
 
 void put_pixel(int x, int y, int color, t_img *img)
