@@ -14,8 +14,9 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/init/init.c 				\
 		srcs/init/init_utils.c 			\
 		srcs/mapping/mapping.c			\
-		srcs/graphic/render2D.c			\
+		srcs/graphic/hooks.c			\
 		srcs/graphic/player.c			\
+		srcs/graphic/disp_utils.c			\
 		srcs/graphic/rays.c				\
 		srcs/graphic/draw.c				\
 		srcs/utils.c

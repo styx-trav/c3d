@@ -17,11 +17,11 @@ static int	get_player(t_maps *mapp, char **map)
 	return (0);
 }
 
-static void	size_map(t_maps *map, int i, int j)
+static void	size_map(t_maps *map, int i, int j, char **maps)
 {
-	if (map->map[i][j] == '!')
+	if (maps[i][j] == '!')
 		return ;
-	if (map->map[i][j] == '1')
+	if (maps[i][j] == '1')
 	{
 		if (map->mini == -1 || i < map->mini)
 			map->mini = i;
@@ -33,11 +33,11 @@ static void	size_map(t_maps *map, int i, int j)
 			map->maxi = i;
 		return ;
 	}
-	map->map[i][j] = '!';
-	size_map(map, i +1, j);
-	size_map(map, i -1, j);
-	size_map(map, i, j +1);
-	size_map(map, i, j -1);
+	maps[i][j] = '!';
+	size_map(map, i +1, j, maps);
+	size_map(map, i -1, j, maps);
+	size_map(map, i, j +1, maps);
+	size_map(map, i, j -1, maps);
 }
 
 static char	*inloop(char *map, int min, int max)
@@ -100,9 +100,8 @@ t_maps	*get_map(char **map)
 	mapp->minj = -1;
 	mapp->maxi = -1;
 	mapp->maxj = -1;
-	mapp->map = map;
 	mapp->dir = map[mapp->i][mapp->j];
-	size_map(mapp, mapp->i, mapp->j);
+	size_map(mapp, mapp->i, mapp->j, map);
 	mapp->map = reduce_map(map, mapp);
 	free_map(map);
 	if (!mapp->map)
