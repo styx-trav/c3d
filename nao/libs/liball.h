@@ -91,4 +91,7 @@ void clear_image(t_all *all);
 bool touch(float px, float py, t_all *all);
 void draw_rays(t_all *all, t_player *player);
 
+//from utils.c
+size_t	ft_strlen(const char *s);
+
 #endif

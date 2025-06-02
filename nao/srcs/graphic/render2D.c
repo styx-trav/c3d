@@ -20,26 +20,46 @@ void	init_map(t_all *all)
 		i++;
 	}
 }
+static bool collision_zone(t_all *all, float px, float py)
+{
+	float zone;
+	float dy;
+	float dx;
+	int check_x;
+	int check_y;
+
+	zone = 10.0f;
+	dy = -zone;
+	while (dy <= zone)
+	{
+		dx = -zone;
+		while (dx <= zone)
+		{
+			check_x = (int)((px + dx) / 64);
+			check_y = (int)((py + dy) / 64);
+			if (check_y < 0 || check_x < 0 || !all->map[check_y] || check_x >= (int)ft_strlen(all->map[check_y]) || all->map[check_y][check_x] == '\0')
+				return (true);
+			if (all->map[check_y][check_x] == '1' || all->map[check_y][check_x] == ' ')
+				return (true);
+			dx += zone;
+		}
+		dy += zone;
+	}
+	return (false);
+}
+
 bool touch(float px, float py, t_all *all)
 {
-	int x;
-	int y;
-	int i;
-	int j;
+	int x = (int)(px);
+	int y = (int)(py);
+	int mapx = x / 64;
+	int mapy = y / 64;
 
-	x = px / 64;
-	y = py / 64;
-	//printf("%d, %d\n", x, y);
-	i = 0;
-	while (all->map[i])
-		i++;
-	j = 0;
-	while (all->map[0][j])
-		j++;
-	if (x >= j - 1 || y >= i - 1
-		|| all->map[y][x] == '1' || all->map[y][x] == ' ')
+	if (mapy < 0 || mapx < 0 || !all->map[mapy] || mapx >= (int)ft_strlen(all->map[mapy]) || all->map[mapy][mapx] == '\0')
 		return (true);
-	return (false);
+	if (all->map[mapy][mapx] == '1' || all->map[mapy][mapx] == ' ')
+		return (true);
+	return (collision_zone(all, px, py));
 }
 
 void clear_image(t_all *all)

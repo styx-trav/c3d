@@ -16,7 +16,9 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/mapping/mapping.c			\
 		srcs/graphic/render2D.c			\
 		srcs/graphic/player.c			\
-		srcs/graphic/rays.c
+		srcs/graphic/rays.c				\
+		srcs/graphic/draw.c				\
+		srcs/utils.c
 
 OBJ = $(SRC:.c=.o)
 

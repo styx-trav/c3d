@@ -65,20 +65,6 @@ int	closer(int keycode, t_all *str)
 	return (0);
 }
 
-int draw_loop(t_all *all)
-{
-	t_player *player = &all->player;
-	
-	move_player(all, player);
-	mlx_destroy_image(all->mlx, all->fg.img);
-	all->fg.img = mlx_new_image(all->mlx, WIDTH, HEIGHT);
-	img_address(&all->fg);
-	clear_image(all);
-	draw_square(0, 0, 4, 0x00FF00, &(player->img));
-	draw_rays(all, player);
-	return (0);
-}
-
 void	start_loop(t_all *all)
 {
 	mlx_loop_hook(all->mlx, draw_loop, all);
