@@ -20,7 +20,7 @@ void	init_map(t_all *all)
 		i++;
 	}
 }
-static bool collision_zone(t_all *all, float px, float py)
+bool collision_zone(t_all *all, float px, float py)
 {
 	float zone;
 	float dy;
@@ -28,15 +28,15 @@ static bool collision_zone(t_all *all, float px, float py)
 	int check_x;
 	int check_y;
 
-	zone = 10.0f;
+	zone = 0.05f;
 	dy = -zone;
 	while (dy <= zone)
 	{
 		dx = -zone;
 		while (dx <= zone)
 		{
-			check_x = (int)((px + dx) / 64);
-			check_y = (int)((py + dy) / 64);
+			check_x = (int)((px + dx));// / 64);
+			check_y = (int)((py + dy));// / 64);
 			if (check_y < 0 || check_x < 0 || !all->map[check_y] || check_x >= (int)ft_strlen(all->map[check_y]) || all->map[check_y][check_x] == '\0')
 				return (true);
 			if (all->map[check_y][check_x] == '1' || all->map[check_y][check_x] == ' ')

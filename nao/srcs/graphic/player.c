@@ -1,5 +1,6 @@
 #include "liball.h"
 #include <stdio.h>
+bool collision_zone(t_all *all, float px, float py);
 
 void init_player(t_all *all, t_player *player)
 {
@@ -74,6 +75,7 @@ void rotate_player(t_player *player)
 	if (player->angle < 0)
 		player->angle = 2 * PI;
 }
+
 void move_player(t_all *all, t_player *player)
 {
 	float speed;
@@ -119,10 +121,12 @@ void move_player(t_all *all, t_player *player)
 		x += sin_angle * speed;
 		y -= cos_angle * speed;
 	}
-	if (all->map[(int)y][(int)x] != '1' && all->map[(int)y][(int)x] != ' ')
+	if (!collision_zone(all, x, y))
 	{
 		player->x = x;
 		player->y = y;
 	}
+	else
+		printf("collusion\n");
 	//clear_image(all);
 }
