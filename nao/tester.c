@@ -2,28 +2,6 @@
 #include "libmap.h"
 #include "liball.h"
 
-void	free_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map && map[i])
-	{
-		printf("%s\n", map[i]);
-		free(map[i]);
-		i++;
-	}
-	if (map)
-		free(map);
-}
-
-void	print_map(t_maps *map)
-{
-	printf("current map :: player at %d, %d, min %d, %d, max %d, %d\n", map->i, map->j, map->mini, map->minj, map->maxi, map->maxj);
-	free_map(map->map);
-	free(map);
-}
-
 void	free_all(t_all *all)
 {
 	if (all->map)
@@ -36,11 +14,9 @@ void	free_all(t_all *all)
 		mlx_destroy_image(all->mlx, all->west.img);
 	if (all->east.img)
 		mlx_destroy_image(all->mlx, all->east.img);
-	if (!all->player.img.img)
+	if (!all->fg.img)
 		printf("Error\ninit mlx\n");
 	else
-		mlx_destroy_image(all->mlx, all->player.img.img);
-	if (all->fg.img)
 		mlx_destroy_image(all->mlx, all->fg.img);
 	if (all->bg.img)
 		mlx_destroy_image(all->mlx, all->bg.img);
@@ -50,19 +26,6 @@ void	free_all(t_all *all)
 		mlx_destroy_display(all->mlx);
 	if (all->mlx)
 		free(all->mlx);
-}
-
-int	exitt(t_all *str)
-{
-	mlx_loop_end(str->mlx);
-	return (0);
-}
-
-int	closer(int keycode, t_all *str)
-{
-	if (keycode == 0xff1b)
-		mlx_loop_end(str->mlx);
-	return (0);
 }
 
 void	start_loop(t_all *all)

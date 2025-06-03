@@ -38,3 +38,9 @@ int	key_release(int keycode, t_all *all)
 		all->player.right_rotate = false;
 	return (0);
 }
+
+int	exitt(t_all *str)
+{
+	mlx_loop_end(str->mlx);
+	return (0);
+}

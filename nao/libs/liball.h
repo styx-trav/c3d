@@ -42,8 +42,6 @@ typedef struct s_player
 	bool key_right;
 	bool left_rotate;
 	bool right_rotate;
-
-	t_img img;
 }	t_player;
 
 // typedef struct s_mx
@@ -84,6 +82,7 @@ int	init(t_all *all, char *filename, int width, int height);
 //from hooks.c
 int	key_press(int keycode, t_all *all);
 int	key_release(int keycode, t_all *all);
+int	exitt(t_all *str);
 
 //from player.c
 void	init_player(t_all *all, t_player *player);
@@ -102,5 +101,6 @@ void draw_rays(t_all *all, t_player *player);
 
 //from utils.c
 size_t	ft_strlen(const char *s);
+void	free_map(char **map);
 
 #endif

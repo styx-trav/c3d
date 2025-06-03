@@ -58,7 +58,6 @@ static int	mlx_setup(t_all *all, int width, int height)
 	all->fg.height = height;
 	all->bg.width = width;
 	all->bg.height = height;
-	img_address(&all->player.img);
 	img_address(&all->fg);
 	img_address(&all->bg);
 	return (1);
