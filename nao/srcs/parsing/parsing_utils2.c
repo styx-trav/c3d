@@ -1,5 +1,15 @@
 #include "libparsing.h"
 
+/*printf("south texture :: %s\n", parse->south);
+printf("east texture :: %s\n", parse->east);
+printf("west texture :: %s\n", parse->west);
+printf("north texture :: %s\n", parse->north);
+if (parse->floor[0])
+printf("floor color : %d.%d.%d\n", parse->floor[1], parse->floor[2], parse->floor[3]);
+if (parse->ceiling[0])
+printf("ceiling color : %d.%d.%d\n", parse->ceiling[1], parse->ceiling[2], parse->ceiling[3]);
+*/
+
 t_pars	*free_parse(t_pars *parse, char *err_msg)
 {
 	if (parse->fd != -1)
@@ -10,29 +20,13 @@ t_pars	*free_parse(t_pars *parse, char *err_msg)
 		printf("%s\n", err_msg);
 	}
 	if (parse->south)
-	{
-		printf("south texture :: %s\n", parse->south);
 		free(parse->south);
-	}
 	if (parse->east)
-	{
-		printf("east texture :: %s\n", parse->east);
 		free(parse->east);
-	}
 	if (parse->west)
-	{
-		printf("west texture :: %s\n", parse->west);
 		free(parse->west);
-	}
 	if (parse->north)
-	{
-		printf("north texture :: %s\n", parse->north);
 		free(parse->north);
-	}
-	if (parse->floor[0])
-		printf("floor color : %d.%d.%d\n", parse->floor[1], parse->floor[2], parse->floor[3]);
-	if (parse->ceiling[0])
-		printf("ceiling color : %d.%d.%d\n", parse->ceiling[1], parse->ceiling[2], parse->ceiling[3]);
 	free(parse);
 	return (NULL);
 }

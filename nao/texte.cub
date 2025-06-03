@@ -2,14 +2,14 @@ NO ./textures/test.xpm
      
      SO ./textures/test.xpm      
 
-	F 150,0,158
+	F 150,    	0,   158
 		
 			
 EA			./textures/test.xpm 
 
 		WE                                            ./textures/test.xpm 
 		
-C 				80,0,200
+C 				80,	  0,    200
 
         1111111111111111111111111
         1000000000110000000000001

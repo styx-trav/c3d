@@ -77,3 +77,9 @@ void draw_one_ray(float angle, t_all *all, t_player *player)
 // ray_x = player->x - (cos_angle * dist);
 // ray_y = player->y - (sin_angle * dist);
 // put_pixel(ray_x, ray_y, 0x0000FF, &all->fg);
+
+all->player.img.img = mlx_new_image(all->mlx, 10, 10);
+if (!all->player.img.img)
+	return (0);
+all->player.img.width = 10;
+all->player.img.height = 10;

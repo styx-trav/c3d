@@ -6,11 +6,8 @@ static int	get_num(int fd, int i)
 	int		res;
 
 	a = reader(fd);
-	if (i == 1)
-	{
-		while (a && (a == ' ' || a == '\t'))
-			a = reader(fd);
-	}
+	while (a && (a == ' ' || a == '\t'))
+		a = reader(fd);
 	if (a > '9' || a < '0')
 		return (-1);
 	res = 0;
