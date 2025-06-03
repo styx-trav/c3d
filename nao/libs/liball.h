@@ -92,7 +92,7 @@ void	move_player(t_all *all, t_player *player);
 
 //from disp_utils.c
 void	put_pixel(int x, int y, int color, t_img *img);
-bool	collision_zone(t_all *all, float px, float py);
+int		collision_zone(t_all *all, float px, float py);
 
 //from draw.c
 int draw_loop(t_all *all);

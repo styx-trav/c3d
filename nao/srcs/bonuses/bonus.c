@@ -39,7 +39,7 @@ void draw_square(int x, int y, int size, int color, t_img *img)
 		put_pixel(x + i, y + size, color, img);
 }
 
-bool touch(float px, float py, t_all *all)
+int touch(float px, float py, t_all *all)
 {
 	int x = (int)(px);
 	int y = (int)(py);
@@ -47,9 +47,9 @@ bool touch(float px, float py, t_all *all)
 	int mapy = y / 64;
 
 	if (mapy < 0 || mapx < 0 || !all->map[mapy] || mapx >= (int)ft_strlen(all->map[mapy]) || all->map[mapy][mapx] == '\0')
-		return (true);
+		return (1);
 	if (all->map[mapy][mapx] == '1' || all->map[mapy][mapx] == ' ')
-		return (true);
+		return (1);
 	return (collision_zone(all, px, py));
 }
 

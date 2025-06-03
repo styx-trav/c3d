@@ -13,7 +13,7 @@ void	put_pixel(int x, int y, int color, t_img *img)
 	img->addr[index + 2] = (color >> 16) & 0xFF;
 }
 
-bool	is_wall(t_all *all, float x, float y)
+int	is_wall(t_all *all, float x, float y)
 {
 	int	check_x;
 	int	check_y;
@@ -25,11 +25,11 @@ bool	is_wall(t_all *all, float x, float y)
 		|| all->map[check_y][check_x] == '\0'
 		|| all->map[check_y][check_x] == '1'
 		|| all->map[check_y][check_x] == ' ')
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
-bool	collision_zone(t_all *all, float px, float py)
+int	collision_zone(t_all *all, float px, float py)
 {
 	float	zone;
 	float	dy;
@@ -43,10 +43,10 @@ bool	collision_zone(t_all *all, float px, float py)
 		while (dx <= zone)
 		{
 			if (is_wall(all, px + dx, py + dy))
-				return (true);
+				return (1);
 			dx += zone;
 		}
 		dy += zone;
 	}
-	return (false);
+	return (0);
 }

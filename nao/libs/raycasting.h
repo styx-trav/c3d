@@ -13,9 +13,11 @@ typedef struct s_ray
 	int		stepx;
 	int		stepy;
 	int		color;
+	t_img *tex;
 }	t_ray;
 
-//void    raycast(t_all *all);
-//void    draw_wall_column(t_all *all, int x, int height, t_img *texture);
+
+//from walls.c
+void set_wall_x(t_ray *rays, t_all *all, t_player *player, float angle);
 
 #endif

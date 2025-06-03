@@ -60,16 +60,20 @@ static void	set_color_walls(t_ray *rays, t_all *all)
 	{
 		rays->dist = rays->disty - rays->deltay;
 		if (rays->stepy < 0)
+			//rays->tex = &all->north;
 			rays->color = 0xFF0000; // nord = red
 		else
-			rays->color = 0x0000FF; // sud = blue
+			//rays->tex = &all->south;
+			rays->color = 0x0000FF; // south = blue
 	}
 	else
 	{
 		rays->dist = rays->distx - rays->deltax;
 		if (rays->stepx < 0)
+			//rays->tex = &all->west;
 			rays->color = 0x00FF00; // west = green
 		else
+			//rays->tex = &all->east;
 			rays->color = 0xFFFF00; // east = yellow
 	}
 }
@@ -86,6 +90,7 @@ static void	add_deltas(float angle, t_all *all, t_player *player, int i)
 	rays_set_up(&rays, angle, player);
 	set_color_walls(&rays, all);
 	rays.dist *= cos(angle - player->angle);
+	//set_wall_x(&rays, all, player, angle);
 	height = (1 / rays.dist) * (WIDTH / 2);
 	start_y = (HEIGHT - height) / 2;
 	end = start_y + height;
@@ -103,7 +108,7 @@ void	draw_rays(t_all *all, t_player *player)
 	float	angle;
 	int		i;
 
-	fov = PI / 2;
+	fov = PI / 2.5;
 	start_angle = player->angle - (fov / 2);
 	i = 0;
 	while (i < NUM_RAYS)

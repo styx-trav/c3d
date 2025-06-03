@@ -19,7 +19,8 @@ SRC =	srcs/parsing/parsing.c 			\
 		srcs/graphic/disp_utils.c			\
 		srcs/graphic/rays.c				\
 		srcs/graphic/draw.c				\
-		srcs/utils.c
+		srcs/utils.c					\
+		srcs/graphic/walls.c
 
 OBJ = $(SRC:.c=.o)
 
