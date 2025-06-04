@@ -7,9 +7,9 @@ int	get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all)
 	int		tex_x;
 
 	if (ray->tex == &all->north || ray->tex == &all->south)
-		wall_x = player->x + ray->dist * cos(angle);
+		wall_x = player->x + ray->dist * -cos(angle);
 	else
-		wall_x = player->y + ray->dist * sin(angle);
+		wall_x = player->y + ray->dist * -sin(angle);
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * ray->tex->width);//convert to pixel
 	return (tex_x);
