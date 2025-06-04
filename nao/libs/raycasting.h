@@ -1,6 +1,8 @@
 #ifndef RAYCASTING_H
 # define RAYCASTING_H
 
+# include "liball.h"
+
 typedef struct s_ray
 {
 	int		mapx;
@@ -16,8 +18,18 @@ typedef struct s_ray
 	t_img *tex;
 }	t_ray;
 
+typedef struct s_render
+{
+	t_ray	*ray;
+	int		x;
+	int		tex_x;
+	float	height;
+	t_all	*all;
+}	t_render;
 
 //from walls.c
-void set_wall_x(t_ray *rays, t_all *all, t_player *player, float angle);
+int		get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all);
+void	draw_column(t_render *r);
+void	set_dir_walls(t_ray *rays, t_all *all);
 
 #endif

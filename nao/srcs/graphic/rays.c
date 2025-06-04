@@ -26,79 +26,24 @@ static void	rays_set_up(t_ray *rays, float angle, t_player *player)
 	rays->mapy = mapy;
 }
 
-static int	wall_dist(t_ray *r, char **map)
-{
-	int	wall;
-	int	side;
-
-	wall = 0;
-	side = 0;
-	while (!wall)
-	{
-		if (r->distx > r->disty)
-		{
-			side = 1;
-			r->disty = r->disty + r->deltay;
-			r->mapy += r->stepy;
-		}
-		else
-		{
-			side = 0;
-			r->distx = r->distx + r->deltax;
-			r->mapx += r->stepx;
-		}
-		if (map[r->mapy][r->mapx] == ' ' || map[r->mapy][r->mapx] == '1')
-			wall = 1;
-	}
-	return (side);
-}
-
-static void	set_color_walls(t_ray *rays, t_all *all)
-{
-	rays->color = 0x00F000;
-	if (wall_dist(rays, all->map))
-	{
-		rays->dist = rays->disty - rays->deltay;
-		if (rays->stepy < 0)
-			//rays->tex = &all->north;
-			rays->color = 0xFF0000; // nord = red
-		else
-			//rays->tex = &all->south;
-			rays->color = 0x0000FF; // south = blue
-	}
-	else
-	{
-		rays->dist = rays->distx - rays->deltax;
-		if (rays->stepx < 0)
-			//rays->tex = &all->west;
-			rays->color = 0x00FF00; // west = green
-		else
-			//rays->tex = &all->east;
-			rays->color = 0xFFFF00; // east = yellow
-	}
-}
-
 static void	add_deltas(float angle, t_all *all, t_player *player, int i)
 {
-	t_ray	rays;
-	float	height;
-	int		start_y;
-	int		end;
+	t_ray		ray;
+	t_render	render;
 
-	rays.deltax = fabs(1 / cos(angle));
-	rays.deltay = fabs(1 / sin(angle));
-	rays_set_up(&rays, angle, player);
-	set_color_walls(&rays, all);
-	rays.dist *= cos(angle - player->angle);
-	//set_wall_x(&rays, all, player, angle);
-	height = (1 / rays.dist) * (WIDTH / 2);
-	start_y = (HEIGHT - height) / 2;
-	end = start_y + height;
-	while (start_y < end)
-	{
-		put_pixel(i, start_y, rays.color, &all->fg);
-		start_y++;
-	}
+	ray.deltax = fabs(1 / cos(angle));
+	ray.deltay = fabs(1 / sin(angle));
+	rays_set_up(&ray, angle, &all->player);
+	set_dir_walls(&ray, all);
+	ray.dist *= cos(angle - all->player.angle);
+
+	render.ray = &ray;
+	render.x = i;
+	render.height = (1 / ray.dist) * (WIDTH / 2);
+	render.tex_x = get_tex_x(&ray, player, angle, all);
+	render.all = all;
+
+	draw_column(&render);
 }
 
 void	draw_rays(t_all *all, t_player *player)
