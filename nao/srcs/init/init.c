@@ -2,27 +2,38 @@
 #include "libmap.h"
 #include "libparsing.h"
 
-static int	set_textures(t_all *all, t_pars *parse)
+static int	set_ns(t_all *all, t_pars *parse)
 {
-	all->north.img = mlx_xpm_file_to_image(all->mlx, parse->north, &(all->north.width), &(all->north.height));
+	all->north.img = mlx_xpm_file_to_image(all->mlx, parse->north,
+			&(all->north.width), &(all->north.height));
 	if (!all->north.img)
 	{
 		free_parse(parse, "north texture");
 		return (0);
 	}
-	all->south.img = mlx_xpm_file_to_image(all->mlx, parse->south, &(all->south.width), &(all->south.height));
+	all->south.img = mlx_xpm_file_to_image(all->mlx, parse->south,
+			&(all->south.width), &(all->south.height));
 	if (!all->south.img)
 	{
 		free_parse(parse, "south texture");
 		return (0);
 	}
-	all->east.img = mlx_xpm_file_to_image(all->mlx, parse->east, &(all->east.width), &(all->east.height));
+	return (1);
+}
+
+static int	set_textures(t_all *all, t_pars *parse)
+{
+	if (!set_ns(all, parse))
+		return (0);
+	all->east.img = mlx_xpm_file_to_image(all->mlx, parse->east,
+			&(all->east.width), &(all->east.height));
 	if (!all->east.img)
 	{
 		free_parse(parse, "east texture");
 		return (0);
 	}
-	all->west.img = mlx_xpm_file_to_image(all->mlx, parse->west, &(all->west.width), &(all->west.height));
+	all->west.img = mlx_xpm_file_to_image(all->mlx, parse->west,
+			&(all->west.width), &(all->west.height));
 	if (!all->west.img)
 	{
 		free_parse(parse, "west texture");

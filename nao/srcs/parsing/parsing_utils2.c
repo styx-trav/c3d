@@ -5,9 +5,11 @@ printf("east texture :: %s\n", parse->east);
 printf("west texture :: %s\n", parse->west);
 printf("north texture :: %s\n", parse->north);
 if (parse->floor[0])
-printf("floor color : %d.%d.%d\n", parse->floor[1], parse->floor[2], parse->floor[3]);
+printf("floor color : %d.%d.%d\n", parse->floor[1],
+parse->floor[2], parse->floor[3]);
 if (parse->ceiling[0])
-printf("ceiling color : %d.%d.%d\n", parse->ceiling[1], parse->ceiling[2], parse->ceiling[3]);
+printf("ceiling color : %d.%d.%d\n", parse->ceiling[1],
+parse->ceiling[2], parse->ceiling[3]);
 */
 
 t_pars	*free_parse(t_pars *parse, char *err_msg)
