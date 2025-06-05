@@ -11,7 +11,7 @@ int	get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all)
 	else
 		wall_x = player->y + ray->dist * -sin(angle);
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * ray->tex->width);//convert to pixel
+	tex_x = (int)(wall_x * ray->tex->width);
 	return (tex_x);
 }
 
@@ -22,21 +22,20 @@ void	draw_column(t_render *r)
 	int				end;
 	int				tex_y;
 	char			*px;
-	unsigned int	color;
 
 	y = (HEIGHT - r->height) / 2;
 	end = y + r->height;
 	while (y < end)
 	{
-		d = y * 256 - HEIGHT * 128 + r->height * 128;//calculate position in the wall column
-		tex_y = (d * r->ray->tex->height) / ((int)r->height * 256);//find corresponding pixel in the texture
+		d = y * 256 - HEIGHT * 128 + r->height * 128;
+		tex_y = (d * r->ray->tex->height) / ((int)r->height * 256);
 		if (tex_y < 0)
 			tex_y = 0;
 		else if (tex_y >= r->ray->tex->height)
 			tex_y = r->ray->tex->height - 1;
-		px = r->ray->tex->addr + (tex_y * r->ray->tex->size_line + r->tex_x * (r->ray->tex->bpp / 8));
-		color = *(unsigned int *)px;//read color from texture pixel
-		put_pixel(r->x, y, color, &r->all->fg);
+		px = r->ray->tex->addr + (tex_y * r->ray->tex->size_line
+				+ r->tex_x * (r->ray->tex->bpp / 8));
+		put_pixel(r->x, y, *(unsigned int *)px, &r->all->fg);
 		y++;
 	}
 }
@@ -76,19 +75,15 @@ void	set_dir_walls(t_ray *rays, t_all *all)
 		rays->dist = rays->disty - rays->deltay;
 		if (rays->stepy < 0)
 			rays->tex = &all->north;
-			//rays->color = 0xFF0000; // nord = red
 		else
 			rays->tex = &all->south;
-			//rays->color = 0x0000FF; // south = blue
 	}
 	else
 	{
 		rays->dist = rays->distx - rays->deltax;
 		if (rays->stepx < 0)
 			rays->tex = &all->west;
-			//rays->color = 0x00FF00; // west = green
 		else
 			rays->tex = &all->east;
-			//rays->color = 0xFFFF00; // east = yellow
 	}
 }

@@ -36,13 +36,11 @@ static void	add_deltas(float angle, t_all *all, t_player *player, int i)
 	rays_set_up(&ray, angle, &all->player);
 	set_dir_walls(&ray, all);
 	ray.dist *= cos(angle - all->player.angle);
-
 	render.ray = &ray;
 	render.x = i;
 	render.height = (1 / ray.dist) * (WIDTH / 2);
 	render.tex_x = get_tex_x(&ray, player, angle, all);
 	render.all = all;
-
 	draw_column(&render);
 }
 
