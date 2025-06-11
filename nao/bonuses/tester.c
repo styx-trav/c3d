@@ -40,11 +40,11 @@ void	start_loop(t_all *all)
 	mlx_loop(all->mlx);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 { 
 	t_all all;
 
-	if (!init(&all, "texte.cub", WIDTH, HEIGHT))
+	if (argc != 2 || !init(&all, argv[1], WIDTH, HEIGHT))
 	{
 		free_all(&all);
 		return (0);

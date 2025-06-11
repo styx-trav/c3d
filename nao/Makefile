@@ -1,7 +1,7 @@
 CC = cc -g
 INCLUDES = -I./manda/libs -I./manda/srcs
 FLAGS = -Wall -Werror -Wextra $(INCLUDES)
-NAME = try
+NAME = cub3D
 SRC =	manda/srcs/parsing/parsing.c 			\
 		tester.c 						\
 		manda/srcs/parsing/parsing_utils.c	\
