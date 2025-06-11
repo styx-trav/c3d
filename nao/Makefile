@@ -3,9 +3,9 @@ INCLUDES = -I./libs -I./srcs
 FLAGS = -Wall -Werror -Wextra $(INCLUDES)
 NAME = try
 SRC =	srcs/parsing/parsing.c 			\
+		tester.c 						\
 		srcs/parsing/parsing_utils.c	\
 		srcs/parsing/parsing_utils2.c	\
-		tester.c 						\
 		srcs/parsing/floor_ceiling.c 	\
 		srcs/mapping/map_parse.c 		\
 		srcs/mapping/map_parse_utils.c 		\
@@ -43,7 +43,7 @@ clean:
 
 fclean:
 	rm -f $(OBJ) $(NAME)
-	
+
 re: clean all
 
 .PHONY: all clean fclean re

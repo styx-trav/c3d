@@ -39,6 +39,27 @@ int	key_release(int keycode, t_all *all)
 	return (0);
 }
 
+int	mouse_move(int x, int y, t_all *all)
+{
+	int center_x;
+	float sensitivity;
+	int delta_x;
+	(void)y;
+
+	center_x = WIDTH / 2;
+	sensitivity = 0.001;
+	if (x == center_x)
+		return (0);
+	delta_x = x - center_x;
+	all->player.angle += delta_x * sensitivity;
+	if (all->player.angle > 2 * PI)
+		all->player.angle -= 2 * PI;
+	if (all->player.angle < 0)
+		all->player.angle += 2 * PI;
+	mlx_mouse_move(all->mlx, all->win, center_x, HEIGHT / 2);
+	return (0);
+}
+
 int	exitt(t_all *str)
 {
 	mlx_loop_end(str->mlx);

@@ -33,8 +33,10 @@ void	start_loop(t_all *all)
 	mlx_loop_hook(all->mlx, draw_loop, all);
 	mlx_hook(all->win, 2, 1L << 0, key_press, all);
 	mlx_hook(all->win, 3, 1L << 1, key_release, all);
+	mlx_hook(all->win, 6, 1L << 6, mouse_move, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
 
+	mlx_mouse_hide(all->mlx, all->win);
 	mlx_loop(all->mlx);
 }
 
