@@ -24,7 +24,9 @@ int	is_wall(t_all *all, float x, float y)
 		|| check_x >= (int)ft_strlen(all->map[check_y])
 		|| all->map[check_y][check_x] == '\0'
 		|| all->map[check_y][check_x] == '1'
-		|| all->map[check_y][check_x] == ' ')
+		|| all->map[check_y][check_x] == ' '
+		|| all->map[check_y][check_x] == '?')
+		//|| all->map[check_y][check_x] == '3')
 		return (1);
 	return (0);
 }

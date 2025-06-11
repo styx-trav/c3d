@@ -62,7 +62,7 @@ static int	wall_dist(t_ray *r, char **map)
 			r->mapx += r->stepx;
 		}
 		if (map[r->mapy][r->mapx] == ' ' || map[r->mapy][r->mapx] == '1'
-			|| map[r->mapy][r->mapx] == '?')
+			|| map[r->mapy][r->mapx] == '?')// || map[r->mapy][r->mapx] == '3')
 			wall = 1;
 	}
 	return (side);
