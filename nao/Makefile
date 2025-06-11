@@ -22,7 +22,7 @@ SRC =	manda/srcs/parsing/parsing.c 			\
 		manda/srcs/utils.c					\
 		manda/srcs/graphic/walls.c
 BSRC = 	bonuses/srcs/parsing/parsing.c 			\
-		tester.c 						\
+		bonuses/tester.c 						\
 		bonuses/srcs/parsing/parsing_utils.c	\
 		bonuses/srcs/parsing/parsing_utils2.c	\
 		bonuses/srcs/parsing/floor_ceiling.c 	\
