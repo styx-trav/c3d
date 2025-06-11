@@ -82,7 +82,6 @@ int	init(t_all *all, char *filename, int width, int height);
 //from hooks.c
 int	key_press(int keycode, t_all *all);
 int	key_release(int keycode, t_all *all);
-int	mouse_move(int x, int y, t_all *all);
 int	exitt(t_all *str);
 
 //from player.c

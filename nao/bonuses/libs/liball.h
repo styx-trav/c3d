@@ -44,6 +44,13 @@ typedef struct s_player
 	bool right_rotate;
 }	t_player;
 
+typedef struct s_sprite 
+{
+	void 			*img[3];
+	int 			frame_index;
+	unsigned long 	last_update;
+}	t_sprite;
+
 typedef struct s_door
 {
 	int	i;
