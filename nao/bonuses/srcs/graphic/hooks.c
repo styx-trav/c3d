@@ -1,4 +1,5 @@
 #include "liball.h"
+#include <stdio.h>
 
 int	key_press(int keycode, t_all *all)
 {
@@ -7,6 +8,8 @@ int	key_press(int keycode, t_all *all)
 		mlx_loop_end(all->mlx);
 		return (0);
 	}
+	if (keycode == 101)
+		open_door(1, 1, 1, all);
 	if (keycode == W)
 		all->player.key_up = true;
 	if (keycode == S)
@@ -57,6 +60,18 @@ int	mouse_move(int x, int y, t_all *all)
 	if (all->player.angle < 0)
 		all->player.angle = 2 * PI;
 	mlx_mouse_move(all->mlx, all->win, center_x, HEIGHT / 2);
+	return (0);
+}
+
+int	open_door(int button, int x, int y, t_all *all)
+{
+	(void)x;
+	(void)y;
+	if (button == 1 && all->door.seen)
+	{
+		all->map[all->door.i][all->door.j] = '!';
+		draw_loop(all);
+	}
 	return (0);
 }
 

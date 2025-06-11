@@ -63,6 +63,7 @@ int	draw_loop(t_all *all)
 	move_player(all, player);
 	switch_img(all);
 	draw_floor_ceiling(all);
+	all->door.seen = false;
 	draw_rays(all, player);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);

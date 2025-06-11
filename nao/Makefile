@@ -1,6 +1,6 @@
 CC = cc -g
 INCLUDES = -I./manda/libs -I./manda/srcs
-FLAGS = -Wall -Werror -Wextra $(INCLUDES)
+FLAGS = -Wall -Werror -Wextra
 NAME = cub3D
 SRC =	manda/srcs/parsing/parsing.c 			\
 		tester.c 						\
@@ -50,7 +50,7 @@ all: $(NAME) clean
 	$(CC) $(FLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
 
 $(NAME): $(SRC)
-	$(CC) $(FLAGS) $(SRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(FLAGS) $(INCLUDES) $(SRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
@@ -59,7 +59,7 @@ fclean:
 	rm -f $(OBJ) $(NAME)
 
 bonus:
-	$(CC) $(FLAGS) $(BSRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(FLAGS) -I./bonuses/srcs -I./bonuses/libs $(BSRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 re: clean all
 

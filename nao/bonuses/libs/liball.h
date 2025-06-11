@@ -44,11 +44,12 @@ typedef struct s_player
 	bool right_rotate;
 }	t_player;
 
-// typedef struct s_mx
-// {
-// 	double	x;
-// 	double	y;
-// }		t_mx;
+typedef struct s_door
+{
+	int	i;
+	int	j;
+	bool	seen;
+}	t_door;
 
 typedef struct s_all
 {
@@ -65,6 +66,7 @@ typedef struct s_all
 	char	**map;
 	t_player	player;
 	char	dir;//angle ?? double, matrix ? add later;
+	t_door	door;
 }			t_all;
 
 //from init/
@@ -83,6 +85,7 @@ int	init(t_all *all, char *filename, int width, int height);
 int	key_press(int keycode, t_all *all);
 int	key_release(int keycode, t_all *all);
 int	mouse_move(int x, int y, t_all *all);
+int	open_door(int button, int x, int y, t_all *all);
 int	exitt(t_all *str);
 
 //from player.c

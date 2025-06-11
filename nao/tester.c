@@ -44,7 +44,9 @@ int	main(int argc, char **argv)
 { 
 	t_all all;
 
-	if (argc != 2 || !init(&all, argv[1], WIDTH, HEIGHT))
+	if (argc != 2)
+		return (0);
+	if (!init(&all, argv[1], WIDTH, HEIGHT))
 	{
 		free_all(&all);
 		return (0);

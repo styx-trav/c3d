@@ -34,6 +34,7 @@ void	start_loop(t_all *all)
 	mlx_hook(all->win, 2, 1L << 0, key_press, all);
 	mlx_hook(all->win, 3, 1L << 1, key_release, all);
 	mlx_hook(all->win, 6, 1L << 6, mouse_move, all);
+	mlx_mouse_hook(all->win, open_door, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
 
 	mlx_mouse_hide(all->mlx, all->win);
@@ -44,7 +45,9 @@ int	main(int argc, char **argv)
 { 
 	t_all all;
 
-	if (argc != 2 || !init(&all, argv[1], WIDTH, HEIGHT))
+	if (argc != 2)
+		return (0);
+	if (!init(&all, argv[1], WIDTH, HEIGHT))
 	{
 		free_all(&all);
 		return (0);
