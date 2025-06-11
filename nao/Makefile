@@ -21,16 +21,30 @@ SRC =	manda/srcs/parsing/parsing.c 			\
 		manda/srcs/graphic/draw.c				\
 		manda/srcs/utils.c					\
 		manda/srcs/graphic/walls.c
-
+BSRC = 	bonuses/srcs/parsing/parsing.c 			\
+		tester.c 						\
+		bonuses/srcs/parsing/parsing_utils.c	\
+		bonuses/srcs/parsing/parsing_utils2.c	\
+		bonuses/srcs/parsing/floor_ceiling.c 	\
+		bonuses/srcs/mapping/map_parse.c 		\
+		bonuses/srcs/mapping/map_parse_utils.c 		\
+		bonuses/srcs/gnl/get_next_line.c 				\
+		bonuses/srcs/gnl/get_next_line_utils.c 			\
+		bonuses/srcs/init/init.c 				\
+		bonuses/srcs/init/init_utils.c 			\
+		bonuses/srcs/mapping/mapping.c			\
+		bonuses/srcs/graphic/hooks.c			\
+		bonuses/srcs/graphic/player.c			\
+		bonuses/srcs/graphic/disp_utils.c			\
+		bonuses/srcs/graphic/rays.c				\
+		bonuses/srcs/graphic/draw.c				\
+		bonuses/srcs/utils.c					\
+		bonuses/srcs/graphic/walls.c
 OBJ = $(SRC:.c=.o)
 
+B_OBJ = $(BSRC:.c=.o)
+
 all: $(NAME) clean
-
-#$(NAME): $(OBJ)
-#	$(CC) $(FLAGS) -o $(NAME) $(OBJ) 
-
-#%.o: %.c
-#	$(CC) $(FLAGS) -c $< -o $@
 
 %.o: %.c
 	$(CC) $(FLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
@@ -43,6 +57,9 @@ clean:
 
 fclean:
 	rm -f $(OBJ) $(NAME)
+
+bonus:
+	$(CC) $(FLAGS) $(BSRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 re: clean all
 
