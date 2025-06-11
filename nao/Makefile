@@ -1,26 +1,26 @@
 CC = cc -g
-INCLUDES = -I./libs -I./srcs
+INCLUDES = -I./manda/libs -I./manda/srcs
 FLAGS = -Wall -Werror -Wextra $(INCLUDES)
 NAME = try
-SRC =	srcs/parsing/parsing.c 			\
+SRC =	manda/srcs/parsing/parsing.c 			\
 		tester.c 						\
-		srcs/parsing/parsing_utils.c	\
-		srcs/parsing/parsing_utils2.c	\
-		srcs/parsing/floor_ceiling.c 	\
-		srcs/mapping/map_parse.c 		\
-		srcs/mapping/map_parse_utils.c 		\
-		srcs/gnl/get_next_line.c 				\
-		srcs/gnl/get_next_line_utils.c 			\
-		srcs/init/init.c 				\
-		srcs/init/init_utils.c 			\
-		srcs/mapping/mapping.c			\
-		srcs/graphic/hooks.c			\
-		srcs/graphic/player.c			\
-		srcs/graphic/disp_utils.c			\
-		srcs/graphic/rays.c				\
-		srcs/graphic/draw.c				\
-		srcs/utils.c					\
-		srcs/graphic/walls.c
+		manda/srcs/parsing/parsing_utils.c	\
+		manda/srcs/parsing/parsing_utils2.c	\
+		manda/srcs/parsing/floor_ceiling.c 	\
+		manda/srcs/mapping/map_parse.c 		\
+		manda/srcs/mapping/map_parse_utils.c 		\
+		manda/srcs/gnl/get_next_line.c 				\
+		manda/srcs/gnl/get_next_line_utils.c 			\
+		manda/srcs/init/init.c 				\
+		manda/srcs/init/init_utils.c 			\
+		manda/srcs/mapping/mapping.c			\
+		manda/srcs/graphic/hooks.c			\
+		manda/srcs/graphic/player.c			\
+		manda/srcs/graphic/disp_utils.c			\
+		manda/srcs/graphic/rays.c				\
+		manda/srcs/graphic/draw.c				\
+		manda/srcs/utils.c					\
+		manda/srcs/graphic/walls.c
 
 OBJ = $(SRC:.c=.o)
 

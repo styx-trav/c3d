@@ -42,8 +42,6 @@ typedef struct s_player
 	bool key_right;
 	bool left_rotate;
 	bool right_rotate;
-
-	t_img img;
 }	t_player;
 
 // typedef struct s_mx
@@ -84,26 +82,26 @@ int	init(t_all *all, char *filename, int width, int height);
 //from hooks.c
 int	key_press(int keycode, t_all *all);
 int	key_release(int keycode, t_all *all);
+int	mouse_move(int x, int y, t_all *all);
+int	exitt(t_all *str);
 
 //from player.c
 void	init_player(t_all *all, t_player *player);
 void	rotate_player(t_player *player);
 void	move_player(t_all *all, t_player *player);
 
-//from 
+//from disp_utils.c
+void	put_pixel(int x, int y, int color, t_img *img);
+int		collision_zone(t_all *all, float px, float py);
 
-void draw_square(int x, int y, int size, int color, t_img *img);
-void put_pixel(int x, int y, int color, t_img *img);
-void init_player(t_all *all, t_player *player);
-int key_press(int keycode, t_all *all);
-int key_release(int keycode, t_all *all);
-void move_player(t_all *all, t_player *player);
+//from draw.c
 int draw_loop(t_all *all);
-void clear_image(t_all *all);
-bool touch(float px, float py, t_all *all);
+
+//from rays.c
 void draw_rays(t_all *all, t_player *player);
 
 //from utils.c
 size_t	ft_strlen(const char *s);
+void	free_map(char **map);
 
 #endif
