@@ -53,9 +53,9 @@ int	mouse_move(int x, int y, t_all *all)
 	delta_x = x - center_x;
 	all->player.angle += delta_x * sensitivity;
 	if (all->player.angle > 2 * PI)
-		all->player.angle -= 2 * PI;
+		all->player.angle = 0;
 	if (all->player.angle < 0)
-		all->player.angle += 2 * PI;
+		all->player.angle = 2 * PI;
 	mlx_mouse_move(all->mlx, all->win, center_x, HEIGHT / 2);
 	return (0);
 }
