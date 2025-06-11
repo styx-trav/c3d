@@ -64,6 +64,14 @@ int	draw_loop(t_all *all)
 	switch_img(all);
 	draw_floor_ceiling(all);
 	all->door.seen = false;
+	if (all->map[(int)all->player.y][(int)all->player.x] == '*'
+		|| all->map[(int)(all->player.y - 0.2)][(int)all->player.x] == '*'
+		|| all->map[(int)all->player.y][(int)(all->player.x - 0.2)] == '*'
+		|| all->map[(int)all->player.y][(int)(all->player.x + 0.2)] == '*'
+		|| all->map[(int)(all->player.y + 0.2)][(int)all->player.x] == '*')
+		all->see_3 = false;
+	else
+		all->see_3 = true;
 	draw_rays(all, player);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tester.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 21:07:27 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 21:07:29 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libparsing.h"
 #include "libmap.h"
 #include "liball.h"
@@ -35,14 +47,13 @@ void	start_loop(t_all *all)
 	mlx_hook(all->win, 3, 1L << 1, key_release, all);
 	mlx_hook(all->win, 6, 1L << 6, mouse_move, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
-
 	mlx_mouse_hide(all->mlx, all->win);
 	mlx_loop(all->mlx);
 }
 
 int	main(int argc, char **argv)
-{ 
-	t_all all;
+{
+	t_all	all;
 
 	if (argc != 2)
 		return (0);

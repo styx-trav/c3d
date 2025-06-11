@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 19:24:35 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 19:24:37 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "liball.h"
 
 int	key_press(int keycode, t_all *all)
@@ -41,11 +53,11 @@ int	key_release(int keycode, t_all *all)
 
 int	mouse_move(int x, int y, t_all *all)
 {
-	int center_x;
-	float sensitivity;
-	int delta_x;
-	(void)y;
+	int		center_x;
+	float	sensitivity;
+	int		delta_x;
 
+	(void)y;
 	center_x = WIDTH / 2;
 	sensitivity = 0.001;
 	if (x == center_x)

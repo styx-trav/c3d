@@ -26,7 +26,6 @@ int	is_wall(t_all *all, float x, float y)
 		|| all->map[check_y][check_x] == '1'
 		|| all->map[check_y][check_x] == ' '
 		|| all->map[check_y][check_x] == '?')
-		//|| all->map[check_y][check_x] == '3')
 		return (1);
 	return (0);
 }

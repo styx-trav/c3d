@@ -67,6 +67,7 @@ typedef struct s_all
 	t_player	player;
 	char	dir;//angle ?? double, matrix ? add later;
 	t_door	door;
+	bool	see_3;
 }			t_all;
 
 //from init/

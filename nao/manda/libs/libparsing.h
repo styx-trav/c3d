@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libparsing.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 21:01:46 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 21:01:48 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBPARSING_H
 # define LIBPARSING_H
 
@@ -13,23 +25,23 @@ typedef struct s_pars
 	char	*north;
 	char	*east;
 	char	*west;
-	int	floor[4];
-	int	ceiling[4];
-	int	fd;
+	int		floor[4];
+	int		ceiling[4];
+	int		fd;
 }		t_pars;
 
 //from parsing/
 
 //from parsing_utils.c
 t_pars	*make_parse(void);
-int	len(char *str);
+int		len(char *str);
 char	*add_char(char *str, char c);
 char	reader(int fd);
 char	move_to_char(int fd, int i);
 
 //from parsing_utils2.c
 t_pars	*free_parse(t_pars *parse, char *err_msg);
-int	is_cub(char *str);
+int		is_cub(char *str);
 
 //from parsing.c
 t_pars	*parsing_pt1_el(char *file);
@@ -44,11 +56,11 @@ void	free_map(char **map);
 
 //from map_parse.c
 char	**make_map(t_pars *parse);
-int	last_map_check(char **map);
+int		last_map_check(char **map);
 
 //from map_parse_utils.c
-int	instr(char *str, char a);
-int	is_empty(char *line);
+int		instr(char *str, char a);
+int		is_empty(char *line);
 char	**map_errors(char a, char **map);
 
 #endif

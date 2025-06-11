@@ -1,16 +1,16 @@
-#include "libparsing.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 21:00:34 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 21:00:38 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*printf("south texture :: %s\n", parse->south);
-printf("east texture :: %s\n", parse->east);
-printf("west texture :: %s\n", parse->west);
-printf("north texture :: %s\n", parse->north);
-if (parse->floor[0])
-printf("floor color : %d.%d.%d\n", parse->floor[1],
-parse->floor[2], parse->floor[3]);
-if (parse->ceiling[0])
-printf("ceiling color : %d.%d.%d\n", parse->ceiling[1],
-parse->ceiling[2], parse->ceiling[3]);
-*/
+#include "libparsing.h"
 
 t_pars	*free_parse(t_pars *parse, char *err_msg)
 {

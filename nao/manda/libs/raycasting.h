@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 21:02:01 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 21:02:02 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYCASTING_H
 # define RAYCASTING_H
 
@@ -15,7 +27,7 @@ typedef struct s_ray
 	int		stepx;
 	int		stepy;
 	int		color;
-	t_img *tex;
+	t_img	*tex;
 }	t_ray;
 
 typedef struct s_render

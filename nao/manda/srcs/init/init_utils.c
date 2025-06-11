@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 20:58:34 by naorakot          #+#    #+#             */
+/*   Updated: 2025/06/11 20:58:36 by naorakot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "liball.h"
 
 int	calc_color(int col[4])
@@ -13,7 +25,8 @@ int	calc_color(int col[4])
 
 void	img_address(t_img *img)
 {
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->size_line, &img->endian);
+	img->addr = mlx_get_data_addr(img->img,
+			&img->bpp, &img->size_line, &img->endian);
 }
 
 void	start_all(t_all *all)

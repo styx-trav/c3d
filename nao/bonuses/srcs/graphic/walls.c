@@ -40,7 +40,7 @@ void	draw_column(t_render *r)
 	}
 }
 
-static int	wall_dist(t_ray *r, char **map)
+static int	wall_dist(t_ray *r, char **map, bool see)
 {
 	int	wall;
 	int	side;
@@ -62,7 +62,8 @@ static int	wall_dist(t_ray *r, char **map)
 			r->mapx += r->stepx;
 		}
 		if (map[r->mapy][r->mapx] == ' ' || map[r->mapy][r->mapx] == '1'
-			|| map[r->mapy][r->mapx] == '?')// || map[r->mapy][r->mapx] == '3')
+			|| map[r->mapy][r->mapx] == '?'
+			|| (see && map[r->mapy][r->mapx] == '*'))
 			wall = 1;
 	}
 	return (side);
@@ -71,7 +72,7 @@ static int	wall_dist(t_ray *r, char **map)
 void	set_dir_walls(t_ray *rays, t_all *all)
 {
 	rays->color = 0x00F000;
-	if (wall_dist(rays, all->map))
+	if (wall_dist(rays, all->map, all->see_3))
 	{
 		rays->dist = rays->disty - rays->deltay;
 		if (rays->stepy < 0)
