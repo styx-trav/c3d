@@ -28,3 +28,33 @@ void	start_all(t_all *all)
 	all->west.img = NULL;
 	all->map = NULL;
 }
+
+unsigned long get_current_time_ms(void)
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000UL + tv.tv_usec / 1000UL);
+}
+
+#include <stdio.h>
+
+int load_sprite_frames(t_sprite *sprite, void *mlx)
+{
+	int w;
+	int h;
+	int i = 0;
+
+	sprite->frame_index = 0;
+	sprite->last_update = get_current_time_ms();
+	sprite->img[0] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski_eyesclosed.xpm", &w, &h);
+	sprite->img[1] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski.xpm", &w, &h);
+	sprite->img[2] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski_mouseopen.xpm", &w, &h);
+	while (i < SPRITE_FRAMES)
+	{
+		if (!sprite->img[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}

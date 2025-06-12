@@ -11,13 +11,14 @@
 # define LEFT 65361
 # define RIGHT 65363
 # define NUM_RAYS WIDTH
-
 # define  PI 3.14159265359
+# define SPRITE_FRAMES 3
 
 # include <stdlib.h>
 # include <stdbool.h>
 # include <mlx.h>
 # include <math.h>
+# include <sys/time.h>
 
 typedef struct s_img
 {
@@ -46,9 +47,11 @@ typedef struct s_player
 
 typedef struct s_sprite 
 {
-	void 			*img[3];
+	void 			*img[SPRITE_FRAMES];
 	int 			frame_index;
 	unsigned long 	last_update;
+	int				x;
+	int				y;
 }	t_sprite;
 
 typedef struct s_door
@@ -72,6 +75,7 @@ typedef struct s_all
 	int		ceiling;
 	char	**map;
 	t_player	player;
+	t_sprite 	sprite;
 	char	dir;//angle ?? double, matrix ? add later;
 	t_door	door;
 }			t_all;
@@ -82,6 +86,8 @@ typedef struct s_all
 int	calc_color(int col[4]);
 void	img_address(t_img *img);
 void	start_all(t_all *all);
+int load_sprite_frames(t_sprite *sprite, void *mlx);
+unsigned long get_current_time_ms(void);
 
 //from init.c
 int	init(t_all *all, char *filename, int width, int height);
