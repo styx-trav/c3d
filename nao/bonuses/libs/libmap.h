@@ -15,7 +15,13 @@ typedef struct s_maps
 	char	**map;
 }		t_maps;
 
+//from mapping/map_add.c
+char	**expand_map(char **map);
+
 //from mapping/mapping.c
 t_maps	*get_map(char **map);
+
+//from utils.c
+size_t	ft_strlen(const char *s);
 
 #endif

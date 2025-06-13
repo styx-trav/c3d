@@ -109,6 +109,7 @@ t_maps	*get_map(char **map)
 	size_map(mapp, mapp->i, mapp->j, map);
 	mapp->map = reduce_map(map, mapp);
 	free_map(map);
+	//mapp->map = expand_map(mapp->map);
 	if (!mapp->map)
 	{
 		perror("map conversion malloc");

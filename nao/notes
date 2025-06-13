@@ -1,3 +1,19 @@
+//bonuses, sprites
+distance between x, y player and xs, ys sprite be sqrt((xs-x)^2 + (ys-y)^2)
+	correct and usable
+use that distance for sprite size
+angle from x, y player and xs, ys sprite be ::
+	vector player->sprite(xs-x, ys-y)
+	player->angle already in store
+	vector angle apparently atan(vectory / vectorx)
+	"added" to player angle (?)
+		==>approved, vec angle + player angle, to adjust for 2PI->0 overflow
+
+then from there ::	use the angle for the horizontal middle placement (based on fov [PI/2.5] and screen size [WIDTH])
+				:: if outside of fov, not visible;
+			use the distance for the size of it
+				:: (1 / ray.dist) * (WIDTH / 2) type beat
+
 
 //current events
 

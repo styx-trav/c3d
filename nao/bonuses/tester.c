@@ -40,6 +40,17 @@ void	start_loop(t_all *all)
 	mlx_mouse_hide(all->mlx, all->win);
 	mlx_loop(all->mlx);
 }
+/*#include <stdio.h>
+void	print_map(char **map)
+{
+	int	i = 0;
+
+	while (map && map[i])
+	{
+		printf("%s\n", map[i]);
+		i++;
+	}
+}*/
 
 int	main(int argc, char **argv)
 { 
@@ -52,6 +63,7 @@ int	main(int argc, char **argv)
 		free_all(&all);
 		return (0);
 	}
+	//print_map(all.map);
 	init_player(&all, &all.player);
 	start_loop(&all);
 	free_all(&all);
