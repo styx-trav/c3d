@@ -86,7 +86,6 @@ typedef struct s_all
 int	calc_color(int col[4]);
 void	img_address(t_img *img);
 void	start_all(t_all *all);
-int load_sprite_frames(t_sprite *sprite, void *mlx);
 unsigned long get_current_time_ms(void);
 
 //from init.c
@@ -115,6 +114,12 @@ int draw_loop(t_all *all);
 
 //from rays.c
 void draw_rays(t_all *all, t_player *player);
+
+//from sprite.c
+void	get_sprite(t_all *all);
+int load_sprite_frames(t_sprite *sprite, void *mlx);
+void update_sprite(t_sprite *sprite);
+void	draw_sprite(t_all *all);
 
 //from utils.c
 size_t	ft_strlen(const char *s);

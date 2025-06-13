@@ -55,27 +55,20 @@ static void	switch_img(t_all *all)
 	bg->img = tmp_ptr;
 }
 
-static void update_sprite(t_sprite *sprite)
-{
-    unsigned long now = get_current_time_ms();
-    if (now - sprite->last_update > 100) {
-        sprite->frame_index = (sprite->frame_index + 1) % SPRITE_FRAMES;
-        sprite->last_update = now;
-    }
-}
-
 int	draw_loop(t_all *all)
 {
 	t_player	*player;
+	t_sprite	*sprite;
 
 	player = &all->player;
+	sprite = &all->sprite;
 	move_player(all, player);
 	switch_img(all);
 	draw_floor_ceiling(all);
 	all->door.seen = false;
 	update_sprite(&all->sprite);
-	mlx_put_image_to_window(all->mlx, all->win, all->sprite.img[all->sprite.frame_index], 0, 0);
 	draw_rays(all, player);
+	draw_sprite(all);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);
 }
