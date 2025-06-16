@@ -90,6 +90,7 @@ int	init(t_all *all, char *filename, int width, int height)
 	all->floor = calc_color(parse->floor);
 	all->ceiling = calc_color(parse->ceiling);
 	map = get_map(make_map(parse));
+	
 	free_parse(parse, NULL);
 	if (!map)
 		return (0);

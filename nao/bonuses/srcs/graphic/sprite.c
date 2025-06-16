@@ -53,13 +53,14 @@ void update_sprite(t_sprite *sprite)
 	}
 }
 
-void	draw_sprite(t_all *all)
-{
-	int	screen_x;
-	int	screen_y;
+// void	draw_sprite(t_all *all)
+// {
+// 	int	screen_x;
+// 	int	screen_y;
 
-	screen_x = all->sprite.x * 10;
-	screen_y = all->sprite.y * 10;
-	mlx_put_image_to_window(all->mlx, all->win,
-		all->sprite.img[all->sprite.frame_index], screen_x, screen_y);
-}
+// 	screen_x = all->sprite.x * 10;
+// 	screen_y = all->sprite.y * 10;
+// 	mlx_put_image_to_window(all->mlx, all->win,
+// 		all->sprite.img[all->sprite.frame_index], screen_x, screen_y);
+// }
+

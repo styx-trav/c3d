@@ -58,10 +58,8 @@ static void	switch_img(t_all *all)
 int	draw_loop(t_all *all)
 {
 	t_player	*player;
-	t_sprite	*sprite;
 
 	player = &all->player;
-	sprite = &all->sprite;
 	move_player(all, player);
 	switch_img(all);
 	draw_floor_ceiling(all);
