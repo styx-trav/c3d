@@ -18,6 +18,12 @@ void	init_player(t_all *all, t_player *player)
 	player->x = player->x + 0.5;
 	player->y = player->y + 0.5;
 	player->angle = PI / 2;
+	if (all->dir == 'E')
+		player->angle = PI;
+	else if (all->dir == 'W')
+		player->angle = 0;
+	else if (all->dir == 'S')
+		player->angle = 3 * PI / 2;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_left = false;
