@@ -51,7 +51,7 @@ static int	check_map(char **map, int i, int j, int player)
 	char	a;
 
 	a = map[i][j];
-	if (!instr("1230NWES \n", a))
+	if (!instr("120NWESM \n", a))
 	{
 		printf("forbidden character in map\n");
 		return (-1);

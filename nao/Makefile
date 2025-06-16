@@ -40,7 +40,9 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/graphic/rays.c				\
 		bonuses/srcs/graphic/draw.c				\
 		bonuses/srcs/utils.c					\
-		bonuses/srcs/graphic/walls.c
+		bonuses/srcs/graphic/walls.c			\
+		bonuses/srcs/graphic/sprite.c
+		
 OBJ = $(SRC:.c=.o)
 
 B_OBJ = $(BSRC:.c=.o)

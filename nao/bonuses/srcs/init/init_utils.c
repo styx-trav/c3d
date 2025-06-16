@@ -28,3 +28,11 @@ void	start_all(t_all *all)
 	all->west.img = NULL;
 	all->map = NULL;
 }
+
+unsigned long get_current_time_ms(void)
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000UL + tv.tv_usec / 1000UL);
+}

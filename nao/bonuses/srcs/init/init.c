@@ -90,6 +90,7 @@ int	init(t_all *all, char *filename, int width, int height)
 	all->floor = calc_color(parse->floor);
 	all->ceiling = calc_color(parse->ceiling);
 	map = get_map(make_map(parse));
+	
 	free_parse(parse, NULL);
 	if (!map)
 		return (0);
@@ -97,6 +98,9 @@ int	init(t_all *all, char *filename, int width, int height)
 	all->player.x = (double)map->j;
 	all->dir = map->dir;
 	all->map = map->map;
+	get_sprite(all);
 	free(map);
+	if (!load_sprite_frames(&all->sprite, all->mlx))
+		return (0);
 	return (1);
 }

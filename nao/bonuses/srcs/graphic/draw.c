@@ -72,7 +72,9 @@ int	draw_loop(t_all *all)
 		all->see_3 = false;
 	else
 		all->see_3 = true;
+	update_sprite(&all->sprite);
 	draw_rays(all, player);
+	draw_sprite(all);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);
 }
