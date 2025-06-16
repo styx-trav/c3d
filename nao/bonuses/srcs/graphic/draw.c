@@ -55,6 +55,45 @@ static void	switch_img(t_all *all)
 	bg->img = tmp_ptr;
 }
 
+//? => angle in fov ===> (angle - (PI/2 - fov/2)) / (fov/width);
+void  draw_square(double dist, double angle, t_all *all)
+{
+	int size = (int)(80.0 / dist); //had to choose a size for it
+	float fov = PI / 2.5;
+	double res = (angle - (PI/2-fov/2)) / (fov/WIDTH);//basic calculation for the angle range on screen
+	int x = WIDTH/2 + (WIDTH/2 - (int)res); //mirroring so it's not inverted
+	int y = HEIGHT/2;//static height for now
+	int i = y - size/2;
+	int j;
+	while (i < y + size/2)
+	{
+		j = x - size/2;
+		while (j < x + size/2)
+		{
+			if (i >0 && j >0 && i <HEIGHT && j <WIDTH)
+				put_pixel(j, i, 0x00FF0000, &all->fg);
+			j++;
+		}
+		i++;
+	}
+}
+//not sure where the problems are coming from on the moving front :: visibly there's an angle issue to it ?
+//maybe the fov inclusion, but movement makes it bug out
+//definitely the fov inclusion, maybe the angle add ?
+void  draw_sprite_light(t_all *all, t_player *player)
+{
+	double xs = 26.5;
+	double ys = 11.5;
+	double vectorx = xs - player->x;
+	double vectory = ys - player->y;
+	double angle = atan(vectory / vectorx) + player->angle;
+	double dist = sqrt((vectorx * vectorx) + (vectory * vectory));
+	while  (angle >= 2 * PI)
+		angle = angle - (2 * PI);
+	if (angle > (PI / 2) - (PI / 5) && angle < (PI / 2) + (PI / 5))
+		draw_square(dist, angle, all);
+}
+
 int	draw_loop(t_all *all)
 {
 	t_player	*player;
@@ -74,6 +113,8 @@ int	draw_loop(t_all *all)
 		all->see_3 = true;
 	update_sprite(&all->sprite);
 	draw_rays(all, player);
+	//nao new stuff
+	//draw_sprite_light(all, player);
 	draw_sprite(all);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);
