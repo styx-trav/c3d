@@ -45,14 +45,14 @@ int load_sprite_frames(t_sprite *sprite, void *mlx)
 	{
 		sprite->img[i].img = mlx_xpm_file_to_image(mlx, paths[i], &w, &h);
 		if (!sprite->img[i].img)
-			return 0;
+			return (0);
 		sprite->img[i].addr = mlx_get_data_addr(sprite->img[i].img, &sprite->img[i].bpp,
 				&sprite->img[i].size_line, &sprite->img[i].endian);
 		sprite->img[i].width = w;
 		sprite->img[i].height = h;
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 
