@@ -47,11 +47,11 @@ typedef struct s_player
 
 typedef struct s_sprite 
 {
-	void 			*img[SPRITE_FRAMES];
+	t_img img[SPRITE_FRAMES];
 	int 			frame_index;
 	unsigned long 	last_update;
-	int				x;
-	int				y;
+	float				x;
+	float				y;
 }	t_sprite;
 
 typedef struct s_door
@@ -117,10 +117,12 @@ int draw_loop(t_all *all);
 void draw_rays(t_all *all, t_player *player);
 
 //from sprite.c
-void	get_sprite(t_all *all);
+int get_sprite(t_all *all);
 int load_sprite_frames(t_sprite *sprite, void *mlx);
 void update_sprite(t_sprite *sprite);
-void	draw_sprite(t_all *all);
+
+//from draw_sprite.c
+void	draw_all_sprites(t_all *all, t_player *player);
 
 //from utils.c
 size_t	ft_strlen(const char *s);
