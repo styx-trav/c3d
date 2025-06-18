@@ -98,9 +98,10 @@ int	init(t_all *all, char *filename, int width, int height)
 	all->player.x = (double)map->j;
 	all->dir = map->dir;
 	all->map = map->map;
-	get_sprite(all);
-	free(map);
 	if (!load_sprite_frames(&all->sprite, all->mlx))
 		return (0);
+	if (!get_sprite(all))
+		return (0);
+	free(map);
 	return (1);
 }

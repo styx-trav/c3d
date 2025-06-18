@@ -37,6 +37,8 @@ static void	size_map(t_maps *map, int i, int j, char **maps)
 		maps[i][j] = '?';
 	else if (maps[i][j] == '3')
 		maps[i][j] = '*';
+	else if (maps[i][j] == 'M')
+		return ;
 	else
 		maps[i][j] = '!';
 	size_map(map, i +1, j, maps);

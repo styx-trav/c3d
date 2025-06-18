@@ -1,66 +1,91 @@
 #include "liball.h"
+#include <stdio.h>
 
-void	get_sprite(t_all *all)
+int	get_sprite(t_all *all)
 {
-	int i = 0;
+	int	i;
+	int	j;
+
+	i = 0;
 	while (all->map[i])
 	{
-		int j = 0;
+		j = 0;
 		while (all->map[i][j])
 		{
 			if (all->map[i][j] == 'M')
 			{
 				all->sprite.x = j + 0.5;
 				all->sprite.y = i + 0.5;
-				return;
+				printf("FOUND SPRITE: %f %f\n", all->sprite.x, all->sprite.y);
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
-
-int load_sprite_frames(t_sprite *sprite, void *mlx)
+int	load_sprite_frames(t_sprite *sprite, void *mlx)
 {
-	int w;
-	int h;
-	int i = 0;
+	int		w;
+	int		h;
+	int		i;
+	char	*paths[SPRITE_FRAMES];
 
+	paths[0] = "bonuses/tex_sprites/shrek_wazowski_eyesclosed.xpm";
+	paths[1] = "bonuses/tex_sprites/shrek_wazowski.xpm";
+	paths[2] = "bonuses/tex_sprites/shrek_wazowski_mouseopen.xpm";
+	i = 0;
 	sprite->frame_index = 0;
 	sprite->last_update = get_current_time_ms();
-	sprite->img[0] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski_eyesclosed.xpm", &w, &h);
-	sprite->img[1] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski.xpm", &w, &h);
-	sprite->img[2] = mlx_xpm_file_to_image(mlx, "bonuses/tex_sprites/shrek_wazowski_mouseopen.xpm", &w, &h);
 	while (i < SPRITE_FRAMES)
 	{
-		if (!sprite->img[i])
+		sprite->img[i].img = mlx_xpm_file_to_image(mlx, paths[i], &w, &h);
+		if (!sprite->img[i].img)
 			return (0);
+		sprite->img[i].addr = mlx_get_data_addr(sprite->img[i].img,
+				&sprite->img[i].bpp, &sprite->img[i].size_line,
+				&sprite->img[i].endian);
+		sprite->img[i].width = w;
+		sprite->img[i].height = h;
 		i++;
 	}
 	return (1);
 }
 
-void update_sprite(t_sprite *sprite)
+void	update_sprite(t_sprite *sprite)
 {
-	unsigned long now;
+	unsigned long	now;
 
 	now = get_current_time_ms();
-	if (now - sprite->last_update > 100) 
+	if (now - sprite->last_update > 100)
 	{
 		sprite->frame_index = (sprite->frame_index + 1) % SPRITE_FRAMES;
 		sprite->last_update = now;
 	}
 }
 
-// void	draw_sprite(t_all *all)
-// {
-// 	int	screen_x;
-// 	int	screen_y;
+int	sprite_is_behind_wall(t_all *all, t_player *player, t_sprite *sprite)
+{
+	double	step_x;
+	double	step_y;
+	double	t;
+	int		map_x;
+	int		map_y;
 
-// 	screen_x = all->sprite.x * 10;
-// 	screen_y = all->sprite.y * 10;
-// 	mlx_put_image_to_window(all->mlx, all->win,
-// 		all->sprite.img[all->sprite.frame_index], screen_x, screen_y);
-// }
-
+	step_x = (sprite->x - player->x) / sprite->dist;
+	step_y = (sprite->y - player->y) / sprite->dist;
+	t = 0;
+	while (t < sprite->dist)
+	{
+		map_x = (int)(player->x + step_x * t);
+		map_y = (int)(player->y + step_y * t);
+		if (map_y >= 0 && all->map[map_y]
+			&& map_x >= 0 && map_x < (int)ft_strlen(all->map[map_y])
+			&& (all->map[map_y][map_x] == '1' || all->map[map_y][map_x] == '?'))
+			return (1);
+		t += 0.05;
+	}
+	return (0);
+}

@@ -1,5 +1,4 @@
 #include "liball.h"
-#include <stdio.h>
 
 int	key_press(int keycode, t_all *all)
 {

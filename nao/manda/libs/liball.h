@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liball.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 21:01:29 by naorakot          #+#    #+#             */
-/*   Updated: 2025/06/11 21:01:31 by naorakot         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:22:04 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,10 @@ int		init(t_all *all, char *filename, int width, int height);
 //from graphic
 
 //from hooks.c
-<<<<<<< HEAD
 int		key_press(int keycode, t_all *all);
 int		key_release(int keycode, t_all *all);
 int		mouse_move(int x, int y, t_all *all);
 int		exitt(t_all *str);
-=======
-int	key_press(int keycode, t_all *all);
-int	key_release(int keycode, t_all *all);
-int	exitt(t_all *str);
->>>>>>> sprite
 
 //from player.c
 void	init_player(t_all *all, t_player *player);
