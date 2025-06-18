@@ -1,5 +1,15 @@
 #include "libparsing.h"
 
+int	check_door(char **map, int i, int j)
+{
+	if (i && j && map[i +1][j] == '1' && map[i -1][j] == '1')
+		return (0);
+	if (i && j && map[i][j +1] == '1' && map[i][j -1] == '1')
+		return (0);
+	printf("Error\ndoor is not encased in a wall\n");
+	return (1);
+}
+
 int	instr(char *str, char a)
 {
 	int	i;

@@ -46,6 +46,11 @@ static int	at_wall(char **map, int i, int j)
 	int	res;
 
 	res = 0;
+	if (map[i][j] == '\n' && map[i][j +1] == '\n')
+	{
+		printf("Error\nempty line in map\n");
+		return (1);
+	}
 	if (i == 0 || j == 0)
 		res = 1;
 	else if (!map[i + 1] || map[i][j + 1] == '\n')

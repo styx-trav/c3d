@@ -74,6 +74,7 @@ typedef struct s_all
 	t_img	east;
 	t_img	south;
 	t_img	west;
+	t_img	doors;
 	int		floor;
 	int		ceiling;
 	char	**map;

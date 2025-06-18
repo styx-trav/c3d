@@ -50,5 +50,6 @@ int	last_map_check(char **map);
 int	instr(char *str, char a);
 int	is_empty(char *line);
 char	**map_errors(char a, char **map);
+int	check_door(char **map, int i, int j);
 
 #endif

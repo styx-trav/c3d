@@ -65,27 +65,38 @@ static int	wall_dist(t_ray *r, char **map, bool see)
 			|| map[r->mapy][r->mapx] == '?'
 			|| (see && map[r->mapy][r->mapx] == '*'))
 			wall = 1;
+		if (map[r->mapy][r->mapx] == '?')
+			side += 2;
 	}
 	return (side);
 }
 
 void	set_dir_walls(t_ray *rays, t_all *all)
 {
+	int res;
+
 	rays->color = 0x00F000;
-	if (wall_dist(rays, all->map, all->see_3))
+	rays->tex = NULL;
+	res = wall_dist(rays, all->map, all->see_3);
+	if (res > 1)
+	{
+		rays->tex = &all->doors;
+		res -= 2;
+	}
+	if (res)
 	{
 		rays->dist = rays->disty - rays->deltay;
-		if (rays->stepy < 0)
+		if (!rays->tex && rays->stepy < 0)
 			rays->tex = &all->north;
-		else
+		else if (!rays->tex)
 			rays->tex = &all->south;
 	}
 	else
 	{
 		rays->dist = rays->distx - rays->deltax;
-		if (rays->stepx < 0)
+		if (!rays->tex && rays->stepx < 0)
 			rays->tex = &all->west;
-		else
+		else if (!rays->tex)
 			rays->tex = &all->east;
 	}
 }

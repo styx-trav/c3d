@@ -4,6 +4,13 @@
 
 static int	set_ns(t_all *all, t_pars *parse)
 {
+	all->doors.img = mlx_xpm_file_to_image(all->mlx, "./textures/tex.xpm",
+			&(all->doors.width), &(all->doors.height));
+	if (!all->doors.img)
+	{
+		free_parse(parse, "doors texture");
+		return (0);
+	}
 	all->north.img = mlx_xpm_file_to_image(all->mlx, parse->north,
 			&(all->north.width), &(all->north.height));
 	if (!all->north.img)
@@ -48,6 +55,7 @@ static void	texture_addresses(t_all *all)
 	img_address(&all->south);
 	img_address(&all->east);
 	img_address(&all->west);
+	img_address(&all->doors);
 }
 
 static int	mlx_setup(t_all *all, int width, int height)
