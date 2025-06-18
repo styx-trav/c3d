@@ -50,8 +50,11 @@ typedef struct s_sprite
 	t_img img[SPRITE_FRAMES];
 	int 			frame_index;
 	unsigned long 	last_update;
-	float				x;
-	float				y;
+	double				x;
+	double				y;
+	double		dist;
+	int			screen_x;
+	int			size;
 }	t_sprite;
 
 typedef struct s_door
@@ -120,9 +123,10 @@ void draw_rays(t_all *all, t_player *player);
 int get_sprite(t_all *all);
 int load_sprite_frames(t_sprite *sprite, void *mlx);
 void update_sprite(t_sprite *sprite);
+int	sprite_is_behind_wall(t_all *all, t_player *player, t_sprite *sprite);
 
 //from draw_sprite.c
-void	draw_all_sprites(t_all *all, t_player *player);
+void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite);
 
 //from utils.c
 size_t	ft_strlen(const char *s);

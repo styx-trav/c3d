@@ -73,9 +73,7 @@ int	draw_loop(t_all *all)
 	else
 		all->see_3 = true;
 	draw_rays(all, player);
-	draw_all_sprites(all, player);
-	// printf("Player pos: (%f, %f) angle: %f\n", all->player.x, all->player.y, all->player.angle);
-	// printf("Sprite pos: (%f, %f)\n", all->sprite.x, all->sprite.y);
+	draw_sprite(all, player, &all->sprite);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);
 }

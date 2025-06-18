@@ -74,8 +74,6 @@ static int	mlx_setup(t_all *all, int width, int height)
 	return (1);
 }
 
-#include <stdio.h>
-
 int	init(t_all *all, char *filename, int width, int height)
 {
 	t_pars	*parse;
@@ -103,10 +101,7 @@ int	init(t_all *all, char *filename, int width, int height)
 	if (!load_sprite_frames(&all->sprite, all->mlx))
 		return (0);
 	if (!get_sprite(all))
-	{
-		printf("no sprite\n");
 		return (0);
-	}
 	free(map);
 	return (1);
 }

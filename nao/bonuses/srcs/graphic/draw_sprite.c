@@ -1,13 +1,13 @@
 #include "liball.h"
 #include "raycasting.h"
 
-static int	get_sprite_tex_x(int sprite_screen_x, int sprite_size, int x, t_img *tex)
+static int	get_sprite_tex_x(int s_screen_x, int s_size, int x, t_img *tex)
 {
-	int relative_x;
-	int tex_x;
+	int	relative_x;
+	int	tex_x;
 
-	relative_x = x - (sprite_screen_x - sprite_size / 2);
-	tex_x = (relative_x * tex->width) / sprite_size;
+	relative_x = x - (s_screen_x - s_size / 2);
+	tex_x = (relative_x * tex->width) / s_size;
 	if (tex_x < 0)
 		tex_x = 0;
 	else if (tex_x >= tex->width)
@@ -15,106 +15,87 @@ static int	get_sprite_tex_x(int sprite_screen_x, int sprite_size, int x, t_img *
 	return (tex_x);
 }
 
-static void	draw_sprite_column(int x, int sprite_size, int sprite_screen_y, int tex_x, t_img *tex, t_all *all)
+static void	draw_s_column(int x, int s_size, int screen_y, int tex_x, t_img *tex, t_all *all)
 {
-	int y_start;
-	int y_end;
-	int y;
-	int d;
-	int tex_y;
-	char *px;
-	int color;
+	int		y;
+	int		end_y;
+	int		d;
+	int		tex_y;
+	char	*px;
 
-	y_start = sprite_screen_y - sprite_size / 2;
-	y_end = y_start + sprite_size;
-	y = y_start;
-	if (!tex || !tex->addr)
-		return ;
-	while (y < y_end)
+	y = screen_y - s_size / 2;
+	end_y = y + s_size;
+	while (y < end_y)
 	{
 		if (y >= 0 && y < HEIGHT)
 		{
-			d = y * 256 - HEIGHT * 128 + sprite_size * 128;
-			tex_y = (d * tex->height) / (sprite_size * 256);
+			d = y * 256 - HEIGHT * 128 + s_size * 128;
+			tex_y = (d * tex->height) / (s_size * 256);
 			if (tex_y < 0)
 				tex_y = 0;
 			else if (tex_y >= tex->height)
 				tex_y = tex->height - 1;
 			px = tex->addr + (tex_y * tex->size_line + tex_x * (tex->bpp / 8));
-			color = *(unsigned int *)px;
-			if ((color & 0x00FFFFFF) != 0)
-				put_pixel(x, y, color, &all->fg);
+			if ((*(unsigned int *)px & 0x00FFFFFF) != 0)
+				put_pixel(x, y, *(unsigned int *)px, &all->fg);
 		}
 		y++;
 	}
 }
 
-void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite)
+static void	get_sprite_screen_data(t_sprite *sprite, t_player *player)
 {
+	double	dx;
+	double	dy;
+	double	dir_x;
+	double	dir_y;
+	double	angle;
 
-	double dx = sprite->x - player->x;
-	double dy = sprite->y - player->y;
-
-	double dir_x = cos(player->angle);
-	double dir_y = sin(player->angle);
-
-	double angle = atan2(dir_x * dy - dir_y * dx, dir_x * dx + dir_y * dy);
-
-	if (!sprite || !sprite->img[sprite->frame_index].img)
-		return;
+	dx = sprite->x - player->x;
+	dy = sprite->y - player->y;
+	dir_x = cos(player->angle);
+	dir_y = sin(player->angle);
+	angle = atan2(dir_x * dy - dir_y * dx, dir_x * dx + dir_y * dy);
 	while (angle < 0)
 		angle += 2 * PI;
 	while (angle >= 2 * PI)
 		angle -= 2 * PI;
+	sprite->dist = sqrt(dx * dx + dy * dy);
+	sprite->screen_x = (int)((angle - (PI - (PI / 2.5) / 2))
+			/ ((PI / 2.5) / WIDTH));
+	sprite->size = (int)(HEIGHT / sprite->dist);
+}
 
-	float fov = PI / 2.5;
+static void	draw_sprite_visible_columns(t_all *all, t_sprite *sprite)
+{
+	int		x;
+	int		end_x;
+	t_img	*tex;
+	int		tex_x;
 
-	int sprite_screen_x = (int)((angle - (PI - fov / 2)) / (fov / WIDTH));
-
-	double dist = sqrt(dx * dx + dy * dy);
-	if (dist < 0.1)
-		return;
-
-	double step_x = dx / dist;
-	double step_y = dy / dist;
-	double t = 0;
-	
-	while (t < dist)
-	{
-		int map_x = (int)(player->x + step_x * t);
-		int map_y = (int)(player->y + step_y * t);
-
-		if (map_y >= 0 && all->map[map_y] && map_x >= 0 && map_x < (int)ft_strlen(all->map[map_y]))
-		{
-			if (all->map[map_y][map_x] == '1' || all->map[map_y][map_x] == '?')
-				return ;
-		}
-		t += 0.05;
-	}
-
-	int sprite_size = (int)(HEIGHT / dist);
-	if (sprite_size <= 0 || sprite_size > HEIGHT * 4)
-		return;
-
-	int sprite_screen_y = HEIGHT / 2;
-	int draw_start_x = sprite_screen_x - sprite_size / 2;
-	int draw_end_x = sprite_screen_x + sprite_size / 2;
-
-	int x = draw_start_x;
-	while (x < draw_end_x)
+	x = sprite->screen_x - sprite->size / 2;
+	end_x = sprite->screen_x + sprite->size / 2;
+	tex = &sprite->img[sprite->frame_index];
+	while (x < end_x)
 	{
 		if (x >= 0 && x < WIDTH)
 		{
-			t_img *tex = &sprite->img[sprite->frame_index];
-			int tex_x = get_sprite_tex_x(sprite_screen_x, sprite_size, x, tex);
-			draw_sprite_column(x, sprite_size, sprite_screen_y, tex_x, tex, all);
+			tex_x = get_sprite_tex_x(sprite->screen_x, sprite->size, x, tex);
+			draw_s_column(x, sprite->size, HEIGHT / 2, tex_x, tex, all);
 		}
 		x++;
 	}
 }
 
-void	draw_all_sprites(t_all *all, t_player *player)
+void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite)
 {
 	update_sprite(&all->sprite);
-	draw_sprite(all, player, &all->sprite);
+	if (!sprite || !sprite->img[sprite->frame_index].img)
+		return ;
+	get_sprite_screen_data(sprite, player);
+	if (sprite->dist < 0.1 || sprite->size <= 0 || sprite->size > HEIGHT * 4)
+		return ;
+	if (sprite_is_behind_wall(all, player, sprite))
+		return ;
+	draw_sprite_visible_columns(all, sprite);
 }
