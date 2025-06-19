@@ -2,18 +2,26 @@
 #include "libmap.h"
 #include "liball.h"
 
-void	free_sprites(void *mlx, t_sprite *sprite)
+
+static void	free_sprites(t_all *all)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (i < SPRITE_FRAMES && sprite->img[i].img)
+	while (i < all->sprite_count)
 	{
-		mlx_destroy_image(mlx, sprite->img[i].img);
+		int j = 0;
+		while (j < 3)
+		{
+			if (all->sprites[i].img[j].img)
+				mlx_destroy_image(all->mlx, all->sprites[i].img[j].img);
+			j++;
+		}
+		if (j != 3)
+			printf("Error\nloading sprite frames\n");
 		i++;
 	}
-	if (i != SPRITE_FRAMES)
-		printf("Error\nloading sprite frames\n");
+	free(all->sprites);
 }
 
 void	free_all(t_all *all)
@@ -30,7 +38,7 @@ void	free_all(t_all *all)
 		mlx_destroy_image(all->mlx, all->east.img);
 	if (all->doors.img)
 		mlx_destroy_image(all->mlx, all->doors.img);
-	free_sprites(all->mlx, &all->sprite);
+	free_sprites(all);
 	if (!all->fg.img)
 		printf("Error\ninit mlx\n");
 	else

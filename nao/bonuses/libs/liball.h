@@ -79,7 +79,10 @@ typedef struct s_all
 	int		ceiling;
 	char	**map;
 	t_player	player;
-	t_sprite 	sprite;
+	t_sprite	sprite;
+	t_sprite	*sprites;
+	int			sprite_count;
+	float 		z_buffer[WIDTH];
 	char	dir;//angle ?? double, matrix ? add later;
 	t_door	door;
 	bool	see_3;
@@ -124,10 +127,12 @@ void draw_rays(t_all *all, t_player *player);
 int get_sprite(t_all *all);
 int load_sprite_frames(t_sprite *sprite, void *mlx);
 void update_sprite(t_sprite *sprite);
-int	sprite_is_behind_wall(t_all *all, t_player *player, t_sprite *sprite);
+int	count_sprites(char **map);
+int	init_sprites(t_all *all);
+void sort_sprites_by_distance(t_sprite *sprites, int count);
 
 //from draw_sprite.c
-void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite);
+void	draw_all_sprites(t_all *all, t_player *player);
 
 //from utils.c
 size_t	ft_strlen(const char *s);

@@ -78,7 +78,7 @@ static void	draw_sprite_visible_columns(t_all *all, t_sprite *sprite)
 	tex = &sprite->img[sprite->frame_index];
 	while (x < end_x)
 	{
-		if (x >= 0 && x < WIDTH)
+		if (x >= 0 && x < WIDTH && sprite->dist < all->z_buffer[x])
 		{
 			tex_x = get_sprite_tex_x(sprite->screen_x, sprite->size, x, tex);
 			draw_s_column(x, sprite->size, HEIGHT / 2, tex_x, tex, all);
@@ -87,17 +87,34 @@ static void	draw_sprite_visible_columns(t_all *all, t_sprite *sprite)
 	}
 }
 
-void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite)
+static void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite)
 {
 	if (sprite->x == -1)
 		return ;
-	update_sprite(&all->sprite);
 	if (!sprite || !sprite->img[sprite->frame_index].img)
 		return ;
 	get_sprite_screen_data(sprite, player);
 	if (sprite->dist < 0.1 || sprite->size <= 0 || sprite->size > HEIGHT * 4)
 		return ;
-	if (sprite_is_behind_wall(all, player, sprite))
-		return ;
 	draw_sprite_visible_columns(all, sprite);
+}
+
+void	draw_all_sprites(t_all *all, t_player *player)
+{
+	int	i;
+
+	i = 0;
+	while (i < all->sprite_count)
+	{
+		update_sprite(&all->sprites[i]);
+		get_sprite_screen_data(&all->sprites[i], player);
+		i++;
+	}
+	sort_sprites_by_distance(all->sprites, all->sprite_count);
+	i = 0;
+	while (i < all->sprite_count)
+	{
+		draw_sprite(all, player, &all->sprites[i]);
+		i++;
+	}
 }

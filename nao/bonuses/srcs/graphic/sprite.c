@@ -1,31 +1,6 @@
 #include "liball.h"
 #include <stdio.h>
 
-int	get_sprite(t_all *all)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (all->map[i])
-	{
-		j = 0;
-		while (all->map[i][j])
-		{
-			if (all->map[i][j] == 'S')
-			{
-				all->sprite.x = j + 0.5;
-				all->sprite.y = i + 0.5;
-				printf("FOUND SPRITE: %f %f\n", all->sprite.x, all->sprite.y);
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	load_sprite_frames(t_sprite *sprite, void *mlx)
 {
 	int		w;
@@ -66,26 +41,82 @@ void	update_sprite(t_sprite *sprite)
 	}
 }
 
-int	sprite_is_behind_wall(t_all *all, t_player *player, t_sprite *sprite)
+int	count_sprites(char **map)
 {
-	double	step_x;
-	double	step_y;
-	double	t;
-	int		map_x;
-	int		map_y;
+	int	i;
+	int	j;
+	int	count;
 
-	step_x = (sprite->x - player->x) / sprite->dist;
-	step_y = (sprite->y - player->y) / sprite->dist;
-	t = 0;
-	while (t < sprite->dist)
+	i = 0;
+	count = 0;
+	while (map[i])
 	{
-		map_x = (int)(player->x + step_x * t);
-		map_y = (int)(player->y + step_y * t);
-		if (map_y >= 0 && all->map[map_y]
-			&& map_x >= 0 && map_x < (int)ft_strlen(all->map[map_y])
-			&& (all->map[map_y][map_x] == '1' || all->map[map_y][map_x] == '?'))
-			return (1);
-		t += 0.05;
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'S')
+				count++;
+			j++;
+		}
+		i++;
 	}
-	return (0);
+	return (count);
+}
+
+int	init_sprites(t_all *all)
+{
+	int	i;
+	int	j;
+	int	idx;
+	int	count;
+
+	i = 0;
+	idx = 0;
+	count = count_sprites(all->map);
+	all->sprite_count = count;
+	all->sprites = malloc(sizeof(t_sprite) * count);
+	if (!all->sprites)
+		return (0);
+	while (all->map[i])
+	{
+		j = 0;
+		while (all->map[i][j])
+		{
+			if (all->map[i][j] == 'S')
+			{
+				all->sprites[idx].x = j + 0.5;
+				all->sprites[idx].y = i + 0.5;
+				if (!load_sprite_frames(&all->sprites[idx], all->mlx))
+					return (0);
+				idx++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	sort_sprites_by_distance(t_sprite *sprites, int count)
+{
+	t_sprite	tmp;
+	int			i;
+	int			j;
+
+	i = 0;
+	while (i < count - 1)
+	{
+		j = i + 1;
+		while (j < count)
+		{
+			if (sprites[i].dist < sprites[j].dist)
+			{
+				tmp = sprites[i];
+				sprites[i] = sprites[j];
+				sprites[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
 }

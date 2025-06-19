@@ -36,7 +36,9 @@ static void	add_deltas(float angle, t_all *all, t_player *player, int i)
 	rays_set_up(&ray, angle, &all->player);
 	set_dir_walls(&ray, all);
 	ray.dist *= cos(angle - all->player.angle);
-	if (all->map[ray.mapy][ray.mapx] == '?' && ray.dist < 0.6 && !all->door.seen)
+	all->z_buffer[i] = ray.dist;
+	if (all->map[ray.mapy][ray.mapx] == '?' && ray.dist < 0.6
+		&& !all->door.seen)
 	{
 		all->door.i = ray.mapy;
 		all->door.j = ray.mapx;
