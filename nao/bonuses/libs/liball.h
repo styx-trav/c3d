@@ -124,7 +124,6 @@ int draw_loop(t_all *all);
 void draw_rays(t_all *all, t_player *player);
 
 //from sprite.c
-int get_sprite(t_all *all);
 int load_sprite_frames(t_sprite *sprite, void *mlx);
 void update_sprite(t_sprite *sprite);
 int	count_sprites(char **map);
