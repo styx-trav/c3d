@@ -67,11 +67,11 @@ int	init_sprites(t_all *all)
 {
 	int	i;
 	int	j;
-	int	idx;
+	int	id;
 	int	count;
 
 	i = 0;
-	idx = 0;
+	id = 0;
 	count = count_sprites(all->map);
 	all->sprite_count = count;
 	all->sprites = malloc(sizeof(t_sprite) * count);
@@ -84,11 +84,11 @@ int	init_sprites(t_all *all)
 		{
 			if (all->map[i][j] == 'S')
 			{
-				all->sprites[idx].x = j + 0.5;
-				all->sprites[idx].y = i + 0.5;
-				if (!load_sprite_frames(&all->sprites[idx], all->mlx))
+				all->sprites[id].x = j + 0.5;
+				all->sprites[id].y = i + 0.5;
+				if (!load_sprite_frames(&all->sprites[id], all->mlx))
 					return (0);
-				idx++;
+				id++;
 			}
 			j++;
 		}
