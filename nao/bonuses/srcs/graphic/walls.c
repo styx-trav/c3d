@@ -10,6 +10,8 @@ int	get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all)
 		wall_x = player->x + ray->dist * -cos(angle);
 	else
 		wall_x = player->y + ray->dist * -sin(angle);
+	if (ray->door)
+		ray->tex = &all->doors;
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * ray->tex->width);
 	return (tex_x);
@@ -78,25 +80,26 @@ void	set_dir_walls(t_ray *rays, t_all *all)
 	rays->color = 0x00F000;
 	rays->tex = NULL;
 	res = wall_dist(rays, all->map, all->see_3);
+	rays->door = 0;
 	if (res > 1)
 	{
-		rays->tex = &all->doors;
+		rays->door = 1;
 		res -= 2;
 	}
 	if (res)
 	{
 		rays->dist = rays->disty - rays->deltay;
-		if (!rays->tex && rays->stepy < 0)
+		if (rays->stepy < 0)
 			rays->tex = &all->north;
-		else if (!rays->tex)
+		else
 			rays->tex = &all->south;
 	}
 	else
 	{
 		rays->dist = rays->distx - rays->deltax;
-		if (!rays->tex && rays->stepx < 0)
+		if (rays->stepx < 0)
 			rays->tex = &all->west;
-		else if (!rays->tex)
+		else
 			rays->tex = &all->east;
 	}
 }

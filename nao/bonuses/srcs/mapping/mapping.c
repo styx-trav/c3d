@@ -19,7 +19,7 @@ static int	get_player(t_maps *mapp, char **map)
 
 static void	size_map(t_maps *map, int i, int j, char **maps)
 {
-	if (maps[i][j] == '!' || maps[i][j] == '?' || maps[i][j] == '*')
+	if (maps[i][j] == '!' || maps[i][j] == '?' || maps[i][j] == '*' || maps[i][j] == 'S')
 		return ;
 	if (maps[i][j] == '1')
 	{
@@ -38,7 +38,7 @@ static void	size_map(t_maps *map, int i, int j, char **maps)
 	else if (maps[i][j] == '3')
 		maps[i][j] = '*';
 	else if (maps[i][j] == 'M')
-		return ;
+		maps[i][j] = 'S' ;
 	else
 		maps[i][j] = '!';
 	size_map(map, i +1, j, maps);

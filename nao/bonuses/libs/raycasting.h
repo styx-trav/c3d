@@ -15,6 +15,7 @@ typedef struct s_ray
 	int		stepx;
 	int		stepy;
 	int		color;
+	int		door;
 	t_img *tex;
 }	t_ray;
 

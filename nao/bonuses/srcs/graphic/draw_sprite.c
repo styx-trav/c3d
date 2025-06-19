@@ -89,6 +89,8 @@ static void	draw_sprite_visible_columns(t_all *all, t_sprite *sprite)
 
 void	draw_sprite(t_all *all, t_player *player, t_sprite *sprite)
 {
+	if (sprite->x == -1)
+		return ;
 	update_sprite(&all->sprite);
 	if (!sprite || !sprite->img[sprite->frame_index].img)
 		return ;

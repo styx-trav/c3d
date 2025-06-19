@@ -12,7 +12,7 @@ int	get_sprite(t_all *all)
 		j = 0;
 		while (all->map[i][j])
 		{
-			if (all->map[i][j] == 'M')
+			if (all->map[i][j] == 'S')
 			{
 				all->sprite.x = j + 0.5;
 				all->sprite.y = i + 0.5;

@@ -2,6 +2,20 @@
 #include "libmap.h"
 #include "liball.h"
 
+void	free_sprites(void *mlx, t_sprite *sprite)
+{
+	int	i;
+
+	i = 0;
+	while (i < SPRITE_FRAMES && sprite->img[i].img)
+	{
+		mlx_destroy_image(mlx, sprite->img[i].img);
+		i++;
+	}
+	if (i != SPRITE_FRAMES)
+		printf("Error\nloading sprite frames\n");
+}
+
 void	free_all(t_all *all)
 {
 	if (all->map)
@@ -14,6 +28,9 @@ void	free_all(t_all *all)
 		mlx_destroy_image(all->mlx, all->west.img);
 	if (all->east.img)
 		mlx_destroy_image(all->mlx, all->east.img);
+	if (all->doors.img)
+		mlx_destroy_image(all->mlx, all->doors.img);
+	free_sprites(all->mlx, &all->sprite);
 	if (!all->fg.img)
 		printf("Error\ninit mlx\n");
 	else
@@ -40,7 +57,7 @@ void	start_loop(t_all *all)
 	mlx_mouse_hide(all->mlx, all->win);
 	mlx_loop(all->mlx);
 }
-/*#include <stdio.h>
+#include <stdio.h>
 void	print_map(char **map)
 {
 	int	i = 0;
@@ -50,7 +67,7 @@ void	print_map(char **map)
 		printf("%s\n", map[i]);
 		i++;
 	}
-}*/
+}
 
 int	main(int argc, char **argv)
 { 
