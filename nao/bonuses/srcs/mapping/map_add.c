@@ -14,15 +14,17 @@
 
 static int	passage_way(char **map)
 {
-	int i = 0;
-	int end;
-	int	col = -1;
+	int	i;
+	int	end;
+	int	col;
 
+	i = 0;
+	col = -1;
 	while (map && map[i])
 	{
 		end = ft_strlen(map[i]) - 1;
 		if (map[i][end] == '1' && map[i][end - 1] != '0'
-			&&  map[i][end - 1] != '1' &&  map[i][end - 1] != ' '
+			&& map[i][end - 1] != '1' && map[i][end - 1] != ' '
 			&& i && map[i + 1])
 			col = i;
 		i++;
@@ -30,13 +32,11 @@ static int	passage_way(char **map)
 	return (col);
 }
 
-static char	*join(char *s1, char *s2)
+static char	*join(char *s1, char *s2, int i)
 {
-	int	i;
 	int	j;
 	char	*str;
 
-	i = 0;
 	j = 0;
 	while (s1 && s1[i])
 		i++;
@@ -61,24 +61,12 @@ static char	*join(char *s1, char *s2)
 	return (str);
 }
 
-char	**expand_map(char **map)
+static char	**outsiders(char **map, int place)
 {
-	int	place = passage_way(map);
 	char	*str;
 
-	if (place == -1)
-		return (map);
-	map[place][ft_strlen(map[place]) - 1] = '*';
-	str = join(map[place], "001");
-	if (!str)
-	{
-		free_map(map);
-		return (NULL);
-	}
-	free(map[place]);
-	map[place] = str;
 	map[place - 1][ft_strlen(map[place - 1]) - 1] = '1';
-	str = join(map[place -1], "11");
+	str = join(map[place -1], "11", 0);
 	if (!str)
 	{
 		free_map(map);
@@ -87,7 +75,7 @@ char	**expand_map(char **map)
 	free(map[place -1]);
 	map[place -1] = str;
 	map[place + 1][ft_strlen(map[place + 1]) - 1] = '1';
-	str = join(map[place +1], "11");
+	str = join(map[place +1], "11", 0);
 	if (!str)
 	{
 		free_map(map);
@@ -95,5 +83,26 @@ char	**expand_map(char **map)
 	}
 	free(map[place +1]);
 	map[place +1] = str;
+	return (map);
+}
+
+char	**expand_map(char **map)
+{
+	int		place;
+	char	*str;
+
+	place = passage_way(map);
+	if (place == -1)
+		return (map);
+	map[place][ft_strlen(map[place]) - 1] = '*';
+	str = join(map[place], "001", 0);
+	if (!str)
+	{
+		free_map(map);
+		return (NULL);
+	}
+	free(map[place]);
+	map[place] = str;
+	map = outsiders(map, place);
 	return (map);
 }

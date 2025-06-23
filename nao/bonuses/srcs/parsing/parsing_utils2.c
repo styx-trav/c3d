@@ -32,7 +32,6 @@ t_pars	*free_parse(t_pars *parse, char *err_msg)
 	free(parse);
 	return (NULL);
 }
-//next up :: adding all the new free stuff :: doors, sprites, etc. plus error messages and what if no sprite ? then push
 
 int	is_cub(char *str)
 {
