@@ -17,9 +17,8 @@ int	get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all)
 	return (tex_x);
 }
 
-void	draw_column(t_render *r)
+void	draw_column(t_render *r, int y)
 {
-	int				y;
 	int				d;
 	int				end;
 	int				tex_y;
@@ -37,7 +36,8 @@ void	draw_column(t_render *r)
 			tex_y = r->ray->tex->height - 1;
 		px = r->ray->tex->addr + (tex_y * r->ray->tex->size_line
 				+ r->tex_x * (r->ray->tex->bpp / 8));
-		put_pixel(r->x, y, *(unsigned int *)px, &r->all->fg);
+		if (y > r->all->minimap_h || r->x > r->all->minimap_w)
+			put_pixel(r->x, y, *(unsigned int *)px, &r->all->fg);
 		y++;
 	}
 }
@@ -51,18 +51,7 @@ static int	wall_dist(t_ray *r, char **map, bool see)
 	side = 0;
 	while (!wall)
 	{
-		if (r->distx > r->disty)
-		{
-			side = 1;
-			r->disty = r->disty + r->deltay;
-			r->mapy += r->stepy;
-		}
-		else
-		{
-			side = 0;
-			r->distx = r->distx + r->deltax;
-			r->mapx += r->stepx;
-		}
+		side = wall_dist_inloop(r);
 		if (map[r->mapy][r->mapx] == ' ' || map[r->mapy][r->mapx] == '1'
 			|| map[r->mapy][r->mapx] == '?'
 			|| (see && map[r->mapy][r->mapx] == '*'))
@@ -73,9 +62,9 @@ static int	wall_dist(t_ray *r, char **map, bool see)
 	return (side);
 }
 
-void	set_dir_walls(t_ray *rays, t_all *all)
+static int	set_up_dir(t_ray *rays, t_all *all)
 {
-	int res;
+	int	res;
 
 	rays->color = 0x00F000;
 	rays->tex = NULL;
@@ -86,6 +75,14 @@ void	set_dir_walls(t_ray *rays, t_all *all)
 		rays->door = 1;
 		res -= 2;
 	}
+	return (res);
+}
+
+void	set_dir_walls(t_ray *rays, t_all *all)
+{
+	int	res;
+
+	res = set_up_dir(rays, all);
 	if (res)
 	{
 		rays->dist = rays->disty - rays->deltay;

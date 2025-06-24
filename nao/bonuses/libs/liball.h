@@ -19,6 +19,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <sys/time.h>
+# include "libparsing.h"
 
 typedef struct s_img
 {
@@ -75,6 +76,8 @@ typedef struct s_all
 	t_img	south;
 	t_img	west;
 	t_img	doors;
+	int	minimap_w;
+	int	minimap_h;
 	int		floor;
 	int		ceiling;
 	char	**map;
@@ -95,6 +98,7 @@ int	calc_color(int col[4]);
 void	img_address(t_img *img);
 void	start_all(t_all *all);
 unsigned long get_current_time_ms(void);
+int	set_ns(t_all *all, t_pars *parse);
 
 //from init.c
 int	init(t_all *all, char *filename, int width, int height);
@@ -132,6 +136,10 @@ void sort_sprites_by_distance(t_sprite *sprites, int count);
 
 //from draw_sprite.c
 void	draw_all_sprites(t_all *all, t_player *player);
+
+//from minimap.c
+int	init_minimap(t_all *all);
+void	draw_minimap(t_all *all, t_player *player);
 
 //from utils.c
 size_t	ft_strlen(const char *s);

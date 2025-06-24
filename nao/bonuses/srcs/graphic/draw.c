@@ -74,6 +74,7 @@ int	draw_loop(t_all *all)
 		all->see_3 = true;
 	draw_rays(all, player);
 	draw_all_sprites(all, player);
+	draw_minimap(all, player);
 	mlx_put_image_to_window(all->mlx, all->win, all->fg.img, 0, 0);
 	return (0);
 }

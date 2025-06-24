@@ -33,6 +33,7 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/init/init.c 				\
 		bonuses/srcs/init/init_utils.c 			\
 		bonuses/srcs/mapping/mapping.c			\
+		bonuses/srcs/mapping/mapping_utils.c			\
 		bonuses/srcs/mapping/map_add.c			\
 		bonuses/srcs/graphic/hooks.c			\
 		bonuses/srcs/graphic/player.c			\
@@ -43,7 +44,7 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/graphic/walls.c			\
 		bonuses/srcs/graphic/sprite.c			\
 		bonuses/srcs/graphic/draw_sprite.c			\
-
+		bonuses/srcs/graphic/minimap.c
 		
 OBJ = $(SRC:.c=.o)
 

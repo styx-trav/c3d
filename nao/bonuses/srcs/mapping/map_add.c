@@ -34,7 +34,7 @@ static int	passage_way(char **map)
 
 static char	*join(char *s1, char *s2, int i)
 {
-	int	j;
+	int		j;
 	char	*str;
 
 	j = 0;

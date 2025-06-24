@@ -1,4 +1,5 @@
 #include "liball.h"
+#include "raycasting.h"
 
 void	put_pixel(int x, int y, int color, t_img *img)
 {
@@ -50,4 +51,23 @@ int	collision_zone(t_all *all, float px, float py)
 		dy += zone;
 	}
 	return (0);
+}
+
+int	wall_dist_inloop(t_ray *r)
+{
+	int	side;
+
+	if (r->distx > r->disty)
+	{
+		side = 1;
+		r->disty = r->disty + r->deltay;
+		r->mapy += r->stepy;
+	}
+	else
+	{
+		side = 0;
+		r->distx = r->distx + r->deltax;
+		r->mapx += r->stepx;
+	}
+	return (side);
 }

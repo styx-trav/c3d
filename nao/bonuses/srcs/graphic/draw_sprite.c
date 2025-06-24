@@ -36,7 +36,7 @@ static void	draw_s_column(int x, int s_size, int screen_y, int tex_x, t_img *tex
 			else if (tex_y >= tex->height)
 				tex_y = tex->height - 1;
 			px = tex->addr + (tex_y * tex->size_line + tex_x * (tex->bpp / 8));
-			if ((*(unsigned int *)px & 0x00FFFFFF) != 0)
+			if ((*(unsigned int *)px & 0x00FFFFFF) != 0 && (y > all->minimap_h || x > all->minimap_w))
 				put_pixel(x, y, *(unsigned int *)px, &all->fg);
 		}
 		y++;

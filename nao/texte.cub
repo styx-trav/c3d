@@ -1,8 +1,8 @@
-NO ./textures/test.xpm 
+NO                  		             ./textures/test.xpm 
      
      SO ./textures/test.xpm      
 
-	F 200, 128, 100
+	F 00000, 128, 100
 		
 			
 EA			./textures/test.xpm 

@@ -30,7 +30,10 @@ typedef struct s_render
 
 //from walls.c
 int		get_tex_x(t_ray *ray, t_player *player, float angle, t_all *all);
-void	draw_column(t_render *r);
+void	draw_column(t_render *r, int y);
 void	set_dir_walls(t_ray *rays, t_all *all);
+
+//from disp_utils.c
+int	wall_dist_inloop(t_ray *r);
 
 #endif

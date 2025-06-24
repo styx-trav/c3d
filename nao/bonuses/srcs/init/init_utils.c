@@ -13,7 +13,8 @@ int	calc_color(int col[4])
 
 void	img_address(t_img *img)
 {
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->size_line, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp,
+			&img->size_line, &img->endian);
 }
 
 void	start_all(t_all *all)
@@ -29,10 +30,36 @@ void	start_all(t_all *all)
 	all->map = NULL;
 }
 
-unsigned long get_current_time_ms(void)
+unsigned long	get_current_time_ms(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000UL + tv.tv_usec / 1000UL);
+}
+
+int	set_ns(t_all *all, t_pars *parse)
+{
+	all->doors.img = mlx_xpm_file_to_image(all->mlx, "./textures/tex.xpm",
+			&(all->doors.width), &(all->doors.height));
+	if (!all->doors.img)
+	{
+		free_parse(parse, "doors texture");
+		return (0);
+	}
+	all->north.img = mlx_xpm_file_to_image(all->mlx, parse->north,
+			&(all->north.width), &(all->north.height));
+	if (!all->north.img)
+	{
+		free_parse(parse, "north texture");
+		return (0);
+	}
+	all->south.img = mlx_xpm_file_to_image(all->mlx, parse->south,
+			&(all->south.width), &(all->south.height));
+	if (!all->south.img)
+	{
+		free_parse(parse, "south texture");
+		return (0);
+	}
+	return (1);
 }

@@ -2,32 +2,6 @@
 #include "libmap.h"
 #include "libparsing.h"
 
-static int	set_ns(t_all *all, t_pars *parse)
-{
-	all->doors.img = mlx_xpm_file_to_image(all->mlx, "./textures/tex.xpm",
-			&(all->doors.width), &(all->doors.height));
-	if (!all->doors.img)
-	{
-		free_parse(parse, "doors texture");
-		return (0);
-	}
-	all->north.img = mlx_xpm_file_to_image(all->mlx, parse->north,
-			&(all->north.width), &(all->north.height));
-	if (!all->north.img)
-	{
-		free_parse(parse, "north texture");
-		return (0);
-	}
-	all->south.img = mlx_xpm_file_to_image(all->mlx, parse->south,
-			&(all->south.width), &(all->south.height));
-	if (!all->south.img)
-	{
-		free_parse(parse, "south texture");
-		return (0);
-	}
-	return (1);
-}
-
 static int	set_textures(t_all *all, t_pars *parse)
 {
 	if (!set_ns(all, parse))
@@ -82,6 +56,18 @@ static int	mlx_setup(t_all *all, int width, int height)
 	return (1);
 }
 
+void	init2(t_all *all, t_maps *map)
+{
+	all->player.y = (double)map->i;
+	all->player.x = (double)map->j;
+	all->dir = map->dir;
+	all->map = map->map;
+	free(map);
+	all->sprite_count = count_sprites(all->map);
+	if (!init_sprites(all))
+		all->sprite.x = -1;
+}
+
 int	init(t_all *all, char *filename, int width, int height)
 {
 	t_pars	*parse;
@@ -98,17 +84,14 @@ int	init(t_all *all, char *filename, int width, int height)
 	all->floor = calc_color(parse->floor);
 	all->ceiling = calc_color(parse->ceiling);
 	map = get_map(make_map(parse));
-	
 	free_parse(parse, NULL);
 	if (!map)
 		return (0);
-	all->player.y = (double)map->i;
-	all->player.x = (double)map->j;
-	all->dir = map->dir;
-	all->map = map->map;
-	free(map);
-	all->sprite_count = count_sprites(all->map);
-	if (!init_sprites(all))
-		all->sprite.x = -1;
+	init2(all, map);
+	if (!init_minimap(all))
+	{
+		printf("minimap init\n");
+		return (0);
+	}
 	return (1);
 }

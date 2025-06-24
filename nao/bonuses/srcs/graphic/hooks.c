@@ -43,11 +43,11 @@ int	key_release(int keycode, t_all *all)
 
 int	mouse_move(int x, int y, t_all *all)
 {
-	int center_x;
-	float sensitivity;
-	int delta_x;
-	(void)y;
+	int		center_x;
+	float	sensitivity;
+	int		delta_x;
 
+	(void)y;
 	center_x = WIDTH / 2;
 	sensitivity = 0.001;
 	if (x == center_x)

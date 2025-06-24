@@ -1,34 +1,5 @@
 #include "libmap.h"
 
-static int	get_player(t_maps *mapp, char **map)
-{
-	mapp->i = 0;
-	while (map[mapp->i])
-	{
-		mapp->j = 0;
-		while (map[mapp->i][mapp->j])
-		{
-			if (instr("NWSE", map[mapp->i][mapp->j]))
-				return (1);
-			mapp->j++;
-		}
-		mapp->i++;
-	}
-	return (0);
-}
-
-static void	if_wall(t_maps *map, int i, int j)
-{
-	if (map->mini == -1 || i < map->mini)
-		map->mini = i;
-	if (map->minj == -1 || j < map->minj)
-		map->minj = j;
-	if (j > map->maxj)
-		map->maxj = j;
-	if (i > map->maxi)
-		map->maxi = i;
-}
-
 static void	size_map(t_maps *map, int i, int j, char **maps)
 {
 	if (maps[i][j] == '!' || maps[i][j] == '?'
@@ -99,6 +70,17 @@ static char	**reduce_map(char **map, t_maps *mapp)
 	return (nmap);
 }
 
+static void	mapp_set_up(t_maps *mapp, char **map)
+{
+	get_player(mapp, map);
+	mapp->mini = -1;
+	mapp->minj = -1;
+	mapp->maxi = -1;
+	mapp->maxj = -1;
+	mapp->dir = map[mapp->i][mapp->j];
+	size_map(mapp, mapp->i, mapp->j, map);
+}
+
 t_maps	*get_map(char **map)
 {
 	t_maps	*mapp;
@@ -108,16 +90,10 @@ t_maps	*get_map(char **map)
 	mapp = (t_maps *)malloc(sizeof(t_maps));
 	if (!mapp)
 		return (NULL);
-	get_player(mapp, map);
-	mapp->mini = -1;
-	mapp->minj = -1;
-	mapp->maxi = -1;
-	mapp->maxj = -1;
-	mapp->dir = map[mapp->i][mapp->j];
-	size_map(mapp, mapp->i, mapp->j, map);
+	mapp_set_up(mapp, map);
 	mapp->map = reduce_map(map, mapp);
 	free_map(map);
-	//mapp->map = expand_map(mapp->map);
+	mapp->map = expand_map(mapp->map);
 	if (!mapp->map)
 	{
 		perror("map conversion malloc");
