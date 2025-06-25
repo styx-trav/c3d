@@ -11,8 +11,8 @@ int	init_minimap(t_all *all)
 	width = 0;
 	while (all->map[0][width])
 		width++;
-	all->minimap_w = width * 20;
-	all->minimap_h = height * 20;
+	all->minimap_w = width * 10;
+	all->minimap_h = height * 10;
 	return (1);
 }
 
@@ -41,8 +41,8 @@ static void	draw_square(t_all *all, int y, int x, int color)
 	int	i;
 	int	j;
 
-	size = 20;
-	if (color == 0x00FF0000)
+	size = 10;
+	if (color != 0x00FFFFFF)
 		size = 2;
 	i = 0;
 	if (size == 2)
@@ -76,18 +76,61 @@ static void	minimap(t_all *all, int on, int i, int j)
 			{
 				if (!(is > 1 && is >= i -1 && is <= i +1)
 					&& all->map[is][js] == 1)
-					draw_square(all, is * 20, js * 20, 0x00FFFFFF);
+					draw_square(all, is * 10, js * 10, 0x00FFFFFF);
 			}
 			else if (all->map[is][js] == '1')
-			{
-				(void)on;
-				(void)i;
-				(void)j;
-				draw_square(all, is * 20, js * 20, 0x00FFFFFF);
-			}
+				draw_square(all, is * 10, js * 10, 0x00FFFFFF);
+			else if (all->map[is][js] == 'S')
+				draw_square(all, is * 10, js * 10, 0x000000FF);
 			js++;
 		}
 		is++;
+	}
+}
+
+void	player_arrow(t_img *fg, int x, int y, float angle)
+{
+	int	j;
+	int	i;
+	int	istep;
+	int	jstep;
+
+	if (angle > PI /4 && angle < 3 * PI /4)
+	{
+		x -= 2;
+		y += -6;
+		jstep = 1;
+		istep = 0;
+	}
+	else if (angle > 3 * PI /4 && angle < 5 * PI /4)
+	{
+		x += 6;
+		y -= 2;
+		jstep = 0;
+		istep = 1;
+	}
+	else if (angle > 5 * PI /4 && angle < 7 * PI /4)
+	{
+		x -= 2;
+		y += 6;
+		jstep = 1;
+		istep = 0;
+	}
+	else
+	{
+		x += -6;
+		y -= 2;
+		jstep = 0;
+		istep = 1;
+	}
+	i = 0;
+	j = 0;
+	//setup here, grab the steps :: put x or y as static a pixel away (step at 0), the other at -4 (step at 1)
+	while (i < 4 && j < 4)
+	{
+		put_pixel(x + j, y + i, 0x00FF0000, fg);
+		i += istep;
+		j += jstep;
 	}
 }
 
@@ -102,23 +145,6 @@ void	draw_minimap(t_all *all, t_player *player)
 	j = 0;
 	i = minimap_setup(all->map, &j);
 	minimap(all, lswitch, i, j);
-	draw_square(all, (int)(all->player.y * 20), (int)(all->player.x * 20), 0x00FF0000);
-	j = (int)(all->player.x * 20) + 3;
-	i = (int)(all->player.y * 20);
-	if (player->angle > PI /4 && player->angle < 3 * PI /4)
-	{
-		j = (int)(all->player.x * 20);
-		i = (int)(all->player.y * 20) - 3;
-	}
-	else if (player->angle > 3 * PI /4 && player->angle < 5 * PI /4)
-	{
-		j = (int)(all->player.x * 20) - 3;
-		i = (int)(all->player.y * 20);
-	}
-	else if (player->angle > 5 * PI /4 && player->angle < 7 * PI /4)
-	{
-		j = (int)(all->player.x * 20);
-		i = (int)(all->player.y * 20) + 3;
-	}
-	put_pixel(j, i, 0x00FF0000, &all->fg);
+	draw_square(all, (int)(player->y * 10), (int)(player->x * 10), 0x00FF0000);
+	player_arrow(&all->fg, (int)(player->x * 10), (int)(player->y * 10), player->angle);
 }

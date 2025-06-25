@@ -40,7 +40,7 @@ unsigned long	get_current_time_ms(void)
 
 int	set_ns(t_all *all, t_pars *parse)
 {
-	all->doors.img = mlx_xpm_file_to_image(all->mlx, "./textures/tex.xpm",
+	all->doors.img = mlx_xpm_file_to_image(all->mlx, "./textures/door.xpm",
 			&(all->doors.width), &(all->doors.height));
 	if (!all->doors.img)
 	{
