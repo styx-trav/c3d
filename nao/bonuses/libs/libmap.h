@@ -5,12 +5,12 @@
 
 typedef struct s_maps
 {
-	int	i;
-	int	j;
-	int	mini;
-	int	minj;
-	int	maxi;
-	int	maxj;
+	int		i;
+	int		j;
+	int		mini;
+	int		minj;
+	int		maxi;
+	int		maxj;
 	char	dir;
 	char	**map;
 }		t_maps;
@@ -23,7 +23,7 @@ t_maps	*get_map(char **map);
 
 //from mapping/mapping_utils.c
 void	if_wall(t_maps *map, int i, int j);
-int	get_player(t_maps *mapp, char **map);
+int		get_player(t_maps *mapp, char **map);
 
 //from utils.c
 size_t	ft_strlen(const char *s);

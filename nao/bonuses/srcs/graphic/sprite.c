@@ -1,5 +1,4 @@
 #include "liball.h"
-#include <stdio.h>
 
 int	load_sprite_frames(t_sprite *sprite, void *mlx)
 {
@@ -41,26 +40,17 @@ void	update_sprite(t_sprite *sprite)
 	}
 }
 
-int	count_sprites(char **map)
+static int	process_sprite(t_all *all, int i, int j, int *id)
 {
-	int	i;
-	int	j;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (map[i])
+	if (all->map[i][j] == 'S')
 	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'S')
-				count++;
-			j++;
-		}
-		i++;
+		all->sprites[*id].x = j + 0.5;
+		all->sprites[*id].y = i + 0.5;
+		if (!load_sprite_frames(&all->sprites[*id], all->mlx))
+			return (0);
+		(*id)++;
 	}
-	return (count);
+	return (1);
 }
 
 int	init_sprites(t_all *all)
@@ -70,53 +60,23 @@ int	init_sprites(t_all *all)
 	int	id;
 	int	count;
 
-	i = 0;
 	id = 0;
 	count = count_sprites(all->map);
 	all->sprite_count = count;
 	all->sprites = malloc(sizeof(t_sprite) * count);
 	if (!all->sprites)
 		return (0);
+	i = 0;
 	while (all->map[i])
 	{
 		j = 0;
 		while (all->map[i][j])
 		{
-			if (all->map[i][j] == 'S')
-			{
-				all->sprites[id].x = j + 0.5;
-				all->sprites[id].y = i + 0.5;
-				if (!load_sprite_frames(&all->sprites[id], all->mlx))
-					return (0);
-				id++;
-			}
+			if (!process_sprite(all, i, j, &id))
+				return (0);
 			j++;
 		}
 		i++;
 	}
 	return (1);
-}
-
-void	sort_sprites_by_distance(t_sprite *sprites, int count)
-{
-	t_sprite	tmp;
-	int			i;
-	int			j;
-
-	i = 0;
-	while (i < count - 1)
-	{
-		j = i + 1;
-		while (j < count)
-		{
-			if (sprites[i].dist < sprites[j].dist)
-			{
-				tmp = sprites[i];
-				sprites[i] = sprites[j];
-				sprites[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
 }

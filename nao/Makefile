@@ -43,6 +43,7 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/utils.c					\
 		bonuses/srcs/graphic/walls.c			\
 		bonuses/srcs/graphic/sprite.c			\
+		bonuses/srcs/graphic/sprite_utils.c			\
 		bonuses/srcs/graphic/draw_sprite.c			\
 		bonuses/srcs/graphic/minimap.c
 		

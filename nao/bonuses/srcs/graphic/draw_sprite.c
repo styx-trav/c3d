@@ -1,21 +1,7 @@
 #include "liball.h"
 #include "raycasting.h"
 
-static int	get_sprite_tex_x(int s_screen_x, int s_size, int x, t_img *tex)
-{
-	int	relative_x;
-	int	tex_x;
-
-	relative_x = x - (s_screen_x - s_size / 2);
-	tex_x = (relative_x * tex->width) / s_size;
-	if (tex_x < 0)
-		tex_x = 0;
-	else if (tex_x >= tex->width)
-		tex_x = tex->width - 1;
-	return (tex_x);
-}
-
-static void	draw_s_column(int x, int s_size, int screen_y, int tex_x, t_img *tex, t_all *all)
+static void	draw_s_column(int x, int s_size, t_img *t, t_all *all)
 {
 	int		y;
 	int		end_y;
@@ -23,20 +9,21 @@ static void	draw_s_column(int x, int s_size, int screen_y, int tex_x, t_img *tex
 	int		tex_y;
 	char	*px;
 
-	y = screen_y - s_size / 2;
+	y = HEIGHT / 2 - s_size / 2;
 	end_y = y + s_size;
 	while (y < end_y)
 	{
 		if (y >= 0 && y < HEIGHT)
 		{
 			d = y * 256 - HEIGHT * 128 + s_size * 128;
-			tex_y = (d * tex->height) / (s_size * 256);
+			tex_y = (d * t->height) / (s_size * 256);
 			if (tex_y < 0)
 				tex_y = 0;
-			else if (tex_y >= tex->height)
-				tex_y = tex->height - 1;
-			px = tex->addr + (tex_y * tex->size_line + tex_x * (tex->bpp / 8));
-			if ((*(unsigned int *)px & 0x00FFFFFF) != 0 && (y > all->minimap_h || x > all->minimap_w))
+			else if (tex_y >= t->height)
+				tex_y = t->height - 1;
+			px = t->addr + (tex_y * t->size_line + t->tex_x * (t->bpp / 8));
+			if ((*(unsigned int *)px & 0x00FFFFFF) != 0
+				&& (y > all->minimap_h || x > all->minimap_w))
 				put_pixel(x, y, *(unsigned int *)px, &all->fg);
 		}
 		y++;
@@ -81,7 +68,8 @@ static void	draw_sprite_visible_columns(t_all *all, t_sprite *sprite)
 		if (x >= 0 && x < WIDTH && sprite->dist < all->z_buffer[x])
 		{
 			tex_x = get_sprite_tex_x(sprite->screen_x, sprite->size, x, tex);
-			draw_s_column(x, sprite->size, HEIGHT / 2, tex_x, tex, all);
+			tex->tex_x = tex_x;
+			draw_s_column(x, sprite->size, tex, all);
 		}
 		x++;
 	}

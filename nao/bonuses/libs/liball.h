@@ -11,7 +11,7 @@
 # define LEFT 65361
 # define RIGHT 65363
 # define NUM_RAYS WIDTH
-# define  PI 3.14159265359
+# define PI 3.14159265359
 # define SPRITE_FRAMES 3
 
 # include <stdlib.h>
@@ -30,119 +30,118 @@ typedef struct s_img
 	int		bpp;
 	int		size_line;
 	int		endian;
+	int		tex_x;
 }		t_img;
 
 typedef struct s_player
 {
-	float x;
-	float y;
-	float angle;
-
-	bool key_up;
-	bool key_down;
-	bool key_left;
-	bool key_right;
-	bool left_rotate;
-	bool right_rotate;
+	float	x;
+	float	y;
+	float	angle;
+	bool	key_up;
+	bool	key_down;
+	bool	key_left;
+	bool	key_right;
+	bool	left_rotate;
+	bool	right_rotate;
 }	t_player;
 
-typedef struct s_sprite 
+typedef struct s_sprite
 {
-	t_img img[SPRITE_FRAMES];
-	int 			frame_index;
-	unsigned long 	last_update;
-	double				x;
-	double				y;
-	double		dist;
-	int			screen_x;
-	int			size;
+	t_img			img[SPRITE_FRAMES];
+	int				frame_index;
+	unsigned long	last_update;
+	double			x;
+	double			y;
+	double			dist;
+	int				screen_x;
+	int				size;
 }	t_sprite;
 
 typedef struct s_door
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	bool	seen;
 }	t_door;
 
 typedef struct s_all
 {
-	void	*mlx;
-	void	*win;
-	t_img	fg;
-	t_img	bg;
-	t_img	north;
-	t_img	east;
-	t_img	south;
-	t_img	west;
-	t_img	doors;
-	int	minimap_w;
-	int	minimap_h;
-	int		floor;
-	int		ceiling;
-	char	**map;
+	void		*mlx;
+	void		*win;
+	t_img		fg;
+	t_img		bg;
+	t_img		north;
+	t_img		east;
+	t_img		south;
+	t_img		west;
+	t_img		doors;
+	int			minimap_w;
+	int			minimap_h;
+	int			floor;
+	int			ceiling;
+	char		**map;
 	t_player	player;
 	t_sprite	sprite;
 	t_sprite	*sprites;
 	int			sprite_count;
-	float 		z_buffer[WIDTH];
-	char	dir;//angle ?? double, matrix ? add later;
-	t_door	door;
-	bool	see_3;
+	float		z_buffer[WIDTH];
+	char		dir;
+	t_door		door;
+	bool		see_3;
 }			t_all;
 
-//from init/
+//from init/init_utils.c
+int				calc_color(int col[4]);
+void			img_address(t_img *img);
+void			start_all(t_all *all);
+unsigned long	get_current_time_ms(void);
+int				set_ns(t_all *all, t_pars *parse);
 
-//from init_utils.c
-int	calc_color(int col[4]);
-void	img_address(t_img *img);
-void	start_all(t_all *all);
-unsigned long get_current_time_ms(void);
-int	set_ns(t_all *all, t_pars *parse);
+//from init/init.c
+int				init(t_all *all, char *filename, int width, int height);
 
-//from init.c
-int	init(t_all *all, char *filename, int width, int height);
+//from graphic/hooks.c
+int				key_press(int keycode, t_all *all);
+int				key_release(int keycode, t_all *all);
+int				mouse_move(int x, int y, t_all *all);
+int				open_door(int button, int x, int y, t_all *all);
+int				exitt(t_all *str);
 
-//from graphic
+//from graphic/player.c
+void			init_player(t_all *all, t_player *player);
+void			rotate_player(t_player *player);
+void			move_player(t_all *all, t_player *player);
 
-//from hooks.c
-int	key_press(int keycode, t_all *all);
-int	key_release(int keycode, t_all *all);
-int	mouse_move(int x, int y, t_all *all);
-int	open_door(int button, int x, int y, t_all *all);
-int	exitt(t_all *str);
+//from graphic/disp_utils.c
+void			put_pixel(int x, int y, int color, t_img *img);
+int				collision_zone(t_all *all, float px, float py);
 
-//from player.c
-void	init_player(t_all *all, t_player *player);
-void	rotate_player(t_player *player);
-void	move_player(t_all *all, t_player *player);
+//from graphic/draw.c
+int				draw_loop(t_all *all);
 
-//from disp_utils.c
-void	put_pixel(int x, int y, int color, t_img *img);
-int		collision_zone(t_all *all, float px, float py);
+//from graphic/rays.c
+void			draw_rays(t_all *all, t_player *player);
 
-//from draw.c
-int draw_loop(t_all *all);
+//from graphic/sprite.c
+int				load_sprite_frames(t_sprite *sprite, void *mlx);
+void			update_sprite(t_sprite *sprite);
+int				init_sprites(t_all *all);
 
-//from rays.c
-void draw_rays(t_all *all, t_player *player);
+//from graphic/sprite_utils.c
+int				count_sprites(char **map);
+void			sort_sprites_by_distance(t_sprite *sprites, int count);
+int				get_sprite_tex_x(int s_screen_x, int s_size, int x, t_img *tex);
 
-//from sprite.c
-int load_sprite_frames(t_sprite *sprite, void *mlx);
-void update_sprite(t_sprite *sprite);
-int	count_sprites(char **map);
-int	init_sprites(t_all *all);
-void sort_sprites_by_distance(t_sprite *sprites, int count);
+//from graphic/draw_sprite.c
+void			draw_all_sprites(t_all *all, t_player *player);
 
-//from draw_sprite.c
-void	draw_all_sprites(t_all *all, t_player *player);
-
-//from minimap.c
-int	init_minimap(t_all *all);
-void	draw_minimap(t_all *all, t_player *player);
+//from graphic/minimap.c
+int				init_minimap(t_all *all);
+void			draw_minimap(t_all *all, t_player *player);
 
 //from utils.c
-size_t	ft_strlen(const char *s);
-void	free_map(char **map);
+size_t			ft_strlen(const char *s);
+void			free_map(char **map);
 
 #endif

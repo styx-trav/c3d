@@ -2,15 +2,15 @@
 #include "libmap.h"
 #include "liball.h"
 
-
 static void	free_sprites(t_all *all)
 {
-	int i;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < all->sprite_count)
 	{
-		int j = 0;
+		j = 0;
 		while (j < 3)
 		{
 			if (all->sprites[i].img[j].img)
@@ -61,25 +61,13 @@ void	start_loop(t_all *all)
 	mlx_hook(all->win, 6, 1L << 6, mouse_move, all);
 	mlx_mouse_hook(all->win, open_door, all);
 	mlx_hook(all->win, 17, 0, &exitt, all);
-
 	mlx_mouse_hide(all->mlx, all->win);
 	mlx_loop(all->mlx);
 }
-#include <stdio.h>
-void	print_map(char **map)
-{
-	int	i = 0;
-
-	while (map && map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
 
 int	main(int argc, char **argv)
-{ 
-	t_all all;
+{
+	t_all	all;
 
 	if (argc != 2)
 		return (0);
@@ -88,7 +76,6 @@ int	main(int argc, char **argv)
 		free_all(&all);
 		return (0);
 	}
-	//print_map(all.map);
 	init_player(&all, &all.player);
 	start_loop(&all);
 	free_all(&all);
