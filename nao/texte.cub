@@ -1,13 +1,13 @@
-NO                  		             ./textures/test.xpm 
+NO                  		             ./textures/wall1.xpm 
      
-     SO ./textures/test.xpm      
+     SO ./textures/wall2.xpm      
 
 	F 00000, 128, 100
 		
 			
-EA			./textures/test.xpm 
+EA			./textures/wall3.xpm 
 
-		WE                                            ./textures/test.xpm 
+		WE                                            ./textures/wall4.xpm 
 		
 C 				245, 245, 200
 

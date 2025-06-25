@@ -1,13 +1,13 @@
-NO ./textures/test.xpm 
+NO ./textures/bonus.xpm 
      
-     SO ./textures/test.xpm      
+     SO ./textures/bonus.xpm      
 
 	F 200, 128, 100
 		
 			
-EA			./textures/test.xpm 
+EA			./textures/bonus.xpm 
 
-		WE                                            ./textures/test.xpm 
+		WE                                            ./textures/bonus.xpm 
 		
 C 				245, 245, 200
 
