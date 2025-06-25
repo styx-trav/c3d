@@ -37,7 +37,7 @@ static int	map_ll(char **map)
 
 	i = 0;
 	max = 0;
-	while (map[i])
+	while (map && map[i])
 	{
 		j = 0;
 		while (map[i][j] && map[i][j] != '\n')
