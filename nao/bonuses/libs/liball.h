@@ -65,6 +65,14 @@ typedef struct s_door
 	bool	seen;
 }	t_door;
 
+typedef struct s_assist
+{
+	int	x;
+	int	y;
+	int	istep;
+	int	jstep;
+}        t_assist;
+
 typedef struct s_all
 {
 	void		*mlx;
@@ -136,9 +144,14 @@ int				get_sprite_tex_x(int s_screen_x, int s_size, int x, t_img *tex);
 //from graphic/draw_sprite.c
 void			draw_all_sprites(t_all *all, t_player *player);
 
-//from graphic/minimap.c
+//from minimap/
+
+//from minimap.c
 int				init_minimap(t_all *all);
 void			draw_minimap(t_all *all, t_player *player);
+
+//from player_arrow.c
+void			player_arrow(t_img *fg, int x, int y, float angle);
 
 //from utils.c
 size_t			ft_strlen(const char *s);

@@ -2,6 +2,7 @@ CC = cc -g
 INCLUDES = -I./manda/libs -I./manda/srcs
 FLAGS = -Wall -Werror -Wextra
 NAME = cub3D
+B_NAME = cub3D_bonus
 SRC =	manda/srcs/parsing/parsing.c 			\
 		tester.c 						\
 		manda/srcs/parsing/parsing_utils.c	\
@@ -45,13 +46,14 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/graphic/sprite.c			\
 		bonuses/srcs/graphic/sprite_utils.c			\
 		bonuses/srcs/graphic/draw_sprite.c			\
-		bonuses/srcs/graphic/minimap.c
+		bonuses/srcs/minimap/minimap.c\
+		bonuses/srcs/minimap/player_arrow.c
 		
 OBJ = $(SRC:.c=.o)
 
 B_OBJ = $(BSRC:.c=.o)
 
-all: $(NAME) clean
+all: $(NAME)
 
 %.o: %.c
 	$(CC) $(FLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
@@ -65,9 +67,19 @@ clean:
 fclean:
 	rm -f $(OBJ) $(NAME)
 
-bonus:
-	$(CC) $(FLAGS) -I./bonuses/srcs -I./bonuses/libs $(BSRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
+$(B_NAME): $(BSRC)
+	$(CC) $(FLAGS) -I./bonuses/srcs -I./bonuses/libs $(BSRC) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(B_NAME)
 
-re: clean all
+bonus: $(B_NAME)
 
-.PHONY: all clean fclean re
+b_clean:
+	rm -f $(B_OBJ)
+
+b_fclean:
+	rm -f $(B_OBJ) $(B_NAME)
+
+re: fclean all
+
+rbonus: b_fclean bonus
+
+.PHONY: all clean fclean re bonus b_clean c_fclean rbonus

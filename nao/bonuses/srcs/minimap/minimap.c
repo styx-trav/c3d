@@ -88,57 +88,11 @@ static void	minimap(t_all *all, int on, int i, int j)
 	}
 }
 
-void	player_arrow(t_img *fg, int x, int y, float angle)
-{
-	int	j;
-	int	i;
-	int	istep;
-	int	jstep;
-
-	if (angle > PI /4 && angle < 3 * PI /4)
-	{
-		x -= 2;
-		y += -6;
-		jstep = 1;
-		istep = 0;
-	}
-	else if (angle > 3 * PI /4 && angle < 5 * PI /4)
-	{
-		x += 6;
-		y -= 2;
-		jstep = 0;
-		istep = 1;
-	}
-	else if (angle > 5 * PI /4 && angle < 7 * PI /4)
-	{
-		x -= 2;
-		y += 6;
-		jstep = 1;
-		istep = 0;
-	}
-	else
-	{
-		x += -6;
-		y -= 2;
-		jstep = 0;
-		istep = 1;
-	}
-	i = 0;
-	j = 0;
-	//setup here, grab the steps :: put x or y as static a pixel away (step at 0), the other at -4 (step at 1)
-	while (i < 4 && j < 4)
-	{
-		put_pixel(x + j, y + i, 0x00FF0000, fg);
-		i += istep;
-		j += jstep;
-	}
-}
-
 void	draw_minimap(t_all *all, t_player *player)
 {
 	static int	lswitch = 0;
-	int	i;
-	int	j;
+	int			i;
+	int			j;
 
 	if (!lswitch && !all->see_3)
 		lswitch++;
@@ -146,5 +100,6 @@ void	draw_minimap(t_all *all, t_player *player)
 	i = minimap_setup(all->map, &j);
 	minimap(all, lswitch, i, j);
 	draw_square(all, (int)(player->y * 10), (int)(player->x * 10), 0x00FF0000);
-	player_arrow(&all->fg, (int)(player->x * 10), (int)(player->y * 10), player->angle);
+	player_arrow(&all->fg, (int)(player->x * 10),
+		(int)(player->y * 10), player->angle);
 }
