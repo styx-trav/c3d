@@ -28,6 +28,8 @@ void	start_all(t_all *all)
 	all->south.img = NULL;
 	all->west.img = NULL;
 	all->map = NULL;
+	all->sprites = NULL;
+	all->sprite_count = 0;
 }
 
 unsigned long	get_current_time_ms(void)

@@ -9,6 +9,7 @@ SRC =	manda/srcs/parsing/parsing.c 			\
 		manda/srcs/parsing/parsing_utils2.c	\
 		manda/srcs/parsing/floor_ceiling.c 	\
 		manda/srcs/mapping/map_parse.c 		\
+		manda/srcs/mapping/adjust.c 		\
 		manda/srcs/mapping/map_parse_utils.c 		\
 		manda/srcs/gnl/get_next_line.c 				\
 		manda/srcs/gnl/get_next_line_utils.c 			\
@@ -34,6 +35,7 @@ BSRC = 	bonuses/srcs/parsing/parsing.c 			\
 		bonuses/srcs/init/init.c 				\
 		bonuses/srcs/init/init_utils.c 			\
 		bonuses/srcs/mapping/mapping.c			\
+		bonuses/srcs/mapping/adjust.c			\
 		bonuses/srcs/mapping/mapping_utils.c			\
 		bonuses/srcs/mapping/map_add.c			\
 		bonuses/srcs/graphic/hooks.c			\

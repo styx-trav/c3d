@@ -119,6 +119,9 @@ char	**make_map(t_pars *parse)
 			return (NULL);
 		line = get_next_line(parse->fd);
 	}
+	map = adjust_map(map);
+	if (!map)
+		return (NULL);
 	map = map_errors(reader(parse->fd), map);
 	return (map);
 }

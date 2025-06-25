@@ -48,4 +48,7 @@ int		is_empty(char *line);
 char	**map_errors(char a, char **map);
 int		check_door(char **map, int i, int j);
 
+//from adjust.c
+char	**adjust_map(char **map);
+
 #endif

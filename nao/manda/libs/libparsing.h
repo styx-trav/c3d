@@ -63,4 +63,7 @@ int		instr(char *str, char a);
 int		is_empty(char *line);
 char	**map_errors(char a, char **map);
 
+//from adjust.c
+char	**adjust_map(char **map);
+
 #endif
