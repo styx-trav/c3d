@@ -32,6 +32,8 @@ static int	get_num(int fd, int i)
 	}
 	if (i < 3 && a != ',')
 		return (-1);
+	if (i == 3 && a != '\n')
+		return (-1);
 	return (res);
 }
 
@@ -55,5 +57,5 @@ char	*get_color(char c, int fd, t_pars *parse)
 			return ("invalid color input");
 		i++;
 	}
-	return (NULL);
+	return ("");
 }

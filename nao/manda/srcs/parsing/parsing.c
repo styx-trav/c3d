@@ -72,15 +72,19 @@ static char	*parse_elements(int fd, t_pars *parse)
 	char	*err;
 
 	i = 0;
+	err = NULL;
 	while (i != 6)
 	{
-		a = move_to_char(fd, i);
+		if (err)
+			a = move_to_char(fd, 0);
+		else
+			a = move_to_char(fd, i);
 		if (a == '\0' || a == '1')
 			return ("missing elements of parsing");
 		if (a == '\n')
-			return ("bad element formatting");
+				return ("bad element formatting");
 		err = get_element(a, fd, parse);
-		if (err)
+		if (err && err[0])
 			return (err);
 		i++;
 	}

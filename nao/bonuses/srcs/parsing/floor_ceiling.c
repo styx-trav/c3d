@@ -43,5 +43,5 @@ char	*get_color(char c, int fd, t_pars *parse)
 			return ("invalid color input");
 		i++;
 	}
-	return (NULL);
+	return ("");
 }
