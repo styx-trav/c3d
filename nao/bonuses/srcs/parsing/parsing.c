@@ -86,11 +86,14 @@ t_pars	*parsing_pt1_el(char *file)
 	char	*err_msg;
 
 	if (!is_cub(file))
+	{
+		printf("Error\nbad file formatting\n");
 		return (NULL);
+	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(file);
+		printf("Error\nopening file\n");
 		return (NULL);
 	}
 	parse = make_parse();

@@ -27,6 +27,7 @@ void	start_all(t_all *all)
 	all->east.img = NULL;
 	all->south.img = NULL;
 	all->west.img = NULL;
+	all->doors.img = NULL;
 	all->map = NULL;
 	all->sprites = NULL;
 	all->sprite_count = 0;
