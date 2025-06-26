@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltantin <ltantin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 16:20:34 by ltantin           #+#    #+#             */
+/*   Updated: 2025/06/26 16:20:35 by ltantin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libparsing.h"
 
 static char	**add_to_map(char **map, char *line)
@@ -41,7 +53,7 @@ static int	at_wall(char **map, int i, int j)
 	}
 	if (i == 0 || j == 0)
 		res = 1;
-	else if (!map[i + 1] || map[i][j + 1] == '\n')
+	else if (!map[i + 1] || !map[i][j + 1] || map[i][j + 1] == '\n')
 		res = 1;
 	else if (map[i -1][j] == ' ' || map[i +1][j] == ' '
 		|| map[i][j -1] == ' ' || map[i][j +1] == ' ')

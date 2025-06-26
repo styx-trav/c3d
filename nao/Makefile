@@ -4,7 +4,7 @@ FLAGS = -Wall -Werror -Wextra
 NAME = cub3D
 B_NAME = cub3D_bonus
 SRC =	manda/srcs/parsing/parsing.c 			\
-		tester.c 						\
+		manda/main.c 						\
 		manda/srcs/parsing/parsing_utils.c	\
 		manda/srcs/parsing/parsing_utils2.c	\
 		manda/srcs/parsing/floor_ceiling.c 	\
@@ -24,7 +24,7 @@ SRC =	manda/srcs/parsing/parsing.c 			\
 		manda/srcs/utils.c					\
 		manda/srcs/graphic/walls.c
 BSRC = 	bonuses/srcs/parsing/parsing.c 			\
-		bonuses/tester.c 						\
+		bonuses/main.c 						\
 		bonuses/srcs/parsing/parsing_utils.c	\
 		bonuses/srcs/parsing/parsing_utils2.c	\
 		bonuses/srcs/parsing/floor_ceiling.c 	\

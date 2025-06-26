@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltantin <ltantin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 16:20:08 by ltantin           #+#    #+#             */
+/*   Updated: 2025/06/26 16:22:11 by ltantin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libparsing.h"
 
 static char	**get_dir(char c, int fd, t_pars *parse)
@@ -70,7 +82,7 @@ static char	*parse_elements(int fd, t_pars *parse)
 		if (a == '\0' || a == '1')
 			return ("missing elements of parsing");
 		if (a == '\n')
-				return ("bad element formatting");
+			return ("bad element formatting");
 		err = get_element(a, fd, parse);
 		if (err && err[0])
 			return (err);

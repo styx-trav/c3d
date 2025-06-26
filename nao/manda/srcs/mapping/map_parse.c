@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naorakot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ltantin <ltantin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 20:59:32 by naorakot          #+#    #+#             */
-/*   Updated: 2025/06/11 20:59:33 by naorakot         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:09:47 by ltantin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	at_wall(char **map, int i, int j)
 	}
 	if (i == 0 || j == 0)
 		res = 1;
-	else if (!map[i + 1] || map[i][j + 1] == '\n')
+	else if (!map[i + 1] || !map[i][j + 1] || map[i][j + 1] == '\n')
 		res = 1;
 	else if (map[i -1][j] == ' ' || map[i +1][j] == ' '
 		|| map[i][j -1] == ' ' || map[i][j +1] == ' ')

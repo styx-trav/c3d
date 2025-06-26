@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   liball.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltantin <ltantin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 16:21:25 by ltantin           #+#    #+#             */
+/*   Updated: 2025/06/26 16:21:50 by ltantin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBALL_H
 # define LIBALL_H
 
@@ -71,7 +83,7 @@ typedef struct s_assist
 	int	y;
 	int	istep;
 	int	jstep;
-}        t_assist;
+}			t_assist;
 
 typedef struct s_all
 {

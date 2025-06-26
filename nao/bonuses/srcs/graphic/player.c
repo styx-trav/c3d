@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltantin <ltantin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 16:21:01 by ltantin           #+#    #+#             */
+/*   Updated: 2025/06/26 16:21:02 by ltantin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "liball.h"
 
 void	init_player(t_all *all, t_player *player)
@@ -87,8 +99,8 @@ void	move_player(t_all *all, t_player *player)
 	float	sin_a;
 
 	rotate_player(player);
-	cos_a = cos(player->angle) * 0.02;
-	sin_a = sin(player->angle) * 0.02;
+	cos_a = cos(player->angle) * 0.12;
+	sin_a = sin(player->angle) * 0.12;
 	move_vert(all, player, cos_a, sin_a);
 	move_hor(all, player, cos_a, sin_a);
 }
